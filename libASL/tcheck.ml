@@ -21,6 +21,7 @@ open Printf
 
 let verbose = false
 
+let opt_desugar = ref false
 
 (****************************************************************)
 (** {3 Exceptions thrown by typechecker}                        *)
@@ -1413,17 +1414,19 @@ and tc_expr (env: Env.t) (u: unifier) (loc: AST.l) (x: AST.expr): (AST.expr * AS
                 (Expr_Field(e', f), get_recordfield loc rfs f)
             | FT_Register rfs ->
                 let (ss, ty') = get_regfield loc rfs f in
-                (Expr_Slices(e', ss), ty')
+                let x' = if !opt_desugar then Expr_Slices(e', ss) else Expr_Field(e', f) in
+                (x', ty')
             )
     | Expr_Fields(e, fs) ->
             let (e', ty) = tc_expr env u loc e in
             (match typeFields (Env.globals env) loc ty with
             | FT_Record rfs ->
-                let tys = List.map (get_recordfield loc rfs) fs in
+                let tys = List.map (get_recordfield loc rfs) fs |> List.map (derefType (Env.globals env)) in
                 (Expr_Fields(e', fs), mk_concat_tys tys)
             | FT_Register rfs ->
                 let (ss, ty') = get_regfields loc rfs fs in
-                (Expr_Slices(e', ss), ty')
+                let x' = if !opt_desugar then Expr_Slices(e', ss) else Expr_Fields(e', fs) in
+                (x', ty')
             )
     | Expr_Slices(e, ss) ->
             let all_single = List.for_all (function (Slice_Single _) -> true | _ -> false) ss in
@@ -1530,7 +1533,7 @@ and tc_type (env: Env.t) (loc: AST.l) (x: AST.ty): AST.ty =
             if not (GlobalEnv.isType (Env.globals env) tc) then raise (IsNotA (loc, "type constructor", pprint_ident tc));
             (match GlobalEnv.getType (Env.globals env) tc with
             (* todo: instantiate with type parameters? *)
-            | Some (Type_Abbreviation ty') -> derefType (Env.globals env) ty'
+            | Some (Type_Abbreviation ty') when !opt_desugar -> derefType (Env.globals env) ty'
             | _ -> Type_Constructor(tc)
             )
     | Type_Bits(n) ->
@@ -1636,17 +1639,19 @@ and tc_lexpr2 (env: Env.t) (u: unifier) (loc: AST.l) (x: AST.lexpr): (AST.lexpr 
             (LExpr_Field(l', f), get_recordfield loc rfs f)
         | FT_Register rfs ->
             let (ss, ty') = get_regfield loc rfs f in
-            (LExpr_Slices(l', ss), ty')
+            let x' = if !opt_desugar then LExpr_Slices(l', ss) else LExpr_Field(l', f) in
+            (x', ty')
         )
     | LExpr_Fields(l, fs) ->
         let (l', ty) = tc_lexpr2 env u loc l in
         (match typeFields (Env.globals env) loc ty with
         | FT_Record rfs ->
-            let tys = List.map (get_recordfield loc rfs) fs in
+            let tys = List.map (get_recordfield loc rfs) fs |> List.map (derefType (Env.globals env)) in
             (LExpr_Fields(l', fs), mk_concat_tys tys)
         | FT_Register rfs ->
             let (ss, ty') = get_regfields loc rfs fs in
-            (LExpr_Slices(l', ss), ty')
+            let x' = if !opt_desugar then LExpr_Slices(l', ss) else LExpr_Fields(l', fs) in
+            (x', ty')
         )
     | LExpr_Slices(e, ss) ->
         let all_single = List.for_all (function (Slice_Single _) -> true | _ -> false) ss in
@@ -1679,7 +1684,8 @@ and tc_lexpr2 (env: Env.t) (u: unifier) (loc: AST.l) (x: AST.lexpr): (AST.lexpr 
 
     | LExpr_BitTuple(ls) ->
         let (ls', tys) = List.split (List.map (tc_lexpr2 env u loc) ls) in
-        let ty = mk_concat_tys tys in
+        let tys' = List.map (derefType (Env.globals env)) tys in
+        let ty = mk_concat_tys tys' in
         (LExpr_BitTuple(ls'), ty)
     | LExpr_Tuple(ls) ->
         let (ls', tys) = List.split (List.map (tc_lexpr2 env u loc) ls) in
@@ -1736,7 +1742,8 @@ let rec tc_lexpr (env: Env.t) (u: unifier) (loc: AST.l) (ty: AST.ty) (x: AST.lex
                 (LExpr_Field(l', f), get_recordfield loc rfs f)
             | FT_Register rfs ->
                 let (ss, ty') = get_regfield loc rfs f in
-                (LExpr_Slices(l', ss), ty')
+                let x' = if !opt_desugar then LExpr_Slices(l', ss) else LExpr_Field(l', f) in
+                (x', ty')
             )
         in
         check_type env u loc ty' ty;
@@ -1745,11 +1752,12 @@ let rec tc_lexpr (env: Env.t) (u: unifier) (loc: AST.l) (ty: AST.ty) (x: AST.lex
         let (l', lty) = tc_lexpr2 env u loc l in
         let (r,  ty') = (match typeFields (Env.globals env) loc lty with
             | FT_Record rfs ->
-                let tys = List.map (get_recordfield loc rfs) fs in
+                let tys = List.map (get_recordfield loc rfs) fs |> List.map (derefType (Env.globals env)) in
                 (LExpr_Fields(l', fs), mk_concat_tys tys)
             | FT_Register rfs ->
                 let (ss, ty') = get_regfields loc rfs fs in
-                (LExpr_Slices(l', ss), ty')
+                let x' = if !opt_desugar then LExpr_Slices(l', ss) else LExpr_Fields(l', fs) in
+                (x', ty')
             )
         in
         check_type env u loc ty' ty;
@@ -1801,7 +1809,8 @@ let rec tc_lexpr (env: Env.t) (u: unifier) (loc: AST.l) (ty: AST.ty) (x: AST.lex
 
     | LExpr_BitTuple(ls) ->
         let (ls', tys) = List.split (List.map (tc_lexpr2 env u loc) ls) in
-        let ty' = mk_concat_tys tys in
+        let tys' = List.map (derefType (Env.globals env)) tys in
+        let ty' = mk_concat_tys tys' in
         check_type env u loc ty' ty;
         (LExpr_BitTuple(ls'), [])
     | LExpr_Tuple(ls) ->
