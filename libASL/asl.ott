@@ -252,6 +252,7 @@ flexible_ident_list :: 'IdentList' ::=
 variable_declaration :: 'Decl_' ::= {{ quotient-with declaration }}
     {{ aux _ l }}
     | ty qualident ; EOL                                       ::   :: Var
+    | ty qualident = expr ; EOL                                :: S :: VarInit {{ ocaml Decl_Var([[ty]], [[qualident]], Range($symbolstartpos,$endpos)) }} {{ com TODO }}
     | constant ty qualident = expr ; EOL                       ::   :: Const
     | array ty qualident [ ixtype ] ; EOL                      :: S :: Array {{ ocaml Decl_Var(Type_Array([[ixtype]],[[ty]]), [[qualident]], Range($symbolstartpos,$endpos)) }}
 
@@ -396,13 +397,14 @@ decode_body :: 'DecoderBody_' ::=
 % features not found in published ASL but potentially used in glue code
 internal_definition :: 'Decl_' ::= {{ quotient-with declaration }}
     {{ aux _ l }}
-    | __operator1 unop            = ident1 , ... , identn ; EOL                       :: :: Operator1
-    | __operator2 binop_or_concat = ident1 , ... , identn ; EOL                       :: :: Operator2
-    | __newevent qualident ( formal1 , .. , formaln ) ; EOL                           :: :: NewEventDefn
-    | __event    qualident possibly_empty_block                                       :: :: EventClause
-    | __newmap ty qualident ( formal1 , .. , formaln ) opt_indented_block             :: :: NewMapDefn
-    | __map qualident mapfield1 , .. , mapfieldn optmapcond then possibly_empty_block :: :: MapClause
-    | __config ty qualident = expr ; EOL                                              :: :: Config
+    | __operator1 unop            = ident1 , ... , identn ; EOL                       ::   :: Operator1
+    | __operator2 binop_or_concat = ident1 , ... , identn ; EOL                       ::   :: Operator2
+    | __newevent qualident ( formal1 , .. , formaln ) ; EOL                           ::   :: NewEventDefn
+    | __event    qualident possibly_empty_block                                       ::   :: EventClause
+    | __newmap ty qualident ( formal1 , .. , formaln ) opt_indented_block             ::   :: NewMapDefn
+    | __map qualident mapfield1 , .. , mapfieldn optmapcond then possibly_empty_block ::   :: MapClause
+    | config ty qualident = expr ; EOL                                                ::   :: Config
+    | __config ty qualident = expr ; EOL                                              :: S :: Config_Deprecated {{ ocaml Decl_Config([[ty]], [[qualident]], [[expr]], Range($symbolstartpos,$endpos)) }} {{ com deprecated }}
 
 operator :: 'Operator_' ::=
     {{ phantom }} {{ ocaml string }}

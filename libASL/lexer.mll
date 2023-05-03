@@ -63,6 +63,7 @@ let keywords : (string * Asl_parser.token) list = [
     ("case",                   CASE);
     ("catch",                  CATCH);
     ("constant",               CONSTANT);
+    ("config",                 CONFIG);
     ("do",                     DO);
     ("downto",                 DOWNTO);
     ("else",                   ELSE);

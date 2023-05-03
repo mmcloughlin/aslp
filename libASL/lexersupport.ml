@@ -55,6 +55,7 @@ let string_of_token (t: Asl_parser.token): string =
     | COLON               -> "colon"
     | COMMA               -> "comma"
     | CONSTANT            -> "constant"
+    | CONFIG              -> "config"
     | CONSTRAINED_UNDERSCORE_UNPREDICTABLE -> "constrained_unpredictable"
     | DEDENT              -> "dedent"
     | DIV                 -> "div"
