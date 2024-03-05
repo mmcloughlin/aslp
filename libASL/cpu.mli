@@ -15,6 +15,7 @@ type cpu = {
     elfwrite : Int64.t -> char -> unit;
     opcode   : string -> Primops.bigint -> unit;
     sem      : string -> Primops.bigint -> unit;
+    adhoc    : string -> unit;
 }
 
 val mkCPU : Eval.Env.t -> Dis.env -> cpu

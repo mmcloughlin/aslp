@@ -41,6 +41,7 @@ let help_msg = [
     {|:elf <file>                    Load an ELF file|};
     {|:opcode <instr-set> <int>      Decode and execute opcode|};
     {|:sem <instr-set> <int>         Decode and print opcode semantics|};
+    {|:adhoc <instr-set> <int>       Adhoc symbolic opcode test|};
     {|:project <file>                Execute ASLi commands in <file>|};
     {|:q :quit                       Exit the interpreter|};
     {|:run                           Execute instructions|};
@@ -196,6 +197,9 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         let op = Z.of_string opcode in
         Printf.printf "Decoding instruction %s %s\n" iset (Z.format "%x" op);
         cpu'.sem iset op
+    | [":adhoc"] ->
+        let cpu' = Cpu.mkCPU cpu.env cpu.denv in
+        cpu'.adhoc "A64"
     | ":dump" :: iset :: opcode :: rest ->
         let fname =
             (match rest with

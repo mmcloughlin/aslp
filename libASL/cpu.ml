@@ -20,6 +20,7 @@ type cpu = {
     elfwrite : Int64.t -> char -> unit;
     opcode   : string -> Primops.bigint -> unit;
     sem      : string -> Primops.bigint -> unit;
+    adhoc    : string -> unit;
 }
 
 let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
@@ -56,6 +57,20 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
             (fun s -> Printf.printf "%s\n" (pp_stmt s))
             (Dis.dis_decode_entry env denv decoder op)
 
+    and adhoc (iset: string): unit =
+        (* Construct add with immediate opcode parts. *)
+        let hi = Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 10) (Z.of_int 0x244))) in
+        let imm = Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 12) (Z.of_int 42))) in
+        let lo = Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 10) (Z.of_int 0x107))) in
+
+        (* Append into 32-bit opcode. *)
+        let op = sym_append_bits Unknown 10 22 hi (sym_append_bits Unknown 12 10 imm lo) in
+
+        let decoder = Eval.Env.getDecoder env (Ident iset) in
+        List.iter
+            (fun s -> Printf.printf "%s\n" (pp_stmt s))
+            (Dis.dis_decode_entry env denv decoder op)
+
     in
     {
         env      = env;
@@ -66,7 +81,8 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
         setPC    = setPC;
         elfwrite = elfwrite;
         opcode   = opcode;
-        sem      = sem
+        sem      = sem;
+        adhoc    = adhoc;
     }
 
 (****************************************************************
