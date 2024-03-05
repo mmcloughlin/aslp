@@ -26,6 +26,7 @@ let rec val_expr (v: Value.value): AST.expr =
   | VInt n -> Expr_LitInt(Z.to_string n)
   | VReal n -> Expr_LitReal(Q.to_string n)
   | VBits {n; v} -> Expr_LitBits(Z.format ("%0" ^ string_of_int n ^ "b") v)
+  | VMask mask -> Expr_LitMask(string_of_mask mask)
   | VString s -> Expr_LitString(s)
   | VTuple vs -> Expr_Tuple(List.map val_expr vs)
   | _ -> failwith @@ "Casting unhandled value type to expression: " ^ pp_value v

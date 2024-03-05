@@ -230,6 +230,15 @@ let prim_in_mask (x: bitvector) (m: mask): bool =
 let prim_notin_mask (x: bitvector) (m: mask): bool =
     not (prim_in_mask x m)
 
+let mask_shift_right (m: mask) (n: int): mask =
+    assert(n <= m.n);
+    { n = m.n - n; v = Z.shift_right m.v n; m = Z.shift_right m.m n}
+
+let rec string_of_mask(m: mask): string =
+    if m.n == 0 then ""
+    else
+        let c = if Z.testbit m.m 0 then (if Z.testbit m.v 0 then "1" else "0") else "x" in
+        string_of_mask (mask_shift_right m 1) ^ c
 
 (****************************************************************)
 (** {2 Exception primops}                                       *)
@@ -345,8 +354,8 @@ let clear_ram (mem: ram) (d: char): unit =
     mem.contents <- Pages.empty;
     mem.default  <- Some d
 
-let defaultByte_ram (mem: ram) (addr: bigint): char = 
-    match mem.default with 
+let defaultByte_ram (mem: ram) (addr: bigint): char =
+    match mem.default with
     | None -> Char.chr Z.(to_int ((extract addr 0 8) lxor (extract addr 8 8)))
     | Some c -> c
 

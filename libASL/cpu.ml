@@ -60,7 +60,7 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
     and adhoc (iset: string): unit =
         (* Construct add with immediate opcode parts. *)
         let hi = Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 10) (Z.of_int 0x244))) in
-        let imm = Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 12) (Z.of_int 42))) in
+        let imm = Exp (Expr_Var (Ident "imm")) in
         let lo = Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 10) (Z.of_int 0x107))) in
 
         (* Append into 32-bit opcode. *)
