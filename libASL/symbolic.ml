@@ -9,47 +9,6 @@ type sym =
   | Val of value
   | Exp of expr
 
-(** NOTE(mbm): aparently dead code?
-type 'a sym_pattern =
-  | SymPat_LitInt of bitsLit
-  | SymPat_LitHex of bitsLit
-  | SymPat_LitBits of bitsLit
-  | SymPat_LitMask of bitsLit
-  | SymPat_Const of ident
-  | SymPat_Wildcard
-  | SymPat_Tuple of pattern list
-  | SymPat_Set of pattern list
-  | SymPat_Range of 'a * 'a
-  | SymPat_Single of 'a
-
-type 'a sym_expr =
-  | SymExpr_If of 'a * 'a * ('a * 'a) list * 'a
-  | SymExpr_Binop of 'a * binop * 'a
-  | SymExpr_Unop of unop * 'a
-  | SymExpr_Field of 'a * ident
-  | SymExpr_Fields of 'a * ident list
-  | SymExpr_Slices of 'a * ('a * 'a) list
-  | SymExpr_In of 'a * 'a sym_pattern
-  | SymExpr_Var of ident
-  | SymExpr_Parens of 'a
-  | SymExpr_Tuple of 'a list
-  | SymExpr_Unknown of ty
-  | SymExpr_ImpDef of ty * string option
-  | SymExpr_TApply of ident * 'a list * 'a list
-  | SymExpr_Array of 'a * 'a
-  | SymExpr_LitInt of string
-  | SymExpr_LitHex of string
-  | SymExpr_LitReal of string
-  | SymExpr_LitBits of string
-  | SymExpr_LitMask of string
-  | SymExpr_LitString of string
-
-
-type sym' =
-  | Val' of value
-  | Exp' of ty * (sym' sym_expr)
-    *)
-
 let is_val (x: AST.expr): bool =
     (match x with
     | Expr_LitInt _ -> true
