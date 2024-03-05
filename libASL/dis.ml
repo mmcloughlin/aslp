@@ -299,7 +299,7 @@ type tree =
 
 let empty = Node []
 let single x = Node x
-let append x y = 
+let append x y =
   match x, y with
   | Node [], _ -> y
   | _, Node [] -> x
@@ -914,10 +914,10 @@ and dis_call (loc: l) (f: ident) (tes: sym list) (es: sym list): sym option rws 
 and dis_call' (loc: l) (f: ident) (tes: sym list) (es: sym list): sym option rws =
     let@ fn = DisEnv.getFun loc f in
     (match fn with
-    | Some (rty, _, targs, _, _, _) when List.mem f no_inline_impure -> 
+    | Some (rty, _, targs, _, _, _) when List.mem f no_inline_impure ->
         (* impure functions are not visited. *)
-        (match sym_prim_simplify (name_of_FIdent f) tes es with 
-        | Some x -> DisEnv.pure (Some x) 
+        (match sym_prim_simplify (name_of_FIdent f) tes es with
+        | Some x -> DisEnv.pure (Some x)
         | None ->
             (match rty with
             | Some rty ->
@@ -928,11 +928,11 @@ and dis_call' (loc: l) (f: ident) (tes: sym list) (es: sym list): sym option rws
 
                 let@ rty = dis_type loc rty in
                 let func = Expr_TApply (f, List.map sym_expr tes, List.map sym_expr es) in
-                let@ var = capture_expr loc rty func in 
+                let@ var = capture_expr loc rty func in
                 let@ () = DisEnv.modify LocalEnv.popLevel in
                 DisEnv.pure @@ Some (var_sym_expr var)
-            | None -> 
-                let+ () = DisEnv.write [Stmt_TCall (f, List.map sym_expr tes, List.map sym_expr es, loc)] in 
+            | None ->
+                let+ () = DisEnv.write [Stmt_TCall (f, List.map sym_expr tes, List.map sym_expr es, loc)] in
                 None
             )
         )
@@ -1061,7 +1061,7 @@ and dis_lexpr_chain (loc: l) (x: lexpr) (ref: access_chain list) (r: sym): unit 
                 (* this loses propagation of pure expressions when they are assigned
                    into structures, but this is unavoidable since the structure value types
                    cannot store expressions. *)
-                
+
                 (* mark all pstate.nrw, pstate.el or pstate.sp writes as unsupported and die when we see them.
                    this basically "fixes" us to EL0 and eliminates a bunch of branches.
                    fun fact - the only instructions i'm aware of that can actually do this don't
@@ -1312,7 +1312,7 @@ and dis_stmt' (x: AST.stmt): unit rws =
         | _, _ ->
             raise (DisUnsupported (loc, "for loop bounds not statically known: " ^ pp_stmt x)))
     | Stmt_Dep_Undefined loc
-    | Stmt_Undefined loc 
+    | Stmt_Undefined loc
     | Stmt_Unpred loc
     | Stmt_ConstrainedUnpred loc
     | Stmt_ImpDef (_, loc)
@@ -1328,27 +1328,27 @@ and dis_stmt' (x: AST.stmt): unit rws =
         DisEnv.write [Stmt_Assert(expr_false, loc)]
     )
 
-let dis_encoding (x: encoding) (op: value): bool rws =
+let dis_encoding (x: encoding) (op: sym): bool rws =
     let Encoding_Block (nm, iset, fields, opcode, guard, unpreds, b, loc) = x in
     (* todo: consider checking iset *)
     (* Printf.printf "Checking opcode match %s == %s\n" (Utils.to_string (PP.pp_opcode_value opcode)) (pp_value op); *)
     let ok = (match opcode with
-    | Opcode_Bits b -> eval_eq     loc op (from_bitsLit b)
-    | Opcode_Mask m -> eval_inmask loc op (from_maskLit m)
+    | Opcode_Bits b -> sym_eq     loc op (Val (from_bitsLit b))
+    | Opcode_Mask m -> sym_inmask loc op (Val (from_maskLit m))
     ) in
-    if ok then begin
+    if (bool_of_sym ok) then begin
         if !Eval.trace_instruction then Printf.printf "TRACE: instruction %s\n" (pprint_ident nm);
 
         let@ () = DisEnv.traverse_ (function (IField_Field (f, lo, wd)) ->
-            let v = extract_bits' loc op lo wd in
-            if !Eval.trace_instruction then Printf.printf "      %s = %s\n" (pprint_ident f) (pp_value v);
-            declare_assign_var Unknown (val_type v) f (Val v)
+            let s = sym_extract_bits loc op (sym_of_int lo) (sym_of_int wd) in
+            if !Eval.trace_instruction then Printf.printf "      %s = %s\n" (pprint_ident f) (pp_sym s);
+            declare_assign_var Unknown (sym_type s) f s
         ) fields in
 
         let@ guard' = dis_expr loc guard in
         if to_bool loc (sym_value_unsafe guard') then begin
             List.iter (fun (i, b) ->
-                if eval_eq loc (extract_bits' loc op i 1) (from_bitsLit b) then
+                if eval_eq loc (sym_value_unsafe (sym_extract_bits loc op (sym_of_int i) (sym_of_int 1))) (from_bitsLit b) then
                     raise (Throw (loc, Exc_Unpredictable))
             ) unpreds;
             (* dis_encoding: we cannot guarantee that these statements are fully evaluated. *)
@@ -1361,32 +1361,37 @@ let dis_encoding (x: encoding) (op: value): bool rws =
         DisEnv.pure false
     end
 
-let dis_decode_slice (loc: l) (x: decode_slice) (op: value): value rws =
+let rec dis_decode_pattern (loc: AST.l) (x: decode_pattern) (op: sym): sym =
+    match x with
+    | DecoderPattern_Bits     b -> sym_eq     loc op (Val (from_bitsLit b))
+    | DecoderPattern_Mask     m -> sym_inmask loc op (Val (from_maskLit m))
+    | DecoderPattern_Wildcard _ -> sym_true
+    | DecoderPattern_Not      p -> sym_not_bool loc (dis_decode_pattern loc p op)
+
+let dis_decode_slice (loc: l) (x: decode_slice) (op: sym): sym rws =
     (match x with
     | DecoderSlice_Slice (lo, wd) ->
-        DisEnv.pure @@ extract_bits' loc op lo wd
+        DisEnv.pure @@ sym_extract_bits loc op (sym_of_int lo) (sym_of_int wd)
     | DecoderSlice_FieldName f ->
-        (* assumes expression always evaluates to concrete value. *)
-        let+ _,f' = DisEnv.getVar loc f in sym_value_unsafe f'
+        let+ _,f' = DisEnv.getVar loc f in f'
     | DecoderSlice_Concat fs ->
-        (* assumes expression always evaluates to concrete value. *)
         let+ fs' = DisEnv.traverse (DisEnv.getVar loc) fs in
-        eval_concat loc (List.map (fun (_,s) -> sym_value_unsafe s) fs')
+        sym_concat loc (List.map (fun (t,s) -> (width_of_type loc t, s)) fs')
     )
 
 (* Duplicate of eval_decode_case modified to print rather than eval *)
-let rec dis_decode_case (loc: AST.l) (x: decode_case) (op: value): unit rws =
+let rec dis_decode_case (loc: AST.l) (x: decode_case) (op: sym): unit rws =
     let body = dis_decode_case' loc x op in
     if no_debug() then body
     else DisEnv.scope loc "dis_decode_case" (pp_decode_case x) Utils.pp_unit body
-and dis_decode_case' (loc: AST.l) (x: decode_case) (op: value): unit rws =
+and dis_decode_case' (loc: AST.l) (x: decode_case) (op: sym): unit rws =
     (match x with
     | DecoderCase_Case (ss, alts, loc) ->
-            let@ vs = DisEnv.traverse (fun s -> dis_decode_slice loc s op) ss in
+            let@ ss = DisEnv.traverse (fun s -> dis_decode_slice loc s op) ss in
             let rec dis alts =
                 (match alts with
                 | (alt :: alts') ->
-                    let@ alt' = dis_decode_alt loc alt vs op in
+                    let@ alt' = dis_decode_alt loc alt ss op in
                     (match alt' with
                     | true -> DisEnv.unit
                     | false -> dis alts')
@@ -1398,12 +1403,12 @@ and dis_decode_case' (loc: AST.l) (x: decode_case) (op: value): unit rws =
     )
 
 (* Duplicate of eval_decode_alt modified to print rather than eval *)
-and dis_decode_alt (loc: l) (x: decode_alt) (vs: value list) (op: value): bool rws =
-    let body = dis_decode_alt' loc x vs op in
+and dis_decode_alt (loc: l) (x: decode_alt) (ss: sym list) (op: sym): bool rws =
+    let body = dis_decode_alt' loc x ss op in
     if no_debug() then body
     else DisEnv.scope loc "dis_decode_alt" (pp_decode_alt x) string_of_bool body
-and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: value): bool rws =
-    if List.for_all2 (Eval.eval_decode_pattern loc) ps vs then
+and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (ss: sym list) (op: sym): bool rws =
+    if List.for_all2 (fun p s -> (bool_of_sym (dis_decode_pattern loc p s))) ps ss then
         (match b with
         | DecoderBody_UNPRED loc -> raise (Throw (loc, Exc_Unpredictable))
         | DecoderBody_UNALLOC loc -> raise (Throw (loc, Exc_Undefined))
@@ -1446,8 +1451,8 @@ and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: 
         | DecoderBody_Decoder (fs, c, loc) ->
                 let@ () = DisEnv.modify (LocalEnv.addLevel) in
                 let@ () = DisEnv.traverse_ (function (IField_Field (f, lo, wd)) ->
-                    let v = extract_bits' loc op lo wd in
-                    declare_assign_var loc (val_type v) f (Val v)
+                    let s = sym_extract_bits loc op (sym_of_int lo) (sym_of_int wd) in
+                    declare_assign_var loc (sym_type s) f s
                 ) fs
                 in
                 let@ () = dis_decode_case loc c op in
@@ -1459,7 +1464,7 @@ and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: 
 
 type env = (LocalEnv.t * IdentSet.t)
 
-let dis_decode_entry (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: value): stmt list =
+let dis_decode_entry (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: sym): stmt list =
     let DecoderCase_Case (_,_,loc) = decode in
     let ((),lenv',stmts) = (dis_decode_case loc decode op) env lenv in
     let varentries = List.(concat @@ map (fun vars -> StringMap.(bindings (map fst vars))) lenv.locals) in
@@ -1495,7 +1500,7 @@ let build_env (env: Eval.Env.t): env =
       let pstate_v = set_access_chain loc pstate_v [Field(Ident("SP"))] (VBits({n=1; v=Z.zero;})) in
       let pstate_v = set_access_chain loc pstate_v [Field(Ident("nRW"))] (VBits({n=1; v=Z.zero;})) in
       pstate_v
-    | _ -> 
+    | _ ->
       unsupported loc @@ "Initial env value of PSTATE is not a Value";
     ) in
     let lenv = LocalEnv.setVar loc (Var(0, ("PSTATE"))) (Val(pstate)) lenv in
@@ -1506,7 +1511,7 @@ let build_env (env: Eval.Env.t): env =
     let globals = IdentSet.of_list @@ List.map fst @@ Bindings.bindings (Eval.Env.readGlobals env) in
     lenv, globals
 
-(** Instruction behaviour may be dependent on its PC. When lifting this information may be statically known. 
+(** Instruction behaviour may be dependent on its PC. When lifting this information may be statically known.
     If this is the case, we benefit from setting a PC initially and propagating its value through partial evaluation.
     Assumes variable is named _PC and its represented as a bitvector. *)
 let setPC (env: Eval.Env.t) (lenv,g: env) (address: Z.t): env =
@@ -1525,4 +1530,4 @@ let retrieveDisassembly ?(address:string option) (env: Eval.Env.t) (lenv: env) (
     let lenv = match address with
     | Some v -> setPC env lenv (Z.of_string v)
     | None -> lenv in
-    dis_decode_entry env lenv decoder (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) (Z.of_string opcode)))
+    dis_decode_entry env lenv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) (Z.of_string opcode))))

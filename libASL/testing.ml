@@ -3,6 +3,7 @@ module Env = Eval.Env
 
 open AST
 open Value
+open Symbolic
 open Asl_utils
 
 (****************************************************************
@@ -384,7 +385,7 @@ let op_dis (env: Env.t) (iset: string) (op: value): stmt list opresult =
   let lenv = Dis.build_env env in
   let decoder = Eval.Env.getDecoder env (Ident iset) in
   try
-    let stmts = Dis.dis_decode_entry env lenv decoder op in
+    let stmts = Dis.dis_decode_entry env lenv decoder (Val op) in
     Result.Ok stmts
   with
     | e -> Result.Error (Op_DisFail e)
@@ -460,7 +461,7 @@ let get_opcodes (opt_verbose: bool ref) (iset: string) (instr: string) (env: Env
       let t = enumerate_encoding enc (field_vals_flags_only enc) in
       let l = list_of_enc_tree t in
       let opcodes = (match get_opcodes nm with
-      | [||] -> 
+      | [||] ->
         None
       | ops ->
           Some (List.fold_left (fun codes op ->

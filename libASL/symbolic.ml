@@ -9,6 +9,7 @@ type sym =
   | Val of value
   | Exp of expr
 
+(** NOTE(mbm): aparently dead code?
 type 'a sym_pattern =
   | SymPat_LitInt of bitsLit
   | SymPat_LitHex of bitsLit
@@ -47,6 +48,7 @@ type 'a sym_expr =
 type sym' =
   | Val' of value
   | Exp' of ty * (sym' sym_expr)
+    *)
 
 let is_val (x: AST.expr): bool =
     (match x with
@@ -171,6 +173,11 @@ let int_of_sym (e: sym): int =
   | Exp e        -> int_of_expr e
   | _ -> failwith @@ "int_of_sym: cannot coerce to int " ^ pp_sym e
 
+let bool_of_sym (s: sym): bool =
+  match s with
+  | Val (VBool b) -> b
+  | _ -> failwith @@ "bool_of_sym: cannot coerce to bool " ^ pp_sym s
+
 let sym_of_tuple (loc: AST.l) (v: sym): sym list  =
   match v with
   | Val (VTuple vs) -> (List.map (fun v -> Val v) vs)
@@ -282,7 +289,7 @@ let vint_eq cmp = function
   | _ -> false
 
 let is_zero = vint_eq Z.zero
-let is_one = vint_eq Z.one 
+let is_one = vint_eq Z.one
 
 let eval_lit (x: sym) =
   match x with
@@ -334,7 +341,7 @@ let sym_sub_int loc (x: sym) (y: sym) =
       let n = Z.of_string v in
       let e = Expr_LitInt (Z.to_string (Z.sub n y)) in
       Exp (Expr_TApply (FIdent ("add_int", 0), [], [x1; e]))
-  (* Elim term *) 
+  (* Elim term *)
   | (Exp x, Exp y) when is_pure_exp y ->
       (match find_elim_term loc x (fun v -> if y = v then Some (Val (VInt Z.zero)) else None) with
       | Some e -> e
@@ -438,7 +445,7 @@ let rec sym_append_bits (loc: l) (xw: int) (yw: int) (x: sym) (y: sym): sym =
 
   (* Match append of top-bit replicate expressions, turn into sign extend *)
   | (Exp (Expr_TApply (FIdent ("replicate_bits", 0), [Expr_LitInt "1"; w], [e;_])), Exp r) when sym_slice loc (Exp r) (yw - 1) 1 = Exp e ->
-      Exp (Expr_TApply (FIdent ("SignExtend", 0), [int_expr yw;int_expr (xw+yw)], [r; int_expr (xw + yw)])) 
+      Exp (Expr_TApply (FIdent ("SignExtend", 0), [int_expr yw;int_expr (xw+yw)], [r; int_expr (xw + yw)]))
 
   | (x,y) ->
     Exp (expr_prim' "append_bits" [expr_of_int xw; expr_of_int yw] [sym_expr x;sym_expr y])
@@ -546,7 +553,7 @@ let sym_zero_extend num_zeros old_width e =
       Exp (expr_prim' "ZeroExtend" [expr_of_int old_width; n'] [sym_expr e; n'])
 
 let sym_sign_extend num_zeros old_width (e: sym): sym =
-  match e with 
+  match e with
   | Exp (Expr_TApply (FIdent ("ZeroExtend",0), [Expr_LitInt oldsize; Expr_LitInt newsize], [x; _])) ->
     let size' = string_of_int (num_zeros + int_of_string newsize) in
     Exp (Expr_TApply (FIdent ("ZeroExtend",0), [Expr_LitInt oldsize; Expr_LitInt size'], [x; Expr_LitInt size']))
@@ -659,7 +666,7 @@ let sym_prim_simplify (name: string) (tes: sym list) (es: sym list): sym option 
   | ("add_int",     _,                [x1; x2]) ->
       Some (sym_add_int loc x1 x2)
 
-  | ("sub_int",     _,                [x1; x2]) -> 
+  | ("sub_int",     _,                [x1; x2]) ->
       Some (sym_sub_int loc x1 x2)
 
 

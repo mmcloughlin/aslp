@@ -1312,37 +1312,37 @@ end
 
 
 
-let evaluation_environment (prelude: string) (files: string list) (verbose: bool) = 
+let evaluation_environment (prelude: string) (files: string list) (verbose: bool) =
     let t  = LoadASL.read_file prelude true verbose in
     let ts = List.map (fun filename ->
         if Utils.endswith filename ".spec" then begin
-            LoadASL.read_spec filename verbose 
+            LoadASL.read_spec filename verbose
         end else if Utils.endswith filename ".asl" then begin
-            LoadASL.read_file filename false verbose 
+            LoadASL.read_file filename false verbose
         end else if Utils.endswith filename ".prj" then begin
             [] (* ignore project files here and process later *)
         end else begin
             failwith ("Unrecognized file suffix on "^filename)
         end
-    ) files 
+    ) files
     in
     if verbose then Printf.printf "Building evaluation environment\n";
     (try
         Some (build_evaluation_environment (List.concat (t::ts)))
     with
     | Value.EvalError (loc, msg) ->
-        Printf.printf "  %s: Evaluation error: %s\n" (pp_loc loc) msg; 
+        Printf.printf "  %s: Evaluation error: %s\n" (pp_loc loc) msg;
         None
     )
 
-let aarch64_asl_dir: string option = 
+let aarch64_asl_dir: string option =
     List.nth_opt Res.Sites.aslfiles 0
 
-let aarch64_asl_files: (string * string list) option = 
-    let aarch64_file_load_order = 
+let aarch64_asl_files: (string * string list) option =
+    let aarch64_file_load_order =
        ["mra_tools/arch/regs.asl"; "mra_tools/types.asl"; "mra_tools/arch/arch.asl"; "mra_tools/arch/arch_instrs.asl"; "mra_tools/arch/regs_access.asl";
-        "mra_tools/arch/arch_decode.asl"; "mra_tools/support/aes.asl"; "mra_tools/support/barriers.asl"; "mra_tools/support/debug.asl"; 
-        "mra_tools/support/feature.asl"; "mra_tools/support/hints.asl"; "mra_tools/support/interrupts.asl"; "mra_tools/support/memory.asl"; 
+        "mra_tools/arch/arch_decode.asl"; "mra_tools/support/aes.asl"; "mra_tools/support/barriers.asl"; "mra_tools/support/debug.asl";
+        "mra_tools/support/feature.asl"; "mra_tools/support/hints.asl"; "mra_tools/support/interrupts.asl"; "mra_tools/support/memory.asl";
         "mra_tools/support/stubs.asl"; "mra_tools/support/fetchdecode.asl"; "tests/override.asl"; "tests/override.prj"]
     in Option.bind aarch64_asl_dir (fun dir ->
         let filenames = List.map (Filename.concat dir) aarch64_file_load_order in
@@ -1350,8 +1350,8 @@ let aarch64_asl_files: (string * string list) option =
         Some (prelude, filenames))
 
 (** XXX: .prj files NOT evaluated in this environment! *)
-let aarch64_evaluation_environment ?(verbose = false) (): Env.t option = 
-    Option.bind aarch64_asl_files 
+let aarch64_evaluation_environment ?(verbose = false) (): Env.t option =
+    Option.bind aarch64_asl_files
         (fun (prelude, filenames) -> evaluation_environment prelude filenames verbose)
 
 (****************************************************************

@@ -11,6 +11,7 @@ open LibASL
 
 open Asl_ast
 open Value
+open Symbolic
 open Eval
 open Asl_utils
 
@@ -137,7 +138,7 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
 
                     (try
                         (* Generate and evaluate partially evaluated instruction *)
-                        let disStmts = Dis.dis_decode_entry disEnv lenv decoder op in
+                        let disStmts = Dis.dis_decode_entry disEnv lenv decoder (Val op) in
                         List.iter (eval_stmt disEvalEnv) disStmts;
 
                         if Eval.Env.compare evalEnv disEvalEnv then
@@ -196,15 +197,15 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         Printf.printf "Decoding instruction %s %s\n" iset (Z.format "%x" op);
         cpu'.sem iset op
     | ":dump" :: iset :: opcode :: rest ->
-        let fname = 
-            (match rest with 
+        let fname =
+            (match rest with
             | [] -> "sem.aslb"
-            | [x] -> x 
+            | [x] -> x
             | _ -> invalid_arg "expected at most 3 arguments to :dump")
         in
         let cpu' = Cpu.mkCPU (Eval.Env.copy cpu.env) cpu.denv in
         let op = Z.of_string opcode in
-        let bits = VBits (Primops.prim_cvt_int_bits (Z.of_int 32) op) in
+        let bits = Val (VBits (Primops.prim_cvt_int_bits (Z.of_int 32) op)) in
         let decoder = Eval.Env.getDecoder cpu'.env (Ident iset) in
         let stmts = Dis.dis_decode_entry cpu'.env cpu.denv decoder bits in
         let chan = open_out_bin fname in
@@ -320,15 +321,15 @@ let _ =
 
 let main () =
     if !opt_print_version then Printf.printf "%s\n" version
-    else if !opt_print_aarch64_dir then 
-        match aarch64_asl_dir with 
+    else if !opt_print_aarch64_dir then
+        match aarch64_asl_dir with
         | Some d -> Printf.printf "%s\n" d
         | None -> (Printf.eprintf "Unable to retrieve installed asl directory\n"; exit 1)
     else begin
         if !opt_verbose then List.iter print_endline banner;
         if !opt_verbose then print_endline "\nType :? for help";
         let env_opt =
-            if (!opt_no_default_aarch64)  
+            if (!opt_no_default_aarch64)
             then evaluation_environment !opt_prelude !opt_filenames !opt_verbose
             else begin
                 if List.length (!opt_filenames) != 0 then
@@ -338,7 +339,7 @@ let main () =
                 else ();
                 aarch64_evaluation_environment ~verbose:!opt_verbose ();
             end in
-        let env = (match env_opt with 
+        let env = (match env_opt with
             | Some e -> e
             | None -> failwith "Unable to build evaluation environment.") in
         if not !opt_no_default_aarch64 then
@@ -348,7 +349,7 @@ let main () =
 
         LNoise.history_load ~filename:"asl_history" |> ignore;
         LNoise.history_set ~max_length:100 |> ignore;
-        
+
         let denv = Dis.build_env env in
         let prj_files = List.filter (fun f -> Utils.endswith f ".prj") !opt_filenames in
         let tcenv = TC.Env.mkEnv TC.env0 and cpu = Cpu.mkCPU env denv in
