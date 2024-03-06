@@ -65,6 +65,9 @@ let sym_of_int (n: int): sym =
 let expr_of_int n =
   Expr_LitInt (string_of_int n)
 
+let sym_of_bool (b: bool): sym =
+  Val (from_bool b)
+
 (** Coerces the expression to a symbolic expression, converting
     literal expressions into values. *)
 let sym_of_expr (e: expr): sym =
@@ -202,8 +205,8 @@ let sym_prim (f: ident) (tes: sym list) (es: sym list): sym =
   | None -> Exp (expr_prim f (List.map sym_expr tes) (List.map sym_expr es))
   | Some v -> Val (v)
 
-let sym_true     = Val (from_bool true)
-let sym_false    = Val (from_bool false)
+let sym_true     = sym_of_bool true
+let sym_false    = sym_of_bool false
 let expr_true    = Expr_Var (Ident "TRUE")
 let expr_false   = Expr_Var (Ident "FALSE")
 let sym_zeros n  = Val (VBits (prim_zeros_bits (Z.of_int n)))
@@ -212,7 +215,6 @@ let sym_eq_int   = prim_binop "eq_int"
 let sym_le_int   = prim_binop "le_int"
 
 let sym_eq_bits  = prim_binop "eq_bits"
-let sym_inmask   = prim_binop "in_mask"
 
 let sym_eq_real  = prim_binop "eq_real"
 
@@ -597,6 +599,16 @@ let rec maybe_set (w: Z.t) (e: expr): bitvector =
       prim_append_bits (maybe_set l1 x1) (maybe_set l2 x2)
   | _ -> prim_ones_bits w) in
   prim_extract r Z.zero w
+
+let rec sym_inmask (loc: AST.l) (x: sym) (m: sym): sym =
+  match (x, m) with
+  | (Val (VBits bits), Val (VMask mask)) -> sym_of_bool (prim_in_mask bits mask)
+  | (_, Val (VMask mask)) when prim_mask_is_any mask -> sym_true
+  | (Exp (Expr_TApply (FIdent ("append_bits", 0), [t1; t2], [x1; x2])), Val (VMask mask)) ->
+    sym_and_bool loc
+      (sym_inmask loc (sym_of_expr x1) (Val (VMask (prim_mask_shift_right mask (int_of_expr t2)))))
+      (sym_inmask loc (sym_of_expr x2) (Val (VMask (prim_mask_extract mask 0 ((int_of_expr t2)-1)))))
+  | (_, _) -> prim_binop "in_mask" loc x m
 
 (* Identify whether the bitvector is a trivial mask, consisting of one continuous run of 1s *)
 let is_insert_mask (b: bitvector): (int * int) option =

@@ -230,7 +230,13 @@ let prim_in_mask (x: bitvector) (m: mask): bool =
 let prim_notin_mask (x: bitvector) (m: mask): bool =
     not (prim_in_mask x m)
 
-let mask_shift_right (m: mask) (n: int): mask =
+let prim_mask_is_any (m: mask): bool =
+    Z.equal m.m Z.zero
+
+let prim_mask_extract (m: mask) (l: int) (h: int): mask =
+    { n = h-l+1; v = z_extract m.v l h; m = z_extract m.m l h }
+
+let prim_mask_shift_right (m: mask) (n: int): mask =
     assert(n <= m.n);
     { n = m.n - n; v = Z.shift_right m.v n; m = Z.shift_right m.m n}
 
@@ -238,7 +244,7 @@ let rec string_of_mask(m: mask): string =
     if m.n == 0 then ""
     else
         let c = if Z.testbit m.m 0 then (if Z.testbit m.v 0 then "1" else "0") else "x" in
-        string_of_mask (mask_shift_right m 1) ^ c
+        string_of_mask (prim_mask_shift_right m 1) ^ c
 
 (****************************************************************)
 (** {2 Exception primops}                                       *)
