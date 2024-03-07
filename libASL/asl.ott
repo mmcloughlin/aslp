@@ -516,11 +516,11 @@ stmts :: 'Stmts_' ::=
 
 indented_block :: 'Block_' ::=
     {{ phantom }} {{ ocaml stmt list }}
-    {{ pp-raw x = (nest 4 (lbracket
+    {{ pp-raw x = (nest 4 (lbrace
                           ^^ hardline
                           ^^ (separate hardline (List.map pp_raw_stmt x))))
                   ^^ hardline
-                  ^^ rbracket
+                  ^^ rbrace
     }}
     {{ pp     x = (nest 4 (lbrace
                               ^^ hardline
@@ -630,11 +630,11 @@ s_elsif :: 'S_Elsif_' ::=
 
 optional_else :: 'S_Else' ::=
     {{ phantom }} {{ ocaml stmt list }}
-    {{ pp-raw x = (nest 4 (lbracket
+    {{ pp-raw x = (nest 4 (lbrace
                           ^^ hardline
                           ^^ (separate hardline (List.map pp_raw_stmt x))))
                   ^^ hardline
-                  ^^ rbracket
+                  ^^ rbrace
     }}
     {{ pp     x = match x with [] -> string ""
                              | ys -> string "else {" ^^ hardline
