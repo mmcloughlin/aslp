@@ -630,12 +630,7 @@ s_elsif :: 'S_Elsif_' ::=
 
 optional_else :: 'S_Else' ::=
     {{ phantom }} {{ ocaml stmt list }}
-    {{ pp-raw x = (nest 4 (lbrace
-                          ^^ hardline
-                          ^^ (separate hardline (List.map pp_raw_stmt x))))
-                  ^^ hardline
-                  ^^ rbrace
-    }}
+    {{ pp-raw x = pp_raw_indented_block x }}
     {{ pp     x = match x with [] -> string ""
                              | ys -> string "else {" ^^ hardline
                                          ^^ (nest 4 (separate (string "\n") (List.map pp_stmt ys @ [string "}"])))
