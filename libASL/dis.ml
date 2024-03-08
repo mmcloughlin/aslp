@@ -99,6 +99,7 @@ let no_inline = [
   "BFRound",0;
   "BFAdd",0;
   "BFMul",0;
+  "FPRecipEstimate",0;
   "Mem.read",0;
   "Mem.set",0;
   "AtomicStart",0;
@@ -1270,7 +1271,7 @@ and dis_stmt' (x: AST.stmt): unit rws =
                 (* cannot throw here because this may be reached by disassembling a
                    case with unknown expressions.
                    should only throw an exception at runtime if does not match. *)
-                | None -> DisEnv.write [Stmt_Throw (Ident "UNMATCHED CASE", loc)]
+                | None -> DisEnv.write [Stmt_Assert (expr_false, loc)]
                 | Some s -> dis_stmts s)
             | Alt_Alt(ps, oc, s) :: alts' ->
                 let pat = (sym_exists (dis_pattern loc v) ps) in
@@ -1459,6 +1460,15 @@ and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: 
 
 type env = (LocalEnv.t * IdentSet.t)
 
+
+(* Map enum type idents to the width required to represent them, mapping other idents to None *)
+let enum_types env i =
+  if i = Ident "boolean" then None
+  else
+    match Eval.Env.getEnum env i with
+    | Some l -> Some (Z.log2up (Z.of_int (List.length l)))
+    | _ -> None
+
 let dis_decode_entry (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: value): stmt list =
     let DecoderCase_Case (_,_,loc) = decode in
     let ((),lenv',stmts) = (dis_decode_case loc decode op) env lenv in
@@ -1468,12 +1478,14 @@ let dis_decode_entry (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_cas
     let stmts = flatten stmts [] in
     let stmts' = Transforms.RemoveUnused.remove_unused globals @@ stmts in
     let stmts' = Transforms.RedundantSlice.do_transform Bindings.empty stmts' in
-    let stmts' = Transforms.StatefulIntToBits.run stmts' in
+    let stmts' = Transforms.StatefulIntToBits.run (enum_types env) stmts' in
     let stmts' = Transforms.IntToBits.ints_to_bits stmts' in
     let stmts' = Transforms.CommonSubExprElim.do_transform stmts' in
     let stmts' = Transforms.CopyProp.copyProp stmts' in
     let stmts' = Transforms.RedundantSlice.do_transform bindings stmts' in
     let stmts' = Transforms.RemoveUnused.remove_unused globals @@ stmts' in
+    let stmts' = Transforms.CaseSimp.do_transform stmts' in
+
     if !debug_level >= 2 then begin
         let stmts' = Asl_visitor.visit_stmts (new Asl_utils.resugarClass (!TC.binop_table)) stmts' in
         Printf.printf "===========\n";

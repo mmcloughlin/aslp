@@ -447,6 +447,15 @@ module StatefulIntToBits = struct
     let (_,l) = interval abs in
     Z.geq l Z.zero
 
+  (** Integer variable reads that are successfully converted into
+      bitvectors are wrapped in the following function call and
+      subsequently unwrapped in a later pass.
+
+      Variable reads that are not wrapped imply a integer variable
+      use that this analysis fails to match. To remain compatible,
+      these variable reads are subsequently converted back to integers. *)
+  let wrapper_ident = FIdent ("StatefulIntToBit_wrapper", 0)
+
   (** Covert an integer expression tree into a bitvector equivalent *)
   let rec bv_of_int_expr (vars: state) (e: expr): (sym * abs) =
     match e with
@@ -461,7 +470,7 @@ module StatefulIntToBits = struct
     (* Assume variables have been declared at this point *)
     | Expr_Var i -> 
         (match Bindings.find_opt i (snd vars) with
-        | Some v -> (sym_of_expr e, v)
+        | Some v -> (sym_prim wrapper_ident [] [Exp e], v)
         | _ -> failwith @@ "bv_of_int_expr: Unknown identifier: " ^ (pprint_ident i))
 
     | Expr_TApply (FIdent ("cvt_bits_uint", 0), [t], [e]) ->
@@ -634,6 +643,21 @@ module StatefulIntToBits = struct
           let ex x = sym_expr (extend w x) in
           expr_prim' "slt_bits" [expr_of_abs w] [ex x;ex y]
 
+      (* Translation from enum to bit *)
+      | Expr_TApply (FIdent ("eq_enum", n), [], [x;y]) when n > 0 ->
+          let x = bv_of_int_expr vars x in
+          let y = bv_of_int_expr vars y in
+          let w = merge_abs (snd x) (snd y) in
+          let ex = extend w in
+          (sym_expr @@ sym_prim (FIdent ("eq_bits", 0)) [sym_of_abs w] [ex x; ex y])
+
+      | Expr_TApply (FIdent ("ne_enum", n), [], [x;y]) when n > 0 ->
+          let x = bv_of_int_expr vars x in
+          let y = bv_of_int_expr vars y in
+          let w = merge_abs (snd x) (snd y) in
+          let ex = extend w in
+          (sym_expr @@ sym_prim (FIdent ("ne_bits", 0)) [sym_of_abs w] [ex x; ex y])
+
       (* these functions take bits as first argument and integer as second. just coerce second to bits. *)
       (* TODO: primitive implementations of these expressions expect the shift amount to be signed,
                but a negative shift is invalid anyway. Can't it just be unsigned? *)
@@ -649,14 +673,31 @@ module StatefulIntToBits = struct
 
       | e -> e
       in
-      ChangeDoChildrenPost (e', fun e -> e)
+      ChangeDoChildrenPost(e', fun e -> e)
+  end
+
+  (** Cleanup pass to remove wrapper and introduce necessary bit->int conversions *)
+  class cleanup (vars) = object (self)
+    inherit Asl_visitor.nopAslVisitor
+    method! vexpr e =
+      match e with
+      | Expr_TApply (f, [], [e]) when f = wrapper_ident -> ChangeTo e
+      | Expr_Var v ->
+          (match Bindings.find_opt v vars with
+          | Some w ->
+              (*Printf.printf "transform_int_expr: Found root var: %s\n" (match v with Ident s -> s | _ -> "");*)
+              let prim = if signed w then "cvt_bits_int" else "cvt_bits_uint" in
+              ChangeTo (expr_prim' prim [expr_of_abs w] [e])
+          | None -> SkipChildren)
+      | _ -> DoChildren
   end
 
   (** Get a variable's abstract rep with a default initial value *)
-  let get_default (v: ident) ((_,vars): state): abs =
-    match Bindings.find_opt v vars with
-    | Some (a,b,_) -> (a,b,(Z.zero,Z.zero))
-    | _ -> abs_of_const Z.zero
+  let get_default (v: ident) (w: int option) ((_,vars): state): abs =
+    match w, Bindings.find_opt v vars with
+    | Some w, _ -> abs_of_uwidth w
+    | _, Some (a,b,_) -> (a,b,(Z.zero,Z.zero))
+    | _, _ -> abs_of_const Z.zero
 
   (** Declare a new variable with an initial abstract rep *)
   let assign (v: ident) (i: abs) ((f,vars): state): state =
@@ -686,40 +727,58 @@ module StatefulIntToBits = struct
       | None, Some l -> Some l
       | _, _ -> None) vars1 vars2)
 
+  (* Identify variable types to track, possibly with a minimum initial width for enums *)
+  let capture_type enum_types ty: int option option =
+    if ty = type_integer then Some None
+    else match ty with
+    | Type_Constructor i ->
+        (match enum_types i with
+        | Some w -> Some (Some w)
+        | None -> None)
+    | _ -> None
+
   (** Statement list walk to establish variable widths and visit all expressions *)
   (* 
-     TODO: Unique variable names or support multiple decls somehow
      TODO: This won't respect local scopes within If stmts
   *)
-  let rec walk changed (vars: abs Bindings.t) (s: stmt list): (state * stmt list) =
+  let rec walk enum_types changed (vars: abs Bindings.t) (s: stmt list): (state * stmt list) =
     List.fold_left (fun (st,acc) stmt ->
       let stmt = Asl_visitor.visit_stmt (new transform_int_expr st) stmt in
       let (st,stmt) = (match stmt with
 
       (* Match integer writes *)
-      | Stmt_VarDeclsNoInit(t, [v], loc) when t = type_integer ->
-          let lhs = get_default v st in
-          let e = Stmt_VarDeclsNoInit (type_bits (string_of_int (width lhs)), [v], loc) in
-          let st = assign v lhs st in
-          (st,e)
-      | Stmt_ConstDecl(t, v, e, loc) when t = type_integer ->
-          let lhs = get_default v st in
-          let rhs = bv_of_int_expr st e in
-          let w = merge_abs lhs (snd rhs) in
-          let s = sym_expr (extend w rhs) in
-          let s = Stmt_ConstDecl (type_bits (string_of_int (width w)), v, s, loc) in
-          let st = assign v w st in
-          (st,s)
-      | Stmt_VarDecl(t, v, e, loc) when t = type_integer ->
-          let lhs = get_default v st in
-          let rhs = bv_of_int_expr st e in
-          let w = merge_abs lhs (snd rhs) in
-          let s = sym_expr (extend w rhs) in
-          let s = Stmt_VarDecl (type_bits (string_of_int (width w)), v, s, loc) in
-          let st = assign v w st in
-          (st,s)
+      | Stmt_VarDeclsNoInit(t, [v], loc) ->
+          (match capture_type enum_types t with
+          | Some w ->
+              let lhs = get_default v w st in
+              let e = Stmt_VarDeclsNoInit (type_bits (string_of_int (width lhs)), [v], loc) in
+              let st = assign v lhs st in
+              (st,e)
+          | None -> (st,stmt))
+      | Stmt_ConstDecl(t, v, e, loc) ->
+          (match capture_type enum_types t with
+          | Some w ->
+              let lhs = get_default v w st in
+              let rhs = bv_of_int_expr st e in
+              let w = merge_abs lhs (snd rhs) in
+              let s = sym_expr (extend w rhs) in
+              let s = Stmt_ConstDecl (type_bits (string_of_int (width w)), v, s, loc) in
+              let st = assign v w st in
+              (st,s)
+          | None -> (st,stmt))
+      | Stmt_VarDecl(t, v, e, loc) ->
+          (match capture_type enum_types t with
+          | Some w ->
+              let lhs = get_default v w st in
+              let rhs = bv_of_int_expr st e in
+              let w = merge_abs lhs (snd rhs) in
+              let s = sym_expr (extend w rhs) in
+              let s = Stmt_VarDecl (type_bits (string_of_int (width w)), v, s, loc) in
+              let st = assign v w st in
+              (st,s)
+          | None -> (st,stmt))
       | Stmt_Assign(LExpr_Var(v), e, loc) when tracked v st ->
-          let lhs = get_default v st in
+          let lhs = get_default v None st in
           let rhs = bv_of_int_expr st e in
           let w = merge_abs lhs (snd rhs) in
           let s = sym_expr (extend w rhs) in
@@ -730,32 +789,28 @@ module StatefulIntToBits = struct
       (* Expect only normalised Ifs *)
       | Stmt_If (e, tstmts, [], fstmts, loc) ->
           let (changed,vars) = st in
-          let (t,tstmts) = walk changed vars tstmts in
-          let (f,fstmts) = walk changed vars fstmts in
+          let (t,tstmts) = walk enum_types changed vars tstmts in
+          let (f,fstmts) = walk enum_types changed vars fstmts in
           (merge t f,Stmt_If(e, tstmts, [], fstmts, loc))
       | Stmt_If _ -> failwith "walk: invalid if"
 
       (* Ignore all other stmts *)
-      | Stmt_Assert _ 
-      | Stmt_Throw _
-      | Stmt_TCall _
       | Stmt_VarDeclsNoInit _ 
-      | Stmt_ConstDecl _
-      | Stmt_VarDecl _
-      | Stmt_Assign _ ->
-          (st,stmt)
+      | Stmt_Assign _
+      | Stmt_Assert _
+      | Stmt_TCall _ -> (st,stmt)
 
       | _ -> failwith "walk: invalid IR") in
       (st,acc@[stmt])
     ) ((changed,vars),[]) s
 
-  let rec fixedPoint (vars: abs Bindings.t) (s: stmt list): stmt list =
-    let ((changed,vars),res) = walk false vars s in
-    if changed then fixedPoint vars s
-    else res
+  let rec fixedPoint (enum_types: ident -> int option) (vars: abs Bindings.t) (s: stmt list): stmt list =
+    let ((changed,vars),res) = walk enum_types false vars s in
+    if changed then fixedPoint enum_types vars s
+    else Asl_visitor.visit_stmts (new cleanup vars) res
 
-  let run (s: stmt list): stmt list =
-    fixedPoint Bindings.empty s
+  let run (enum_types: ident -> int option) (s: stmt list): stmt list =
+    fixedPoint enum_types Bindings.empty s
 
 end
 
@@ -1501,4 +1556,79 @@ module CommonSubExprElim = struct
     let xs = apply_knowledge xs expression_visitor#get_info expression_replacer in
     let xs = visit_stmts expression_replacer xs in
     xs
+end
+
+(* A brute force match for total value mappings, implemented as a series of chained ifs *)
+module CaseSimp = struct
+  module StringMap = Map.Make(String);;
+
+  (* Match a 'X = BV_CONSTANT' comparison, returning X and BV_CONSTANT *)
+  let valid_guard e =
+    match e with
+    | Expr_TApply (FIdent ("eq_bits", 0), [Expr_LitInt w], [x; Expr_LitBits b]) ->
+        Some (int_of_string w, x, b)
+    | _ -> None
+
+  (* Match a 'R := BV_CONSTANT' statement, returning R and BV_CONSTANT *)
+  let valid_body b =
+    match b with
+    | Stmt_Assign (LExpr_Var r, Expr_LitBits c, _) -> Some(r, c)
+    | _ -> None
+
+  (* Match a chain of 'if X = BV_CONSTANT then R := BV_CONSTANT else if ... else assert FALSE'
+     given specific X and R expressions, returning a map from test values to assigned values *)
+  let rec match_inner stmt x r =
+    match stmt with
+    | Stmt_If (e, [c], [], [f], _) ->
+        (match valid_guard e, valid_body c, match_inner f x r with
+        | Some (w, x', b), Some (r', c), Some res when x' = x && r = r' -> Some (StringMap.add b c res)
+        | _ -> None)
+    | Stmt_Assert (Expr_Var(Ident "FALSE"), _) -> Some StringMap.empty
+    | _ -> None
+
+  (* Match a chain of 'if X = BV_CONSTANT then R := BV_CONSTANT else if ... else assert FALSE',
+     returning X, R and a map from test values to assigned values *)
+  let match_outer stmt =
+    match stmt with
+    | Stmt_If (e, [t], [], [f], loc) ->
+        (match valid_guard e, valid_body t with
+        | Some (w, x, b), Some (r, c) -> 
+            (match match_inner f x r with
+            | Some res -> Some (x, r, w, loc, StringMap.add b c res)
+            | _ -> None)
+        | _ -> None)
+    | _ -> None
+
+  (* Mapping is total if there is an entry for all possible bv values *)
+  let is_total w res = Z.to_int (Z.shift_left Z.one w) = (StringMap.cardinal res)
+
+  (* Guesses for the possible mapping from key to value. This is incredibly dumb. *)
+  let fn_guess = [
+    (fun x y -> x = y), 
+    (fun r x _ loc -> Stmt_Assign(LExpr_Var r, x, loc));
+    (fun x y -> "0" ^ x = y), 
+    (fun r x w loc -> 
+      let nw = expr_of_int (w + 1) in
+      Stmt_Assign(LExpr_Var r, expr_prim' "ZeroExtend" [expr_of_int w; nw] [x; nw], loc));
+  ]
+
+  class visit_if = object
+    inherit Asl_visitor.nopAslVisitor
+
+    (* Assumes x is pure, as it is referenced within a branch condition *)
+    method! vstmt (s: stmt): stmt visitAction =
+      match match_outer s with
+      | Some (x, r, w, loc, res) when is_total w res ->
+          (match List.find_opt (fun (test,_) -> StringMap.for_all test res) fn_guess with
+          | Some (_,fn) -> ChangeTo (fn r x w loc)
+          | _ -> DoChildren)
+      | _ -> DoChildren
+
+  end
+
+  let do_transform (xs: stmt list): stmt list = 
+    let stmt_visitor = new visit_if in
+    let xs = visit_stmts stmt_visitor xs in
+    xs
+
 end

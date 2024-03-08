@@ -15,38 +15,25 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: 
-      image: ghcr.io/uq-pac/asli-base:latest
-      credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.github_token }}
+    defaults:
+      run:
+        # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idstepsshell
+        # XXX using multi-line string will fail since \n is stuck to the end of the argument.
+        shell: "nix develop github:katrinafyi/pac-nix#ocamlPackages_pac.asli --impure --accept-flake-config --command bash --noprofile --norc -eo pipefail {0}"
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-        
-      - name: Extract encodings
-        run: tar xzf encodings.tar.gz 
-      
-      - name: opam install
-        run: |
-          eval `opam env`
-          opam install . --deps-only --with-test
+    - uses: actions/checkout@v4
 
-      - name: Build
-        run: |
-          eval `opam env`
-          dune build
+    - uses: cachix/install-nix-action@v25
+    - run: echo 'preparing nix shell environment'
 
-      - name: Test
-        id: test
-        run: |
-          eval `opam env`
-          export LD_LIBRARY_PATH=`opam config var z3:lib`
-          ./coverage.sh test
+    - run: dune build --profile release
+    - run: ./coverage.sh test
+      id: coverage
 
-      - name: Upload new coverage results
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: coverage-output-${{ github.run_id }}
-          path: ${{ steps.test.outputs.OUTPUT }}
+    - name: Upload new coverage results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-output-${{ github.run_id }}
+        path: ${{ steps.coverage.outputs.OUTPUT }}

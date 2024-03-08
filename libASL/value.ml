@@ -253,10 +253,16 @@ let from_stringLit (x: string): value =
 
 let eval_prim (f: string) (tvs: value list) (vs: value list): value option =
     ( match (f, tvs, vs) with
-    | ("eq_enum",           [      ], [VEnum x; VEnum y    ])     -> Some (VBool   (snd x =  snd y))
-    | ("eq_enum",           [      ], [VBool x; VBool y    ])     -> Some (VBool   (x =  y))
+    | ("eq_enum",           [      ], [VEnum x; VEnum y    ])     -> Some (VBool   (snd x = snd y))
+    | ("eq_enum",           [      ], [VBool x; VBool y    ])     -> Some (VBool   (x = y))
+    | ("eq_enum",           [      ], [VEnum x; VInt y     ])     -> Some (VBool   (snd x = Z.to_int y))
+    | ("eq_enum",           [      ], [VInt  x; VEnum y    ])     -> Some (VBool   (Z.to_int x = snd y))
+
     | ("ne_enum",           [      ], [VEnum x; VEnum y    ])     -> Some (VBool   (snd x <> snd y))
     | ("ne_enum",           [      ], [VBool x; VBool y    ])     -> Some (VBool   (x <> y))
+    | ("ne_enum",           [      ], [VEnum x; VInt y     ])     -> Some (VBool   (snd x <> Z.to_int y))
+    | ("ne_enum",           [      ], [VInt  x; VEnum y    ])     -> Some (VBool   (Z.to_int x <> snd y))
+
     | ("eq_bool",           [      ], [VBool x; VBool y    ])     -> Some (VBool   (prim_eq_bool    x y))
     | ("ne_bool",           [      ], [VBool x; VBool y    ])     -> Some (VBool   (prim_ne_bool    x y))
     | ("equiv_bool",        [      ], [VBool x; VBool y    ])     -> Some (VBool   (prim_equiv_bool x y))
@@ -416,6 +422,8 @@ let rec eval_eq (loc: AST.l) (x: value) (y: value): bool =
     (match (x, y) with
     | (VBool   x', VBool   y') -> prim_eq_bool x' y'
     | (VEnum   x', VEnum   y') -> snd x' = snd y'
+    | (VEnum   x', VInt    y') -> snd x' = Z.to_int y'
+    | (VInt    x', VEnum   y') -> Z.to_int x' = snd y'
     | (VInt    x', VInt    y') -> prim_eq_int x' y'
     | (VReal   x', VReal   y') -> prim_eq_real x' y'
     | (VBits   x', VBits   y') -> prim_eq_bits x' y'

@@ -28,6 +28,7 @@
     "dune-site"
     "lwt"
     "cohttp-lwt-unix"
+    "yojson"
   )
   (sites (share aslfiles))
 )
