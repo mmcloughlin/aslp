@@ -23,6 +23,7 @@ module StringCmp = struct
 end
 module StringMap = Map.Make(StringCmp)
 
+let unroll_bound = Z.of_int 2
 
 let debug_level_none = -1
 let debug_level = ref debug_level_none
@@ -377,6 +378,42 @@ module DisEnv = struct
             trace = l.trace;
         } in
         ((),s,empty)
+
+
+    (** Merge two states, return change flag if RHS must change to merge with LHS.
+      * Idea is RHS is the fixed-point state at loop entry, needs to be gradually weakened
+      * to include LHS.
+      *)
+    let merge_bindings_fp env l r: ((ty * sym) StringMap.t * bool) =
+      let changed = ref false in
+      if l == r then (l,false) else
+        let out = (StringMap.union (fun k (t1,v1) (t2,v2) ->
+          let out = Some (t1,match v1, v2 with
+            | v1, v2 when v1 = v2 -> v1
+            | _, Val (VUninitialized _) -> v2
+            | _, Val (VArray (ar,v)) when Primops.ImmutableArray.is_empty ar -> v2
+            | _ ->
+                Printf.printf "Merge %s %s %s\n" k (pp_sym v1) (pp_sym v2);
+                changed := true;
+                Val (uninit t1 env))  in
+          out) l r) in (out, !changed)
+
+    (** Same concept as above *)
+    let join_locals_fp (l: LocalEnv.t) (r: LocalEnv.t): bool rws = fun env s ->
+        assert (l.returnSymbols = r.returnSymbols);
+        assert (l.indent = r.indent);
+        assert (l.trace = r.trace);
+        let (locals') = List.map2 (merge_bindings_fp env) l.locals r.locals in
+        let changed = List.mem true (List.map snd locals') in
+        let locals' = List.map fst locals' in
+        let s : LocalEnv.t = {
+            locals = locals';
+            returnSymbols = l.returnSymbols;
+            numSymbols = max l.numSymbols r.numSymbols;
+            indent = l.indent;
+            trace = l.trace;
+        } in
+        (changed,s,empty)
 
     let getFun (loc: l) (x: ident): Eval.fun_sig option rws =
         reads (fun env -> Eval.Env.getFunOpt loc env x)
@@ -1304,8 +1341,14 @@ and dis_stmt' (x: AST.stmt): unit rws =
         let@ start' = dis_expr loc start in
         let@ stop' = dis_expr loc stop in
 
-        (match (start', stop') with
-        | Val startval, Val stopval ->
+        let unrolling =
+          (match start', stop', dir with
+          | Val (VInt startval), Val (VInt stopval), Direction_Up -> Z.leq (Z.sub stopval startval) unroll_bound
+          | Val (VInt startval), Val (VInt stopval), Direction_Down -> Z.leq (Z.sub startval stopval)  unroll_bound
+          | _ -> false) in
+
+        (match unrolling, start', stop' with
+        | true, Val startval, Val stopval ->
             let rec dis_for (i: value): unit rws =
                 let c = (match dir with
                 | Direction_Up -> eval_leq loc i stopval
@@ -1324,8 +1367,24 @@ and dis_stmt' (x: AST.stmt): unit rws =
             in
             declare_var loc type_integer var >>
             dis_for startval
-        | _, _ ->
-            raise (DisUnsupported (loc, "for loop bounds not statically known: " ^ pp_stmt x)))
+        | _ ->
+            let rec loop v =
+              (* Grab the pre-loop state *)
+              let@ pre_env = DisEnv.gets (fun env -> env) in
+              (* Run the body inside a scope, get its final state *)
+              let@ (env,stmts) = DisEnv.locally_ (dis_stmts body) in
+              (* Join state after, determining whether anything changed *)
+              let@ changed = DisEnv.join_locals_fp env pre_env in
+              (* If a change occurred, run again *)
+              if changed then loop v else
+                let start' = sym_expr start' in
+                let stop' = sym_expr stop' in
+                DisEnv.write [Stmt_For(var_ident v,start',dir,stop',flatten stmts [],loc)]
+              in
+            (* Add the loop variable to state, make it unknown *)
+            let@ uninit = DisEnv.mkUninit type_integer in
+            let@ v = DisEnv.stateful (LocalEnv.addLocalVar loc var (Val uninit) type_integer) in
+            loop v)
     | Stmt_Dep_Undefined loc
     | Stmt_Undefined loc
     | Stmt_Unpred loc
