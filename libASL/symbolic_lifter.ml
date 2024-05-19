@@ -296,8 +296,9 @@ let dis_wrapper fn fnsig env =
   try
     let body = fnsig_get_body fnsig in
     let sym = Symbolic.Exp (Expr_Var (Decoder_program.enc)) in
-    let (_,lenv,_) = (Dis.declare_assign_var Unknown (Type_Bits (Expr_LitInt "32")) (Ident "enc") sym) env lenv in
-    let ((),lenv',stmts) = (Dis.dis_stmts body) env lenv in
+    let config = {Dis.eval_env = env ; unroll_bound = Z.zero} in
+    let (_,lenv,_) = (Dis.declare_assign_var Unknown (Type_Bits (Expr_LitInt "32")) (Ident "enc") sym) config lenv in
+    let ((),lenv',stmts) = (Dis.dis_stmts body) config lenv in
     let globals = IdentSet.diff globals dead_globals in
     let stmts = Dis.flatten stmts [] in
     let stmts' = Transforms.RemoveUnused.remove_unused globals @@ stmts in

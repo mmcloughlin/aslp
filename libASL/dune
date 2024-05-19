@@ -39,7 +39,7 @@
    lexer lexersupport loadASL monad primops rws symbolic tcheck testing transforms value
    symbolic_lifter decoder_program call_graph req_analysis
    offline_transform ocaml_backend dis_tc offline_opt
-   arm_env
+   arm_env pretransforms
    )
  (preprocessor_deps (alias ../asl_files))
  (preprocess (pps ppx_blob))

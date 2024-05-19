@@ -1179,7 +1179,7 @@ and eval_encoding (env: Env.t) (x: encoding) (op: Primops.bigint): bool =
     (* todo: consider checking iset *)
     (* Printf.printf "Checking opcode match %s == %s\n" (Utils.to_string (PP.pp_opcode_value opcode)) (pp_value op); *)
     match eval_opcode_guard loc opcode op with
-    | Some op -> 
+    | Some op ->
         if !trace_instruction then Printf.printf "TRACE: instruction %s\n" (pprint_ident nm);
         List.iter (function (IField_Field (f, lo, wd)) ->
             let v = extract_bits' loc op lo wd in
@@ -1211,7 +1211,7 @@ let build_evaluation_environment (ds: AST.declaration list): Env.t = begin
     if false then Printf.printf "Building environment from %d declarations\n" (List.length ds);
 
     (* perform reference parameter transformation. *)
-    let ds = Transforms.RefParams.ref_param_conversion ds in
+    let ds = Pretransforms.RefParams.ref_param_conversion ds in
 
     let env = Env.empty in
     (* todo?: first pull out the constants/configs and evaluate all of them
@@ -1346,14 +1346,14 @@ let evaluate_prj_minimal (tcenv: Tcheck.Env.t) (env: Env.t) (source: LoadASL.sou
 
 (** Constructs an evaluation environment with the given prelude file and .asl/.prj files.
     .prj files given here are required to be minimal. *)
-let evaluation_environment (prelude: LoadASL.source) (files: LoadASL.source list) (verbose: bool) = 
+let evaluation_environment (prelude: LoadASL.source) (files: LoadASL.source list) (verbose: bool) =
     let t  = LoadASL.read_file (prelude) true verbose in
     let ts = List.map (fun file ->
         let filename = LoadASL.name_of_source file in
         if Utils.endswith filename ".spec" then begin
-            LoadASL.read_spec file verbose 
+            LoadASL.read_spec file verbose
         end else if Utils.endswith filename ".asl" then begin
-            LoadASL.read_file file false verbose 
+            LoadASL.read_file file false verbose
         end else if Utils.endswith filename ".prj" then begin
             [] (* ignore project files here and process later *)
         end else begin
