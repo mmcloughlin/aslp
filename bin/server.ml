@@ -17,24 +17,28 @@ open Lwt
 
 let persistent_env = lazy (Option.get (Arm_env.aarch64_evaluation_environment ()))
 
-let eval_instr (opcode: string) : string =
+let eval_instr (opcode: string) : string * string =
     let pp_raw stmt : string = Utils.to_string (Asl_parser_pp.pp_raw_stmt stmt) |> String.trim  in
-    let address = None                                     in
-    let env' = Lazy.force persistent_env                    in
-    let stmts : Asl_ast.stmt list  = Dis.retrieveDisassembly ?address env' (Dis.build_env env') opcode in
-    let stmts'   = List.map pp_raw stmts                                                 in
-    String.concat "\n" stmts'
+    let _address = None in
+
+    let env' = Lazy.force persistent_env in
+    let lenv = Dis.build_env env' in
+    let decoder = Eval.Env.getDecoder env' (Ident "A64") in
+    let (enc, stmts) = Dis.dis_decode_entry_with_inst env' lenv decoder (Z.of_string opcode) in
+
+    let stmts'   = List.map pp_raw stmts in
+    enc, String.concat "\n" stmts'
 
 
 let get_reply (jsonin: string) : Cohttp.Code.status_code * string =
   (*let json  = Yojson.Safe.from_string jsonin in *)
   let make_reply code tail =
-    (code, Yojson.Safe.to_string (`Assoc [("instruction", `String jsonin); tail])) in
+    (code, Yojson.Safe.to_string (`Assoc (["instruction", `String jsonin] @ tail))) in
   Printf.printf "Disassembling '%s'\n" jsonin;
   flush stdout;
   match (eval_instr jsonin) with
-  | exception e -> make_reply `Internal_server_error ("error", `String (Printexc.to_string e))
-  | x -> make_reply `OK ("semantics", `String x)
+  | exception e -> make_reply `Internal_server_error ["error", `String (Printexc.to_string e)]
+  | enc, x -> make_reply `OK [ "encoding", `String enc; "semantics", `String x; ]
 
 
 let unsupp_method_resp : Cohttp.Code.status_code * string =
