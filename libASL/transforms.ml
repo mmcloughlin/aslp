@@ -199,16 +199,23 @@ module StatefulIntToBits = struct
     ints: abs Bindings.t;
   }
 
+  let next_pow_of_2 i =
+    let bits = Z.numbits (Z.of_int (i - 1)) in
+    let i2 = Z.to_int (Z.pow (Z.succ Z.one) bits) in
+    i2
+
   (** Compute the bitvector width needed to represent an interval *)
   let width_of_interval  ?(force_signed=false) ((u,l): interval): int * bool =
     if not force_signed && Z.geq l Z.zero then
       let i = max (Z.log2up (Z.succ u)) 1 in
-      (i,false)
+      let i2 = next_pow_of_2 i in
+      (i2,false)
     else
       let u' = if Z.gt u Z.zero then 1 + (Z.log2up (Z.succ u)) else 1 in
       let l' = if Z.lt l Z.zero then 1 + (Z.log2up (Z.neg l)) else 1 in
       let i = max u' l' in
-      (i,true)
+      let i2 = next_pow_of_2 i in
+      (i2,true)
 
   (** Build an abstract point to represent a constant integer *)
   let abs_of_const (c: Z.t): abs =
@@ -233,8 +240,8 @@ module StatefulIntToBits = struct
   (* Basic merge of abstract points *)
   let merge_abs ((lw,ls,(l1,l2)): abs) ((rw,rs,(r1,r2)): abs): abs =
     let s = ls || rs in
-    let lw = if s && not ls then lw + 1 else lw in
-    let rw = if s && not rs then rw + 1 else rw in
+    let lw = if s && not ls then lw * 2 else lw in
+    let rw = if s && not rs then rw * 2 else rw in
     (max lw rw,s,(Z.max r1 l1,Z.min r2 l2))
 
   (** Max and min of a list of integers *)
@@ -259,14 +266,14 @@ module StatefulIntToBits = struct
   let abs_of_bop ((lw,ls,li): abs) ((rw,rs,ri): abs) (bop: Z.t -> Z.t -> Z.t): abs =
     let i = bopInterval li ri bop in
     let (iw,s) = width_of_interval ~force_signed:(ls||rs) i in
-    let lw = if s && not ls then lw + 1 else lw in
-    let rw = if s && not rs then rw + 1 else rw in
+    let lw = if s && not ls then lw * 2 else lw in
+    let rw = if s && not rs then rw * 2 else rw in
     let w = max (max lw rw) iw in
     (w,s,i)
   let abs_of_uop ((lw,ls,li): abs) (uop: Z.t -> Z.t): abs =
     let i = uopInterval li uop in
     let (iw,s) = width_of_interval ~force_signed:ls i in
-    let lw = if s && not ls then lw + 1 else lw in
+    let lw = if s && not ls then lw * 2 else lw in
     let w = max lw iw in
     (w,s,i)
 
@@ -296,8 +303,8 @@ module StatefulIntToBits = struct
   let force_signed (e,old) =
     if signed old then (e,old)
     else
-      let abs = (width old + 1, true, interval old) in
-      (sym_zero_extend 1 (width old) e, abs)
+      let abs = (width old * 2, true, interval old) in
+      (sym_zero_extend (width old) (width old) e, abs)
 
   (** Extend an expression coupled with its abstract information to a width *)
   let extend (abs) ((e,old) : sym * abs) =
@@ -306,8 +313,8 @@ module StatefulIntToBits = struct
     (* Only going from unsigned to signed *)
     assert ((not (signed old)) || signed abs);
     if signed abs && not (signed old) then
-      let e = sym_zero_extend 1 (width old) e in
-      let w = width old + 1 in
+      let e = sym_zero_extend (width old) (width old) e in
+      let w = width old * 2 in
       if w = width abs then e
       else sym_sign_extend (width abs - w) w e
     else if width abs = width old then e
@@ -389,7 +396,7 @@ module StatefulIntToBits = struct
         let x = force_signed (bv_of_int_expr st x) in
         let y = force_signed (bv_of_int_expr st y) in
         assert (is_pos x = is_pos y);
-        let w = abs_of_div (snd x) (snd y) in
+        let w = merge_abs (*abs_of_div*) (snd x) (snd y) in
         let ex = extend w in
         let f = sym_prim (FIdent ("sdiv_bits", 0)) [sym_of_abs w] [ex x; ex y] in
         (f,w)
@@ -452,7 +459,7 @@ module StatefulIntToBits = struct
     | Expr_TApply (FIdent ("divide_real",0), [], [x; y]) ->
         let x = force_signed (bv_of_real_expr st x) in
         let y = force_signed (bv_of_real_expr st y) in
-        let w = abs_of_div (snd x) (snd y) in
+        let w = merge_abs (*abs_of_div*) (snd x) (snd y) in
         let ex = extend w in
         let f = sym_prim (FIdent ("sdiv_bits", 0)) [sym_of_abs w] [ex x; ex y] in
         (f,w)
@@ -2238,7 +2245,7 @@ module LoopClassify = struct
     let ld = Bindings.merge (fun k l r ->
       match l, r with
       | Some l, Some r when l = r -> Some l
-      | Some l, Some r -> 
+      | Some l, Some r ->
           let w = expr_of_int (width_of_expr (Expr_Var k) st1) in
           Some (join_abs w cond l r)
       | _ -> None) st1.ld st2.ld in
@@ -2318,13 +2325,13 @@ module LoopClassify = struct
     let vars = Bindings.mapi (fun var def ->
       match def, Bindings.find_opt var init_st.vars with
       | x, None -> x
-      | BVIndex(Expr_TApply(FIdent("add_bits",0), [w], [base;mult]),mult',w'), Some (BVIndex(base',mult'',w'')) 
-          when base = base' && mult = mult' && w = w' && mult = mult'' && w = w'' -> 
+      | BVIndex(Expr_TApply(FIdent("add_bits",0), [w], [base;mult]),mult',w'), Some (BVIndex(base',mult'',w''))
+          when base = base' && mult = mult' && w = w' && mult = mult'' && w = w'' ->
             BVIndex(base',mult'',w'')
-      | BVIndex(Expr_TApply(FIdent("sub_bits",0), [w], [base;mult]),mult',w'), Some (BVIndex(base',mult'',w'')) 
-          when  base = base' && neg_bits w mult = mult' && w = w' && mult' = mult'' && w = w'' -> 
+      | BVIndex(Expr_TApply(FIdent("sub_bits",0), [w], [base;mult]),mult',w'), Some (BVIndex(base',mult'',w''))
+          when  base = base' && neg_bits w mult = mult' && w = w' && mult' = mult'' && w = w'' ->
             BVIndex(base',mult'',w'')
-      | x, Some y -> 
+      | x, Some y ->
           failwith @@ "Failed to re-establish initial conditions: " ^ pp_abs x ^ " and " ^ pp_abs y
       ) st.vars in
     { st with vars }
@@ -2368,7 +2375,7 @@ module LoopClassify = struct
       ) effects in
       Bindings.empty
 
-  (* Run the analysis from an initial state. 
+  (* Run the analysis from an initial state.
      Re-runs if we identify abstractions for external state.
    *)
   let rec fixed_point init_st body =
@@ -2376,7 +2383,7 @@ module LoopClassify = struct
     let cand_st = amend_pre_load init_st cand_st in
     let fixes = validate_summary cand_st.vars in
     if fixes = Bindings.empty then cand_st
-    else 
+    else
       let init_st' = { init_st with vars = fixes } in
       fixed_point init_st' body
 
@@ -2388,7 +2395,7 @@ module LoopClassify = struct
     Convert abstract points into expressions.
   *)
 
-  (* 
+  (*
     Build vector primitive operations from the abstract state.
    *)
   let rec build_vec_prim st f i tes es =
@@ -2487,7 +2494,7 @@ module LoopClassify = struct
         let w = expr_of_int (width_of_expr expr st) in
         replicate st.iterations w expr
     (* Vector Operation *)
-    | VecOp(FIdent(f,i), tes, es) -> 
+    | VecOp(FIdent(f,i), tes, es) ->
         build_vec_prim st f i tes es
     (* Read becomes a select operation, building based on its stride and width *)
     | Read(expr,Index(base,mult),width,expr_width) ->
@@ -2497,7 +2504,7 @@ module LoopClassify = struct
     (* Write is a select between a base variable and the overwritten component *)
     | Write(var,Index(base,mult),width,var_width,e) ->
         let elems = div_int var_width width in
-        let sels = build_sels elems (fun i -> 
+        let sels = build_sels elems (fun i ->
           ite_int (eq_int (mod_int (sub_int i base) mult) zero_int)
             (add_int (div_int (sub_int i base) mult) elems) i) in
         let expr = append_bits (mul_int st.iterations width) var_width (build_vec_expr st e) (Expr_Var var) in
@@ -2521,7 +2528,7 @@ module LoopClassify = struct
   let summarize_assign st var abs =
     match abs with
     (* Result is not dependent on itself in anyway *)
-    | a when not (IdentSet.mem var (deps a)) -> 
+    | a when not (IdentSet.mem var (deps a)) ->
         build_vec_expr st abs
     (* Parallel Write, element is only dependent on itself *)
     | Write(var',pos,width,exprw,e) when var = var' && parallel_write var pos width e ->
@@ -2630,12 +2637,12 @@ module LoopClassify = struct
 
   let rec push_select elems w x sels st =
     match x with
-    | Expr_TApply (FIdent ("append_bits", 0), [wr;wl], [r;l]) 
+    | Expr_TApply (FIdent ("append_bits", 0), [wr;wl], [r;l])
         when List.for_all (fun i -> check_leq (mul_int w (add_int i (Expr_LitInt "1"))) wl) sels &&
           is_div wr w && is_div wl w ->
             let elems = sub_int elems (div_int wr w) in
             push_select elems w l sels st
-    | Expr_TApply (FIdent ("append_bits", 0), [wr;wl], [r;l]) 
+    | Expr_TApply (FIdent ("append_bits", 0), [wr;wl], [r;l])
         when List.for_all (fun i -> check_leq wl (mul_int w i)) sels && is_div wl w && is_div wr w ->
           let shift = div_int wl w in
           let sels = List.map (fun i -> sub_int i shift) sels in
@@ -2697,10 +2704,10 @@ module LoopClassify = struct
     | Expr_LitBits x when is_const_sels sels && is_const w ->
         let sels = force_const_sels sels in
         let w = force_const w in
-        Expr_LitBits (apply_sels x w sels) 
+        Expr_LitBits (apply_sels x w sels)
 
     (* Failure case, wasn't able to reduce *)
-    | _ -> 
+    | _ ->
         Printf.printf "push_select: %s\n" (pp_expr x);
         select_vec elems w x sels
 
@@ -2715,13 +2722,13 @@ module LoopClassify = struct
       | _ -> DoChildren)
 
       (*| Expr_TApply (FIdent ("zcast_vec", 0), tes, [Expr_TApply (FIdent ("add_vec", 0), tes', [
-        Expr_TApply (FIdent ("zcast_vec", 0), [n;nw;ow], [x;_;_]) ;  
+        Expr_TApply (FIdent ("zcast_vec", 0), [n;nw;ow], [x;_;_]) ;
           Expr_TApply (FIdent ("zcast_vec", 0), _, [y;_;_]) ;
           _ ]) ; _ ; nw']) ->
             Expr_TApply (FIdent ("add_vec", 0), [n;nw'], [
               Expr_TApply (FIdent ("zcast_vec", 0), [n;nw';ow], [x;n;nw']) ;
               Expr_TApply (FIdent ("zcast_vec", 0), [n;nw';ow], [y;n;nw']) ;
-              n]) 
+              n])
 
       | _ -> e) in
       ChangeDoChildrenPost(e,fn) *)
