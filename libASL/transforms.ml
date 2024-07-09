@@ -1627,6 +1627,23 @@ module RemoveRegisters = struct
 
 end
 
+(* Turn an append of zeroes into a zero extend *)
+module AppendZeros = struct
+  class expr_walker = object
+    inherit Asl_visitor.nopAslVisitor
+    method !vexpr e =
+      match e with
+      | Expr_TApply(FIdent("append_bits", 0), [Expr_LitInt wl;Expr_LitInt wr], [Expr_LitBits l; r])
+          when String.for_all (fun i -> i = '0') l ->
+            let nw = Expr_LitInt (Z.to_string (Z.add (Z.of_string wl) (Z.of_string wr))) in
+            let e = Expr_TApply (FIdent("ZeroExtend", 0), [Expr_LitInt wr; nw], [r; nw]) in
+            ChangeDoChildrenPost(e, fun e -> e)
+      | _ -> DoChildren
+  end
+  let run =
+    let v = new expr_walker in
+    visit_stmts v
+end
 
 module type ScopedBindings = sig
     type 'elt t = 'elt Bindings.t Stack.t
@@ -2720,18 +2737,6 @@ module LoopClassify = struct
           let sels = List.map (fun i -> expr_of_int i) sels in
           ChangeDoChildrenPost(push_select ins w x sels st, fun e -> e)
       | _ -> DoChildren)
-
-      (*| Expr_TApply (FIdent ("zcast_vec", 0), tes, [Expr_TApply (FIdent ("add_vec", 0), tes', [
-        Expr_TApply (FIdent ("zcast_vec", 0), [n;nw;ow], [x;_;_]) ;
-          Expr_TApply (FIdent ("zcast_vec", 0), _, [y;_;_]) ;
-          _ ]) ; _ ; nw']) ->
-            Expr_TApply (FIdent ("add_vec", 0), [n;nw'], [
-              Expr_TApply (FIdent ("zcast_vec", 0), [n;nw';ow], [x;n;nw']) ;
-              Expr_TApply (FIdent ("zcast_vec", 0), [n;nw';ow], [y;n;nw']) ;
-              n])
-
-      | _ -> e) in
-      ChangeDoChildrenPost(e,fn) *)
   end
 
   let run (s: stmt list) env : (bool * stmt list) =
