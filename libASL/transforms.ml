@@ -337,6 +337,34 @@ module StatefulIntToBits = struct
       these variable reads are subsequently converted back to integers. *)
   let wrapper_ident = FIdent ("StatefulIntToBit_wrapper", 0)
 
+  let build_div x y =
+      let wx = width (snd x) in
+      let wy = width (snd y) in
+      let abs = abs_of_div (snd x) (snd y) in
+      let mgr = merge_abs (snd x) (snd y) in
+      let base_div = sym_prim (FIdent ("sdiv_bits", 0)) [sym_of_abs mgr] [extend mgr x; extend mgr y] in
+      if wy > wx then begin
+        (base_div, abs)
+      end
+      else begin
+        assert (width mgr = wx);
+        if width abs = wx then begin
+          (base_div, abs)
+        end else begin
+          let ex = extend abs in
+          (* Test if denom is -1 *)
+          let negone = VBits {n = wy ; v = Z.pred (Z.pow (Z.succ Z.one) wy)} in
+          let den = sym_prim (FIdent ("eq_bits", 0)) [sym_of_abs (snd y)] [fst y; Val negone] in
+          (* Test if num is INT_MIN *)
+          let intmin = VBits {n = wx ; v = Z.pow (Z.succ Z.one) (wx - 1)} in
+          let num = sym_prim (FIdent ("eq_bits", 0)) [sym_of_abs (snd x)] [fst x; Val intmin] in
+          (* Overflow result *)
+          let res = VBits {n = width abs; v = Z.pow (Z.succ Z.one) (wx - 1)} in
+          let test = sym_prim (FIdent ("and_bool", 0)) [] [num;den] in
+          (sym_prim (FIdent ("ite", 0)) [sym_of_abs abs] [test; Val res; ex (base_div,mgr)], abs)
+        end
+      end
+
   (** Covert an integer expression tree into a bitvector equivalent *)
   let rec bv_of_int_expr (st: state) (e: expr): (sym * abs) =
     match e with
@@ -396,10 +424,7 @@ module StatefulIntToBits = struct
         let x = force_signed (bv_of_int_expr st x) in
         let y = force_signed (bv_of_int_expr st y) in
         assert (is_pos x = is_pos y);
-        let w = merge_abs (*abs_of_div*) (snd x) (snd y) in
-        let ex = extend w in
-        let f = sym_prim (FIdent ("sdiv_bits", 0)) [sym_of_abs w] [ex x; ex y] in
-        (f,w)
+        build_div x y
 
     (* when the divisor is a power of 2, mod can be implemented by truncating. *)
     | Expr_TApply (FIdent ("frem_int", 0), [], [n;Expr_LitInt d]) when is_power_of_2 (int_of_string d) ->
@@ -459,10 +484,7 @@ module StatefulIntToBits = struct
     | Expr_TApply (FIdent ("divide_real",0), [], [x; y]) ->
         let x = force_signed (bv_of_real_expr st x) in
         let y = force_signed (bv_of_real_expr st y) in
-        let w = merge_abs (*abs_of_div*) (snd x) (snd y) in
-        let ex = extend w in
-        let f = sym_prim (FIdent ("sdiv_bits", 0)) [sym_of_abs w] [ex x; ex y] in
-        (f,w)
+        build_div x y
 
     | Expr_TApply (FIdent ("cvt_int_real", 0), [], [x]) ->
         bv_of_int_expr st x
@@ -2725,7 +2747,7 @@ module LoopClassify = struct
 
     (* Failure case, wasn't able to reduce *)
     | _ ->
-        Printf.printf "push_select: %s\n" (pp_expr x);
+        (*Printf.printf "push_select: %s\n" (pp_expr x);*)
         select_vec elems w x sels
 
   class cleanup st = object
@@ -2747,8 +2769,8 @@ module LoopClassify = struct
       let res = visit_stmts (new cleanup st) res in
       (true,res)
     with e ->
-      let m = Printexc.to_string e in
-      Printf.printf "\nVec Failure: %s\n" m;
+      (*let m = Printexc.to_string e in
+      Printf.printf "\nVec Failure: %s\n" m;*)
       (false,s)
 
 end
