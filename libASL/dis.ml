@@ -352,7 +352,11 @@ module DisEnv = struct
         try
             Eval.mk_uninitialized Unknown config.eval_env t
         with
-            e -> unsupported Unknown @@
+            e ->
+              (* Support bit widths we don't know *)
+              match t with
+              | Type_Bits _ -> VUninitialized t
+              | _ -> unsupported Unknown @@
                 "mkUninit: failed to evaluate type " ^ pp_type t ^ " due to " ^
                 Printexc.to_string e
 

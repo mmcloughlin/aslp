@@ -39,7 +39,9 @@ bits(N) sdiv_bits(bits(N) x, bits(N) y)
 
 bits(N1) lsl_bits(bits(N1) x, bits(N2) y)
     integer yn = SInt(y);
-    return LSL(x, yn);
+    // LSL will assert if yn is negative, but we assume this
+    // operation is pure. Wrap it to be identity in this case.
+    return if yn < 0 then x else LSL(x, yn);
 
 bits(N1) lsr_bits(bits(N1) x, bits(N2) y)
     integer yn = SInt(y);
@@ -325,6 +327,8 @@ integer LowestSetBit(bits(N) x)
     else
         return N;
 
+bits(W) ite(boolean c, bits(W) x, bits(W) y)
+  return if c then x else y;
 
 // Vector Operations
 
@@ -344,6 +348,12 @@ bits(W * N) mul_vec(bits(W * N) x, bits(W * N) y, integer N)
   bits(W * N) result;
   for i = 0 to (N - 1)
     Elem[result, i, W] = Elem[x, i, W] * Elem[y, i, W];
+  return result;
+
+bits(W * N) sdiv_vec(bits(W * N) x, bits(W * N) y, integer N)
+  bits(W * N) result;
+  for i = 0 to (N - 1)
+    Elem[result, i, W] = sdiv_bits(Elem[x, i, W], Elem[y, i, W]);
   return result;
 
 bits(W * N) lsr_vec(bits(W * N) x, bits(W * N) y, integer N)

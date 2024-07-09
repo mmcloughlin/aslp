@@ -503,9 +503,9 @@ module StatefulIntToBits = struct
       let e' = match e with
       (* Slice may take bitvector or integer as first argument, allow for failure in bv case *)
       (* TODO: Would prefer to type check x, rather than allowing for failure *)
-      | Expr_Slices(x, [Slice_LoWd(Expr_LitInt l,w)]) ->
+      | Expr_Slices(x, [Slice_LoWd(Expr_LitInt l,Expr_LitInt w)]) ->
           let l = int_of_expr (Expr_LitInt l) in
-          let w = int_of_expr w in
+          let w = int_of_expr (Expr_LitInt w) in
           (match bv_of_int_expr_opt st x with
           | Some (e,a) ->
               if width a = l + w && l = 0 then sym_expr e else
@@ -669,7 +669,9 @@ module StatefulIntToBits = struct
     else match ty with
     | Type_Constructor i ->
         (match enum_types i with
-        | Some w -> Some (Some w)
+        | Some w ->
+            let w = next_pow_of_2 w in
+            Some (Some w)
         | None -> None)
     | _ -> None
 
@@ -2477,16 +2479,21 @@ module LoopClassify = struct
         Expr_TApply(FIdent("slt_vec", 0),  [iters; w], vec_args [x; y])
     | "eq_bits", 0, [w], [x;y] ->
         Expr_TApply(FIdent("eq_vec", 0),   [iters; w], vec_args [x; y])
+
     | "asr_bits", 0, [w;w'], [x;y] when w = w' ->
         Expr_TApply(FIdent("asr_vec", 0),  [iters; w], vec_args [x;y])
-    | "asr_bits", 0, [w;w'], [x;y] ->
+    | "asr_bits", 0, [Expr_LitInt w;Expr_LitInt w'], [x;y] when Z.gt (Z.of_string w) (Z.of_string w') ->
+        let w = Expr_LitInt w and w' = Expr_LitInt w' in
         let y = Expr_TApply(FIdent("scast_vec", 0), [iters; w; w'], (vec_args [y]) @ [w]) in
         Expr_TApply(FIdent("asr_vec", 0),  [iters; w], [build_vec_expr st x;y;iters])
+
     | "lsl_bits", 0, [w;w'], [x;y] when w = w' ->
         Expr_TApply(FIdent("lsl_vec", 0),  [iters; w], vec_args [x;y])
-    | "lsl_bits", 0, [w;w'], [x;y] ->
+    | "lsl_bits", 0, [Expr_LitInt w;Expr_LitInt w'], [x;y] when Z.gt (Z.of_string w) (Z.of_string w') ->
+        let w = Expr_LitInt w and w' = Expr_LitInt w' in
         let y = Expr_TApply(FIdent("scast_vec", 0), [iters; w; w'], (vec_args [y]) @ [w]) in
         Expr_TApply(FIdent("lsl_vec", 0),  [iters; w], [build_vec_expr st x;y;iters])
+
     | "ite", 0, [w], [c;x;y] ->
         Expr_TApply(FIdent("ite_vec", 0), [iters; w], vec_args [c;x;y])
 

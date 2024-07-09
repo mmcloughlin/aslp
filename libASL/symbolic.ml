@@ -620,7 +620,12 @@ let sym_insert_bits loc (old_width: int) (old: sym) (lo: sym) (wd: sym) (v: sym)
   | (_, _, Val wd', _) when Primops.prim_zrem_int (Z.of_int old_width) (to_integer Unknown wd') = Z.zero ->
       (* Elem.set *)
       let pos = zdiv_int lo wd in
-      Exp ( Expr_TApply (FIdent("Elem.set", 0), [expr_of_int old_width ; sym_expr wd], List.map sym_expr [old ; pos ; wd ; v]) )
+      Exp ( Expr_TApply (FIdent("Elem.set", 0), [expr_of_int old_width ; sym_expr wd],
+          List.map sym_expr [old ; pos ; wd ; v]) )
+  | (_, Val (VInt l), _, _) when l = Z.zero ->
+      Exp (Expr_TApply (FIdent ("Elem.set", 0), [expr_of_int old_width ; sym_expr wd],
+          List.map sym_expr [old ; lo ; wd ; v]))
+
   | (_, _, Val wd', _) ->
       (* Build an insert out of bitvector masking operations *)
       let wd = to_int loc wd' in
