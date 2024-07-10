@@ -431,20 +431,19 @@ module DisEnv = struct
         let num, s = LocalEnv.incNumSymbols s in
         (Ident (prefix ^ string_of_int num),s,empty)
 
-    let indent: string rws =
+    let indent: string list rws =
         let+ i = gets (fun l -> l.indent) in
-        let h = i / 2 in
-        let s = String.concat "" (List.init h (fun _ -> "\u{2502} \u{250a} ")) in
-        if i mod 2 == 0 then
-            s ^ ""
-        else
-            s ^ "\u{2502} "
+        (* when concatenated, produces a string of the form:
+                "| I | I | ..." where | and I are
+           alternating unicode box-drawing lines *)
+        List.init i (fun i -> if i mod 2 == 0 then "\u{2502} " else "\u{250a} ")
 
     let debug (minLevel: int) (s: string): unit rws =
         if !debug_level >= minLevel then
             let+ i = indent in
-            let s' = Str.global_replace (Str.regexp "\n") ("\n"^i) s in
-            Printf.printf "%s%s\n" i s';
+            List.iter
+              (fun l -> List.iter print_string i; print_endline l)
+              (String.split_on_char '\n' s);
             ()
         else
             unit
@@ -1463,11 +1462,11 @@ let dis_decode_slice (loc: l) (x: decode_slice) (op: Primops.bigint): value rws 
     )
 
 (* Duplicate of eval_decode_case modified to print rather than eval *)
-let rec dis_decode_case (loc: AST.l) (x: decode_case) (op: Primops.bigint): unit rws =
+let rec dis_decode_case (loc: AST.l) (x: decode_case) (op: Primops.bigint): string rws =
     let body = dis_decode_case' loc x op in
     if no_debug() then body
-    else DisEnv.scope loc "dis_decode_case" (pp_decode_case x) Utils.pp_unit body
-and dis_decode_case' (loc: AST.l) (x: decode_case) (op: Primops.bigint): unit rws =
+    else DisEnv.scope loc "dis_decode_case" (pp_decode_case x) Fun.id body
+and dis_decode_case' (loc: AST.l) (x: decode_case) (op: Primops.bigint): string rws =
     (match x with
     | DecoderCase_Case (ss, alts, loc) ->
             let@ vs = DisEnv.traverse (fun s -> dis_decode_slice loc s op) ss in
@@ -1476,8 +1475,8 @@ and dis_decode_case' (loc: AST.l) (x: decode_case) (op: Primops.bigint): unit rw
                 | (alt :: alts') ->
                     let@ alt' = dis_decode_alt loc alt vs op in
                     (match alt' with
-                    | true -> DisEnv.unit
-                    | false -> dis alts')
+                    | Some x -> DisEnv.pure x
+                    | None -> dis alts')
                 | [] ->
                         raise (DisInternalError (loc, "unmatched decode pattern"))
                 )
@@ -1486,16 +1485,16 @@ and dis_decode_case' (loc: AST.l) (x: decode_case) (op: Primops.bigint): unit rw
     )
 
 (* Duplicate of eval_decode_alt modified to print rather than eval *)
-and dis_decode_alt (loc: l) (x: decode_alt) (vs: value list) (op: Primops.bigint): bool rws =
+and dis_decode_alt (loc: l) (x: decode_alt) (vs: value list) (op: Primops.bigint): string option rws =
     let body = dis_decode_alt' loc x vs op in
     if no_debug() then body
-    else DisEnv.scope loc "dis_decode_alt" (pp_decode_alt x) string_of_bool body
-and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: Primops.bigint): bool rws =
+    else DisEnv.scope loc "dis_decode_alt" (pp_decode_alt x) Option.(fold ~none:"(unmatched)" ~some:Fun.id) body
+and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: Primops.bigint): string option rws =
     if List.for_all2 (Eval.eval_decode_pattern loc) ps vs then
         (match b with
         | DecoderBody_UNPRED loc -> raise (Throw (loc, Exc_Unpredictable))
         | DecoderBody_UNALLOC loc -> raise (Throw (loc, Exc_Undefined))
-        | DecoderBody_NOP loc -> DisEnv.pure true
+        | DecoderBody_NOP loc -> DisEnv.pure (Some "(NOP)")
         | DecoderBody_Encoding (inst, l) ->
                 let@ (enc, opost, cond, exec) = DisEnv.reads (fun config -> Eval.Env.getInstruction loc config.eval_env inst) in
                 let@ enc_match = dis_encoding enc op in
@@ -1527,9 +1526,9 @@ and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: 
                     end;
 
                     let@ () = DisEnv.write stmts in
-                    DisEnv.pure true
+                    DisEnv.pure (Some (pprint_ident inst))
                 end else begin
-                    DisEnv.pure false
+                    DisEnv.pure None
                 end
         | DecoderBody_Decoder (fs, c, loc) ->
                 let@ () = DisEnv.modify (LocalEnv.addLevel) in
@@ -1539,12 +1538,12 @@ and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: 
                     declare_assign_var loc (val_type v) f (Val v)
                 ) fs
                 in
-                let@ () = dis_decode_case loc c op in
+                let@ result = dis_decode_case loc c op in
                 let@ () = DisEnv.modify (LocalEnv.popLevel) in
-                DisEnv.pure true
+                DisEnv.pure (Some result)
         )
     else
-        DisEnv.pure false
+        DisEnv.pure None
 
 type env = (LocalEnv.t * IdentSet.t)
 
@@ -1558,11 +1557,11 @@ let enum_types env i =
     | _ -> None
 
 (* Actually perform dis *)
-let dis_core (env: Eval.Env.t) (unroll_bound) ((lenv,globals): env) (decode: decode_case) (op: Primops.bigint): stmt list =
+let dis_core (env: Eval.Env.t) (unroll_bound) ((lenv,globals): env) (decode: decode_case) (op: Primops.bigint): string * stmt list =
     let DecoderCase_Case (_,_,loc) = decode in
     let config = { eval_env = env ; unroll_bound } in
 
-    let ((),lenv',stmts) = (dis_decode_case loc decode op) config lenv in
+    let (enc,lenv',stmts) = (dis_decode_case loc decode op) config lenv in
     let varentries = List.(concat @@ map (fun vars -> StringMap.(bindings (map fst vars))) lenv.locals) in
     let bindings = Asl_utils.Bindings.of_seq @@ List.to_seq @@ List.map (fun (x,y) -> (Ident x,y)) varentries in
     (* List.iter (fun (v,t) -> Printf.printf ("%s:%s\n") v (pp_type t)) varentries; *)
@@ -1586,7 +1585,8 @@ let dis_core (env: Eval.Env.t) (unroll_bound) ((lenv,globals): env) (decode: dec
         List.iter (fun s -> Printf.printf "%s\n" (pp_stmt s)) stmts';
         Printf.printf "===========\n";
     end;
-    stmts'
+    enc, stmts'
+
 
 (* Wrapper around the core to attempt loop vectorization, reverting back if this fails.
    This is a complete hack, but it is nicer to make the loop unrolling decision during
@@ -1594,10 +1594,10 @@ let dis_core (env: Eval.Env.t) (unroll_bound) ((lenv,globals): env) (decode: dec
  *)
 let dis_decode_entry (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: Primops.bigint): stmt list =
   let unroll_bound = Z.of_int 1 in
-  let stmts' = dis_core env unroll_bound (lenv,globals) decode op in
+  let _,stmts' = dis_core env unroll_bound (lenv,globals) decode op in
   let (res,stmts') = Transforms.LoopClassify.run stmts' env in
   if res then stmts' else
-    dis_core env (Z.of_int 1000) (lenv,globals) decode op
+    snd @@ dis_core env (Z.of_int 1000) (lenv,globals) decode op
 
 let build_env (env: Eval.Env.t): env =
     let env = Eval.Env.freeze env in
