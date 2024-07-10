@@ -29,7 +29,6 @@ let eval_instr (opcode: string) : string * string =
     let stmts'   = List.map pp_raw stmts in
     enc, String.concat "\n" stmts'
 
-
 let get_reply (jsonin: string) : Cohttp.Code.status_code * string =
   (*let json  = Yojson.Safe.from_string jsonin in *)
   let make_reply code tail =
@@ -47,8 +46,10 @@ let unsupp_method_resp : Cohttp.Code.status_code * string =
 let missing_param : Cohttp.Code.status_code * string =
   (`Bad_request, Yojson.Safe.to_string (`Assoc [("error", `String "missing opcode param.")]))
 
-(*let () = ignore (List.map (fun (f: string) -> print_endline (eval_instr f)) (tl (to_list Sys.argv))) *)
-
+let try_set_flags xs : (unit, Cohttp.Code.status_code * string) Result.t =
+  match (List.iter Flags.set_flag xs) with
+  | exception (Arg.Bad _ as e) -> Result.error (`Bad_request, Yojson.Safe.to_string (`Assoc [("error", `String (Printexc.to_string e))]))
+  | _ -> Result.ok ()
 
 let get_resp (opcode: string) : Cohttp.Code.status_code * string =
     get_reply opcode
@@ -56,17 +57,26 @@ let get_resp (opcode: string) : Cohttp.Code.status_code * string =
 let server addr port =
   Printf.printf "Started aslp-server at http://%s:%d\n" addr port;
   flush stdout;
+
+  let oldflags = Flags.get_flags () in
+
   let callback _conn req body =
     let uri = req |> Request.uri in
     let _meth = req |> Request.meth |> Code.string_of_method in
     let _headers = req |> Request.headers |> Header.to_string in
     let body' = body |> Cohttp_lwt.Body.to_string in
-    let resp' =
-      match (Request.meth req, Uri.get_query_param uri "opcode") with
-      | `POST, _ -> body' >|= get_resp
-      | `GET, Some param -> Lwt.return (get_resp param)
-      | `GET, None -> Lwt.return missing_param
-      |  _ -> Lwt.return unsupp_method_resp
+
+    Flags.set_flags oldflags;
+
+    let resp' = 
+      match (Option.map try_set_flags (Uri.get_query_param' uri "flags")) with
+      | Some (Error xs) -> Lwt.return xs
+      | Some (Ok ()) | None ->
+        match (Request.meth req, Uri.get_query_param uri "opcode") with
+        | `POST, _ -> body' >|= get_resp
+        | `GET, Some param -> Lwt.return (get_resp param)
+        | `GET, None -> Lwt.return missing_param
+        |  _ -> Lwt.return unsupp_method_resp
     in
     resp' >>= fun (code, body) -> Server.respond_string ~status:code ~body ()
   in
