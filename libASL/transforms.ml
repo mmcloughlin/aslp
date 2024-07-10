@@ -1549,7 +1549,9 @@ module CaseSimp = struct
   (* Match a 'R := BV_CONSTANT' statement, returning R and BV_CONSTANT *)
   let valid_body b =
     match b with
-    | Stmt_Assign (LExpr_Var r, Expr_LitBits c, _) -> Some(r, c)
+    | Stmt_Assign (LExpr_Var r, Expr_LitBits c, _) ->
+        let w = String.length c in
+        Some(r, c, w)
     | _ -> None
 
   (* Match a chain of 'if X = BV_CONSTANT then R := BV_CONSTANT else if ... else assert FALSE'
@@ -1558,7 +1560,7 @@ module CaseSimp = struct
     match stmt with
     | Stmt_If (e, [c], [], [f], _) ->
         (match valid_guard e, valid_body c, match_inner f x r with
-        | Some (w, x', b), Some (r', c), Some res when x' = x && r = r' -> Some (StringMap.add b c res)
+        | Some (w, x', b), Some (r', c, w'), Some res when x' = x && r = r' -> Some (StringMap.add b c res)
         | _ -> None)
     | Stmt_Assert (Expr_Var(Ident "FALSE"), _) -> Some StringMap.empty
     | _ -> None
@@ -1569,9 +1571,9 @@ module CaseSimp = struct
     match stmt with
     | Stmt_If (e, [t], [], [f], loc) ->
         (match valid_guard e, valid_body t with
-        | Some (w, x, b), Some (r, c) ->
+        | Some (w, x, b), Some (r, c, w') ->
             (match match_inner f x r with
-            | Some res -> Some (x, r, w, loc, StringMap.add b c res)
+            | Some res -> Some (x, r, w, w', loc, StringMap.add b c res)
             | _ -> None)
         | _ -> None)
     | _ -> None
@@ -1582,10 +1584,13 @@ module CaseSimp = struct
   (* Guesses for the possible mapping from key to value. This is incredibly dumb. *)
   let fn_guess = [
     (fun x y -> x = y),
-    (fun r x _ loc -> Stmt_Assign(LExpr_Var r, x, loc));
-    (fun x y -> "0" ^ x = y),
-    (fun r x w loc ->
-      let nw = expr_of_int (w + 1) in
+    (fun r x _ _ loc -> Stmt_Assign(LExpr_Var r, x, loc));
+    (fun x y ->
+      let diff = String.length y - String.length x in
+      if diff > 0 then (String.concat "" (List.init diff (fun _ -> "0"))) ^ x = y
+      else false),
+    (fun r x w w' loc ->
+      let nw = expr_of_int w' in
       Stmt_Assign(LExpr_Var r, expr_prim' "ZeroExtend" [expr_of_int w; nw] [x; nw], loc));
   ]
 
@@ -1595,9 +1600,9 @@ module CaseSimp = struct
     (* Assumes x is pure, as it is referenced within a branch condition *)
     method! vstmt (s: stmt): stmt list visitAction =
       match match_outer s with
-      | Some (x, r, w, loc, res) when is_total w res ->
+      | Some (x, r, w, w', loc, res) when is_total w res ->
           (match List.find_opt (fun (test,_) -> StringMap.for_all test res) fn_guess with
-          | Some (_,fn) -> ChangeTo [fn r x w loc]
+          | Some (_,fn) -> ChangeTo [fn r x w w' loc]
           | _ -> DoChildren)
       | _ -> DoChildren
 
