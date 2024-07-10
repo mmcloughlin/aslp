@@ -23,6 +23,7 @@ module StringCmp = struct
 end
 module StringMap = Map.Make(StringCmp)
 
+let use_vectoriser = ref false
 
 let debug_level_none = -1
 let debug_level = ref debug_level_none
@@ -1592,12 +1593,18 @@ let dis_core (env: Eval.Env.t) (unroll_bound) ((lenv,globals): env) (decode: dec
    This is a complete hack, but it is nicer to make the loop unrolling decision during
    partial evaluation, rather than having to unroll after we know vectorization failed.
  *)
+let dis_decode_entry_with_inst (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: Primops.bigint): string * stmt list =
+  let max_upper_bound = Z.of_int64 Int64.max_int in
+  match !use_vectoriser with
+  | false -> dis_core env max_upper_bound (lenv,globals) decode op
+  | true ->
+    let enc,stmts' = dis_core env Z.one (lenv,globals) decode op in
+    let (res,stmts') = Transforms.LoopClassify.run stmts' env in
+    if res then (enc,stmts') else
+      dis_core env max_upper_bound (lenv,globals) decode op
+
 let dis_decode_entry (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: Primops.bigint): stmt list =
-  let unroll_bound = Z.of_int 1 in
-  let _,stmts' = dis_core env unroll_bound (lenv,globals) decode op in
-  let (res,stmts') = Transforms.LoopClassify.run stmts' env in
-  if res then stmts' else
-    snd @@ dis_core env (Z.of_int 1000) (lenv,globals) decode op
+  snd @@ dis_decode_entry_with_inst env (lenv,globals) decode op
 
 let build_env (env: Eval.Env.t): env =
     let env = Eval.Env.freeze env in

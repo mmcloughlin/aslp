@@ -33,6 +33,15 @@ let () = Printexc.register_printer
         Some (Printf.sprintf "EvalError at %s: %s" (pp_loc loc) msg)
     | _ -> None)
 
+let flags = [
+    ("trace:write", Eval.trace_write);
+    ("trace:fun",   Eval.trace_funcall);
+    ("trace:prim",  Eval.trace_primop);
+    ("trace:instr", Eval.trace_instruction);
+    ("eval:concrete_unknown", Value.concrete_unknown);
+    ("dis:vectoriser", Dis.use_vectoriser);
+]
+
 let help_msg = [
     {|:? :help                       Show this help message|};
     {|:elf <file>                    Load an ELF file|};
@@ -60,13 +69,15 @@ let gen_backends = [
     ("cpp",   (Cpu.Cpp, "offlineASL-cpp"));
 ]
 
-let flags = [
-    ("trace:write", Eval.trace_write);
-    ("trace:fun",   Eval.trace_funcall);
-    ("trace:prim",  Eval.trace_primop);
-    ("trace:instr", Eval.trace_instruction);
-    ("eval:concrete_unknown", Value.concrete_unknown)
-]
+let set_flag s =
+    if not (Utils.startswith s "+" || Utils.startswith s "-") then
+        raise @@ Arg.Bad "flag should start with + to set and - to unset";
+    let flags_str = String.concat ", " @@ List.map fst flags in
+    let flag = Utils.stringDrop 1 s in
+
+    (match List.assoc_opt flag flags with
+    | None -> raise @@ Arg.Bad (Printf.sprintf "unknown flag '%s'\navailable flags: %s" flag flags_str);
+    | Some f -> f := Utils.startswith flag "+")
 
 let () = Random.self_init ()
 
@@ -236,16 +247,8 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         close_out chan
     | (":set" :: "impdef" :: rest) ->
         Eval.set_impdef tcenv cpu.env fname rest
-    | [":set"; flag] when Utils.startswith flag "+" ->
-        (match List.assoc_opt (Utils.stringDrop 1 flag) flags with
-        | None -> Printf.printf "Unknown flag %s\n" flag;
-        | Some f -> f := true
-        )
-    | [":set"; flag] when Utils.startswith flag "-" ->
-        (match List.assoc_opt (Utils.stringDrop 1 flag) flags with
-        | None -> Printf.printf "Unknown flag %s\n" flag;
-        | Some f -> f := false
-        )
+    | [":set"; flag] ->
+        set_flag flag
     | [":project"; prj] ->
         let inchan = open_in prj in
         (try
@@ -312,6 +315,7 @@ let options = Arg.align ([
     ( "--export-aarch64", Arg.Set_string opt_export_aarch64_dir,  "       Export bundled AArch64 MRA to the given directory");
     ( "--version", Arg.Set opt_print_version, "       Print version");
     ( "--prelude", Arg.Set_string opt_prelude,"       ASL prelude file (default: ./prelude.asl)");
+    ( "--flag", Arg.String set_flag,          "       Behaviour flags to set (+) or unset (-)");
 ] )
 
 let version = "ASL 0.2.0 alpha"
