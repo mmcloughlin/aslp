@@ -639,7 +639,8 @@ module StatefulIntToBits = struct
           (* Merge width and sign, but keep new range for range analysis *)
           let (w,s,_) = merge_abs i j in
           let m = (w,s,interval i) in
-          {st with changed = true ; ints = Bindings.add v m st.ints}
+
+          {st with ints = Bindings.add v m st.ints}
     | None ->
         {st with changed = true ; ints = Bindings.add v i st.ints}
 
@@ -852,6 +853,7 @@ module IntToBits = struct
       | FIdent ("SignExtend", 0), [_; Expr_LitInt m], _ -> int_of_string m
       | FIdent ("Elem.read", 0), [_; Expr_LitInt m], _ -> int_of_string m
       | FIdent ("Elem.set", 0), [Expr_LitInt v;_], _ -> int_of_string v
+      | FIdent ("ite", 0), [Expr_LitInt n], _ -> int_of_string n
       | _ -> failwith @@ "bits_size_of_expr: unhandled " ^ pp_expr e
       )
     | Expr_Parens e -> bits_size_of_expr vars e
@@ -2621,6 +2623,10 @@ module LoopClassify = struct
           let st' = fixed_point st body in
           let sum = loop_summary st' loc in
           (acc@sum)
+      | Stmt_If(c, t, [], f, loc) ->
+          let t = walk t types env in
+          let f = walk f types env in
+          (acc@[Stmt_If(c, t, [], f, loc)])
       | _ -> (acc@[stmt])) ([]) s
 
   let parse_sels v =
