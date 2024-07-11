@@ -60,14 +60,6 @@ let gen_backends = [
     ("cpp",   (Cpu.Cpp, "offlineASL-cpp"));
 ]
 
-let flags = [
-    ("trace:write", Eval.trace_write);
-    ("trace:fun",   Eval.trace_funcall);
-    ("trace:prim",  Eval.trace_primop);
-    ("trace:instr", Eval.trace_instruction);
-    ("eval:concrete_unknown", Value.concrete_unknown)
-]
-
 let () = Random.self_init ()
 
 let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0: string): unit =
@@ -165,7 +157,7 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
     | [":help"] | [":?"] ->
         List.iter print_endline help_msg;
         print_endline "\nFlags:";
-        List.iter (fun (nm, v) -> Printf.printf "  %s%s\n" (if !v then "+" else "-") nm) flags
+        Flags.StringMap.iter (fun nm v -> Printf.printf "  %s%s\n" (if v then "+" else "-") nm) (Flags.get_flags ())
     | [":opcode"; iset; opcode] ->
         (* todo: make this code more robust *)
         let op = Z.of_string opcode in
@@ -236,16 +228,8 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         close_out chan
     | (":set" :: "impdef" :: rest) ->
         Eval.set_impdef tcenv cpu.env fname rest
-    | [":set"; flag] when Utils.startswith flag "+" ->
-        (match List.assoc_opt (Utils.stringDrop 1 flag) flags with
-        | None -> Printf.printf "Unknown flag %s\n" flag;
-        | Some f -> f := true
-        )
-    | [":set"; flag] when Utils.startswith flag "-" ->
-        (match List.assoc_opt (Utils.stringDrop 1 flag) flags with
-        | None -> Printf.printf "Unknown flag %s\n" flag;
-        | Some f -> f := false
-        )
+    | [":set"; flag] ->
+        Flags.set_flag flag
     | [":project"; prj] ->
         let inchan = open_in prj in
         (try
@@ -312,6 +296,7 @@ let options = Arg.align ([
     ( "--export-aarch64", Arg.Set_string opt_export_aarch64_dir,  "       Export bundled AArch64 MRA to the given directory");
     ( "--version", Arg.Set opt_print_version, "       Print version");
     ( "--prelude", Arg.Set_string opt_prelude,"       ASL prelude file (default: ./prelude.asl)");
+    ( "--flag", Arg.String Flags.set_flag,          "       Behaviour flags to set (+) or unset (-)");
 ] )
 
 let version = "ASL 0.2.0 alpha"
