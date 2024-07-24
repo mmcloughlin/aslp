@@ -20,4 +20,7 @@ scripts/output.txt
 scripts/cntlm.bir
 scripts/total.txt
 
+.cache/
+build/
+
 offlineASL/aarch64_*
