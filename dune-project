@@ -27,6 +27,7 @@
     "lwt"
     "cohttp-lwt-unix"
     "yojson"
+    "mlbdd"
   )
 )
 

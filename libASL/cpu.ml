@@ -12,6 +12,7 @@ open Asl_utils
 type gen_backend =
     | Ocaml
     | Cpp
+    | Scala
 
 type gen_function = AST.ident -> Eval.fun_sig -> Eval.fun_sig Bindings.t -> Eval.fun_sig Bindings.t -> string -> unit
 
@@ -25,7 +26,7 @@ type cpu = {
     elfwrite : Int64.t -> char -> unit;
     opcode   : string -> Primops.bigint -> unit;
     sem      : string -> Primops.bigint -> unit;
-    gen      : string -> string -> gen_backend -> string -> unit;
+    gen      : string -> string -> bool -> gen_backend -> string -> unit;
 }
 
 let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
@@ -60,16 +61,18 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
             (fun s -> Printf.printf "%s\n" (pp_stmt s))
             (Dis.dis_decode_entry env denv decoder opcode)
 
-    and gen (iset: string) (pat: string) (backend: gen_backend) (dir: string): unit =
+    and gen (iset: string) (pat: string) (include_pc: bool) (backend: gen_backend) (dir: string): unit =
         if not (Sys.file_exists dir) then failwith ("Can't find target dir " ^ dir);
 
         (* Build the symbolic lifter *)
-        let (decoder_id,decoder_fnsig,tests,instrs) = Symbolic_lifter.run iset pat env in
+        let (decoder_id,decoder_fnsig,tests,instrs) = Symbolic_lifter.run_marshal include_pc iset pat env in
 
         let run_gen_backend : gen_function =
             match backend with
             | Ocaml -> Ocaml_backend.run
-            | Cpp -> Cpp_backend.run in
+            | Cpp -> Cpp_backend.run
+            | Scala -> Scala_backend.run
+        in
 
         (* Build backend program *)
         run_gen_backend decoder_id decoder_fnsig tests instrs dir

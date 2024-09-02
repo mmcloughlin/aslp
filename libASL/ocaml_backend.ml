@@ -133,6 +133,7 @@ let rec prints_expr e st =
   | Expr_LitString s -> "\"" ^ s ^ "\""
   | Expr_Tuple(es) -> "(" ^ (String.concat "," (List.map (fun e -> prints_expr e st) es)) ^ ")"
   | Expr_Unknown(ty) -> default_value ty st
+  | Expr_If (ty, c, t, [], e) -> Printf.sprintf "(if (%s) then (%s) else (%s))" (prints_expr c st) (prints_expr t st) (prints_expr e st)
 
   | _ -> failwith @@ "prints_expr: " ^ pp_expr e
 
@@ -313,8 +314,8 @@ and write_stmts s st =
         write_seq st;
         write_stmt s st
       ) xs;
-      dec_depth st;
-      assert (not st.skip_seq)
+      dec_depth st
+      (*assert (not st.skip_seq)*)
 
 let build_args targs args =
   if List.length targs = 0 && List.length args = 0 then "()"

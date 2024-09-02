@@ -27,7 +27,10 @@ let opt_export_aarch64_dir = ref ""
 let opt_verbose = ref false
 
 
-let () = Printexc.register_printer
+
+let () = 
+    Printexc.record_backtrace true ;
+    Printexc.register_printer
     (function
     | Value.EvalError (loc, msg) ->
         Some (Printf.sprintf "EvalError at %s: %s" (pp_loc loc) msg)
@@ -40,7 +43,7 @@ let help_msg = [
     {|:sem <instr-set> <int>         Decode and print opcode semantics|};
     {|:ast <instr-set> <int> [file]  Decode and write opcode semantics to stdout or a file, in a structured ast format|};
     {|:gen <instr-set> <regex>       Generate an offline lifter using the given backend|};
-    {|      [backend] [dir]|};
+    {|      [pc-option] [backend] [dir]|};
     {|:project <file>                Execute ASLi commands in <file>|};
     {|:q :quit                       Exit the interpreter|};
     {|:run                           Execute instructions|};
@@ -56,6 +59,7 @@ let help_msg = [
 
 (** supported backends for :gen and their default output directories *)
 let gen_backends = [
+    ("scala", (Cpu.Scala, "offlineASL-scala/lifter/src/generated"));
     ("ocaml", (Cpu.Ocaml, "offlineASL"));
     ("cpp",   (Cpu.Cpp, "offlineASL-cpp/subprojects/aslp-lifter"));
 ]
@@ -197,18 +201,24 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
             (fun s -> Printf.fprintf chan "%s\n" (Utils.to_string (PP.pp_raw_stmt s)))
             (Dis.dis_decode_entry cpu.env cpu.denv decoder op);
         Option.iter close_out chan_opt
-    | ":gen" :: iset :: id :: rest when List.length rest <= 2 ->
+    | ":gen" :: iset :: id :: rest when List.length rest <= 3 ->
+        let pc_option = Option.value List.(nth_opt rest 1) ~default:"false" in
         let backend_str = Option.value List.(nth_opt rest 0) ~default:"ocaml" in
-        Printf.printf "Generating lifter for %s %s using %s backend\n" iset id backend_str;
+        Printf.printf "Generating lifter for %s %s with pc option %s using %s backend\n" iset id pc_option backend_str;
+
+        let pc_option = match String.lowercase_ascii pc_option with
+        | "false" -> false
+        | "true" -> true
+        | _ -> invalid_arg @@ Printf.sprintf "unkown pc option %s (expected: true, false)" pc_option in
 
         let (backend, default_dir) = match List.assoc_opt backend_str gen_backends with
             | Some x -> x
             | None -> invalid_arg @@ Printf.sprintf "unknown backend %s (supported: %s)"
                                      backend_str (String.concat ", " List.(map fst gen_backends)) in
 
-        let dir = Option.value List.(nth_opt rest 1) ~default:default_dir in
+        let dir = Option.value List.(nth_opt rest 2) ~default:default_dir in
         let cpu' = Cpu.mkCPU cpu.env cpu.denv in
-        cpu'.gen iset id backend dir;
+        cpu'.gen iset id pc_option backend dir;
         Printf.printf "Done generating %s lifter into '%s'.\n" backend_str dir;
     | ":dump" :: iset :: opcode :: rest ->
         let fname = 
