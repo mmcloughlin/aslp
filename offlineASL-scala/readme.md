@@ -1,9 +1,13 @@
-Build standalone Scala lifter interface
+Build standalone Scala lifter interface.
 
+Requires Mill (e.g. installed by Coursier). Run in parent directory:
+```bash
+mkdir -p offlineASL-scala/lifter/src/generated
+echo ':gen A64 aarch64.+ scala true offlineASL-scala/lifter/src/generated' | dune exec asli
+cd offlineASL-scala
+mill lifter.assembly
+mill main.run --opcode 0x8b031041
 ```
-# (in parent direictory)
-~ echo ':gen A64 aarch64.+ scala true scalaOfflineASL/lifter/generated' | dune exec asli
-~ cd scalaOfflineASL
-~ ./mill lifter.assembly
-~ ./mill main.run
-```
+This should compile successfully. However, the last command will fail since
+the default instruction-building interface simply throws "not implemented"
+on all methods.
