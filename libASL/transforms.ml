@@ -1183,7 +1183,7 @@ module IntToBits = struct
         in
         let narrow_args () = Expr_TApply (f, [expr_of_int wd'], List.map narrow es) in
 
-        (* for add and sub expressions, we only need the lowest n bits in order
+        (* for some arithmetic expressions, we only need the lowest n bits in order
            to have n bits of precision in the output. *)
         (match name_of_FIdent f with
         | "add_bits" -> ChangeDoChildrenPost (narrow_args (), fun x -> Expr_Slices (x, [sl]))
