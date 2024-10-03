@@ -8,6 +8,7 @@
 module AST = Asl_ast
 
 open Asl_utils
+open Symbolic
 
 type gen_backend =
     | Ocaml
@@ -26,6 +27,7 @@ type cpu = {
     elfwrite : Int64.t -> char -> unit;
     opcode   : string -> Primops.bigint -> unit;
     sem      : string -> Primops.bigint -> unit;
+    adhoc    : string -> unit;
     gen      : string -> string -> bool -> gen_backend -> string -> unit;
 }
 
@@ -59,8 +61,22 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
         let decoder = Eval.Env.getDecoder env (Ident iset) in
         List.iter
             (fun s -> Printf.printf "%s\n" (pp_stmt s))
-            (Dis.dis_decode_entry env denv decoder opcode)
+            (Dis.dis_decode_entry env denv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) opcode))))
 
+    and adhoc (iset: string): unit =
+        (* Construct add with immediate opcode parts. *)
+        let hi = Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 10) (Z.of_int 0x244))) in
+        let imm = Exp (Expr_Var (Ident "imm")) in
+        let lo = Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 10) (Z.of_int 0x107))) in
+
+        (* Append into 32-bit opcode. *)
+        let op = sym_append_bits Unknown 10 22 hi (sym_append_bits Unknown 12 10 imm lo) in
+
+        let decoder = Eval.Env.getDecoder env (Ident iset) in
+        List.iter
+            (fun s -> Printf.printf "%s\n" (pp_stmt s))
+            (Dis.dis_decode_entry env denv decoder op) 
+        
     and gen (iset: string) (pat: string) (include_pc: bool) (backend: gen_backend) (dir: string): unit =
         if not (Sys.file_exists dir) then failwith ("Can't find target dir " ^ dir);
 
@@ -88,6 +104,7 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
         elfwrite = elfwrite;
         opcode   = opcode;
         sem      = sem;
+        adhoc    = adhoc;
         gen      = gen
     }
 

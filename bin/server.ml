@@ -24,7 +24,7 @@ let eval_instr (opcode: string) : string * string =
     let env' = Lazy.force persistent_env in
     let lenv = Dis.build_env env' in
     let decoder = Eval.Env.getDecoder env' (Ident "A64") in
-    let (enc,stmts) = Dis.dis_decode_entry_with_inst env' lenv decoder (Z.of_string opcode) in
+    let (enc,stmts) = Dis.dis_decode_entry_with_inst env' lenv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) (Z.of_string opcode)))) in
 
     let stmts'   = List.map pp_raw stmts in
     enc, String.concat "\n" stmts'
@@ -96,4 +96,3 @@ let () = Arg.parse speclist ignore "usage: aslp-server --host HOSTNAME --port PO
 let () =
   let _address = Unix.(ADDR_INET (inet_addr_of_string !addr_opt, !port_opt)) in
   Lwt_main.run (server !addr_opt !port_opt)
-
