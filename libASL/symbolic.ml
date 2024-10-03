@@ -177,6 +177,11 @@ let int_of_sym (e: sym): int =
   | Exp e        -> int_of_expr e
   | _ -> failwith @@ "int_of_sym: cannot coerce to int " ^ pp_sym e
 
+let bool_of_sym (s: sym): bool =
+  match s with
+  | Val (VBool b) -> b
+  | _ -> failwith @@ "bool_of_sym: cannot coerce to bool " ^ pp_sym s  
+  
 let sym_of_tuple (loc: AST.l) (v: sym): sym list  =
   match v with
   | Val (VTuple vs) -> (List.map (fun v -> Val v) vs)

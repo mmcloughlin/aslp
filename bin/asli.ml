@@ -11,6 +11,7 @@ open LibASL
 
 open Asl_ast
 open Value
+open Symbolic
 open Eval
 open Asl_utils
 
@@ -40,6 +41,7 @@ let help_msg = [
     {|:? :help                       Show this help message|};
     {|:elf <file>                    Load an ELF file|};
     {|:opcode <instr-set> <int>      Decode and execute opcode|};
+    {|:adhoc <instr-set> <int>       Adhoc symbolic opcode test|};
     {|:sem <instr-set> <int>         Decode and print opcode semantics|};
     {|:ast <instr-set> <int> [file]  Decode and write opcode semantics to stdout or a file, in a structured ast format|};
     {|:gen <instr-set> <regex>       Generate an offline lifter using the given backend|};
@@ -134,7 +136,7 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
 
                     (try
                         (* Generate and evaluate partially evaluated instruction *)
-                        let disStmts = Dis.dis_decode_entry disEnv lenv decoder op in
+                        let disStmts = Dis.dis_decode_entry disEnv lenv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) op))) in
                         List.iter (eval_stmt disEvalEnv) disStmts;
 
                         if Eval.Env.compare evalEnv disEvalEnv then
@@ -193,7 +195,7 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         Printf.printf "Decoding instruction %s %s\n" iset (Z.format "%x" op);
         cpu'.sem iset op
     | ":ast" :: iset :: opcode :: rest when List.length rest <= 1 ->
-        let op = Z.of_string opcode in
+        let op = (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) (Z.of_string opcode)))) in
         let decoder = Eval.Env.getDecoder cpu.env (Ident iset) in
         let chan_opt = Option.map open_out (List.nth_opt rest 0) in
         let chan = Option.value chan_opt ~default:stdout in
@@ -220,6 +222,9 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         let cpu' = Cpu.mkCPU cpu.env cpu.denv in
         cpu'.gen iset id pc_option backend dir;
         Printf.printf "Done generating %s lifter into '%s'.\n" backend_str dir;
+    | [":adhoc"] ->
+        let cpu' = Cpu.mkCPU cpu.env cpu.denv in
+        cpu'.adhoc "A64"
     | ":dump" :: iset :: opcode :: rest ->
         let fname = 
             (match rest with 
@@ -230,7 +235,7 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         let cpu' = Cpu.mkCPU (Eval.Env.copy cpu.env) cpu.denv in
         let op = Z.of_string opcode in
         let decoder = Eval.Env.getDecoder cpu'.env (Ident iset) in
-        let stmts = Dis.dis_decode_entry cpu'.env cpu.denv decoder op in
+        let stmts = Dis.dis_decode_entry cpu'.env cpu.denv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) op))) in
         let chan = open_out_bin fname in
         Printf.printf "Dumping instruction semantics for %s %s" iset (Z.format "%x" op);
         Printf.printf " to file %s\n" fname;
