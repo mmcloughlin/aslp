@@ -41,9 +41,8 @@ let help_msg = [
     {|:? :help                       Show this help message|};
     {|:elf <file>                    Load an ELF file|};
     {|:opcode <instr-set> <int>      Decode and execute opcode|};
-    {|:adhoc <instr-set> <int>       Adhoc symbolic opcode test|};
-    {|:sem <instr-set> <int>         Decode and print opcode semantics|};
-    {|:ast <instr-set> <int> [file]  Decode and write opcode semantics to stdout or a file, in a structured ast format|};
+    {|:sem <instr-set> <bits>        Decode and print opcode semantics|};
+    {|:ast <instr-set> <bits> [file] Decode and write opcode semantics to stdout or a file, in a structured ast format|};
     {|:gen <instr-set> <regex>       Generate an offline lifter using the given backend|};
     {|      [pc-option] [backend] [dir]|};
     {|:project <file>                Execute ASLi commands in <file>|};
@@ -191,9 +190,8 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         ) encodings;
     | [":sem"; iset; opcode] ->
         let cpu' = Cpu.mkCPU cpu.env cpu.denv in
-        let op = Z.of_string opcode in
-        Printf.printf "Decoding instruction %s %s\n" iset (Z.format "%x" op);
-        cpu'.sem iset op
+        Printf.printf "Decoding instruction %s %s\n" iset opcode;
+        cpu'.sem iset opcode
     | ":ast" :: iset :: opcode :: rest when List.length rest <= 1 ->
         let op = (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) (Z.of_string opcode)))) in
         let decoder = Eval.Env.getDecoder cpu.env (Ident iset) in
@@ -222,9 +220,6 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         let cpu' = Cpu.mkCPU cpu.env cpu.denv in
         cpu'.gen iset id pc_option backend dir;
         Printf.printf "Done generating %s lifter into '%s'.\n" backend_str dir;
-    | [":adhoc"; iset; opcode] ->
-        let cpu' = Cpu.mkCPU cpu.env cpu.denv in
-        cpu'.adhoc iset opcode
     | ":dump" :: iset :: opcode :: rest ->
         let fname = 
             (match rest with 

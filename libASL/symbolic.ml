@@ -943,21 +943,25 @@ let rec expr_access_chain (x: expr) (a: access_chain list): expr =
   | [] -> x)
 
 
-let sym_opcode_segment_expr_of_string (s: string) (bits: int): sym =
+let sym_bits_segment_expr_of_string (s: string) (bits: int option): sym * int =
   if (String.starts_with ~prefix:"0x" s) then
-    Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int bits) (Z.of_string s)))
-  else
-    Exp (Expr_Var (Ident s))
+    let litbits = (String.length s - 2) * 4 in
+    let bits' = Option.value bits ~default:litbits in
+    (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int bits') (Z.of_string s))), bits')
+  else match bits with
+  | Some bits -> (Exp (Expr_Var (Ident s)), bits)
+  | None -> failwith ("variable segment must have a concrete width")
 
-let sym_opcode_segment_of_string (s: string): sym * int =
+
+let sym_bits_segment_of_string (s: string): sym * int =
   match String.split_on_char ':' s with
   | [expr; bits] ->
-    let bits' = int_of_string bits in
-    let expr' = sym_opcode_segment_expr_of_string expr bits' in
-    (expr', bits')
+    sym_bits_segment_expr_of_string expr (Some (int_of_string bits))
+  | [expr] ->
+    sym_bits_segment_expr_of_string expr None
   | _ -> failwith ("invalid opcode segment")
 
-let sym_opcode_of_string (s: string): sym * int =
-  let segs = List.map sym_opcode_segment_of_string (String.split_on_char '|' s) in
+let sym_bits_of_string (s: string): sym * int =
+  let segs = List.map sym_bits_segment_of_string (String.split_on_char '|' s) in
   let init = (Val (VBits empty_bits), 0) in
   List.fold_left (fun (x, xw) (y, yw) -> (sym_append_bits Unknown xw yw x y, xw+yw)) init segs
