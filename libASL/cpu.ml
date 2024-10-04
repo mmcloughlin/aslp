@@ -64,13 +64,8 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
             (Dis.dis_decode_entry env denv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) opcode))))
 
     and adhoc (iset: string): unit =
-        (* Construct add with immediate opcode parts. *)
-        let hi = Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 10) (Z.of_int 0x244))) in
-        let imm = Exp (Expr_Var (Ident "imm")) in
-        let lo = Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 10) (Z.of_int 0x107))) in
-
-        (* Append into 32-bit opcode. *)
-        let op = sym_append_bits Unknown 10 22 hi (sym_append_bits Unknown 12 10 imm lo) in
+        let opcode = "0x244:10 imm:12 0x107:10" in
+        let (op, _) = sym_opcode_of_string opcode in
 
         let decoder = Eval.Env.getDecoder env (Ident iset) in
         List.iter

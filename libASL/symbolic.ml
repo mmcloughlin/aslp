@@ -922,3 +922,23 @@ let rec expr_access_chain (x: expr) (a: access_chain list): expr =
   | (Index i)::a -> expr_access_chain (Expr_Array(x,val_expr i)) a
   | (SymIndex e)::a -> expr_access_chain (Expr_Array(x,e)) a
   | [] -> x)
+
+
+let sym_opcode_segment_expr_of_string (s: string) (bits: int): sym =
+  if (String.starts_with ~prefix:"0x" s) then
+    Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int bits) (Z.of_string s)))
+  else
+    Exp (Expr_Var (Ident s))
+
+let sym_opcode_segment_of_string (s: string): sym * int =
+  match String.split_on_char ':' s with
+  | [expr; bits] ->
+    let bits' = int_of_string bits in
+    let expr' = sym_opcode_segment_expr_of_string expr bits' in
+    (expr', bits')
+  | _ -> failwith ("invalid opcode segment")
+
+let sym_opcode_of_string (s: string): sym * int =
+  let segs = List.map sym_opcode_segment_of_string (String.split_on_char ' ' s) in
+  let init = (Val (VBits empty_bits), 0) in
+  List.fold_left (fun (x, xw) (y, yw) -> (sym_append_bits Unknown xw yw x y, xw+yw)) init segs
