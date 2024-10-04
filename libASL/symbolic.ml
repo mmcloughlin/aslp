@@ -958,6 +958,6 @@ let sym_opcode_segment_of_string (s: string): sym * int =
   | _ -> failwith ("invalid opcode segment")
 
 let sym_opcode_of_string (s: string): sym * int =
-  let segs = List.map sym_opcode_segment_of_string (String.split_on_char ' ' s) in
+  let segs = List.map sym_opcode_segment_of_string (String.split_on_char '|' s) in
   let init = (Val (VBits empty_bits), 0) in
   List.fold_left (fun (x, xw) (y, yw) -> (sym_append_bits Unknown xw yw x y, xw+yw)) init segs

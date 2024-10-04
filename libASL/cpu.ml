@@ -27,7 +27,7 @@ type cpu = {
     elfwrite : Int64.t -> char -> unit;
     opcode   : string -> Primops.bigint -> unit;
     sem      : string -> Primops.bigint -> unit;
-    adhoc    : string -> unit;
+    adhoc    : string -> string -> unit;
     gen      : string -> string -> bool -> gen_backend -> string -> unit;
 }
 
@@ -63,8 +63,7 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
             (fun s -> Printf.printf "%s\n" (pp_stmt s))
             (Dis.dis_decode_entry env denv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) opcode))))
 
-    and adhoc (iset: string): unit =
-        let opcode = "0x244:10 imm:12 0x107:10" in
+    and adhoc (iset: string) (opcode: string): unit =
         let (op, _) = sym_opcode_of_string opcode in
 
         let decoder = Eval.Env.getDecoder env (Ident iset) in

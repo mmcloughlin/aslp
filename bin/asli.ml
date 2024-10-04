@@ -222,9 +222,9 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         let cpu' = Cpu.mkCPU cpu.env cpu.denv in
         cpu'.gen iset id pc_option backend dir;
         Printf.printf "Done generating %s lifter into '%s'.\n" backend_str dir;
-    | [":adhoc"] ->
+    | [":adhoc"; iset; opcode] ->
         let cpu' = Cpu.mkCPU cpu.env cpu.denv in
-        cpu'.adhoc "A64"
+        cpu'.adhoc iset opcode
     | ":dump" :: iset :: opcode :: rest ->
         let fname = 
             (match rest with 
