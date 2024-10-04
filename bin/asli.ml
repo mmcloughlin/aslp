@@ -193,7 +193,7 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         Printf.printf "Decoding instruction %s %s\n" iset opcode;
         cpu'.sem iset opcode
     | ":ast" :: iset :: opcode :: rest when List.length rest <= 1 ->
-        let op = (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) (Z.of_string opcode)))) in
+        let (op, _) = sym_bits_of_string opcode in
         let decoder = Eval.Env.getDecoder cpu.env (Ident iset) in
         let chan_opt = Option.map open_out (List.nth_opt rest 0) in
         let chan = Option.value chan_opt ~default:stdout in
