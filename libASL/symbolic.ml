@@ -433,13 +433,21 @@ let sym_not_bits loc w (x: sym) =
   | Val x -> Val (VBits (prim_not_bits (to_bits loc x)))
   | _ -> Exp (Expr_TApply (FIdent ("not_bits", 0), [w], [sym_expr x]) )
 
-let sym_and_bits loc w (x: sym) (y: sym) =
+let rec sym_and_bits loc w (x: sym) (y: sym) =
   match x, y with
   | Val x, Val y -> Val (VBits (prim_and_bits (to_bits loc x) (to_bits loc y)))
   | Val x, y when is_zero_bits x -> Val x
   | x, Val y when is_zero_bits y -> Val y
   | Val x, y when is_one_bits x -> y
   | x, Val y when is_one_bits y -> x
+  | (Exp (Expr_TApply (FIdent ("append_bits", 0), [lw; rw], [l; r])), Val (VBits bits)) ->
+    let lw' = int_of_expr lw in
+    let rw' = int_of_expr rw in
+    let lbits = Val (VBits (prim_extract bits (Z.of_int rw') (Z.of_int lw'))) in
+    let rbits = Val (VBits (prim_extract bits Z.zero (Z.of_int rw'))) in
+    let l' = sym_and_bits loc (expr_of_int lw') (sym_of_expr l) lbits in
+    let r' = sym_and_bits loc (expr_of_int rw') (sym_of_expr r) rbits in
+    Exp (Expr_TApply (FIdent ("append_bits", 0), [lw; rw], [sym_expr l'; sym_expr r']))
   | _ -> Exp (Expr_TApply (FIdent ("and_bits", 0), [w], [sym_expr x; sym_expr y]) )
 
 let sym_add_bits loc w (x: sym) (y: sym) =
