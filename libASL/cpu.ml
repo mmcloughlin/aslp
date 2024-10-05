@@ -8,6 +8,7 @@
 module AST = Asl_ast
 
 open Asl_utils
+open Symbolic
 
 type gen_backend =
     | Ocaml
@@ -25,7 +26,7 @@ type cpu = {
     setPC    : Primops.bigint -> unit;
     elfwrite : Int64.t -> char -> unit;
     opcode   : string -> Primops.bigint -> unit;
-    sem      : string -> Primops.bigint -> unit;
+    sem      : string -> string -> unit;
     gen      : string -> string -> bool -> gen_backend -> string -> unit;
 }
 
@@ -55,12 +56,13 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
         let decoder = Eval.Env.getDecoder env (Ident iset) in
         Eval.eval_decode_case AST.Unknown env decoder opcode
 
-    and sem (iset: string) (opcode: Primops.bigint): unit =
+    and sem (iset: string) (opcode: string): unit =
         let decoder = Eval.Env.getDecoder env (Ident iset) in
+        let (op, _) = sym_bits_of_string opcode in
         List.iter
             (fun s -> Printf.printf "%s\n" (pp_stmt s))
-            (Dis.dis_decode_entry env denv decoder opcode)
-
+            (Dis.dis_decode_entry env denv decoder op)
+        
     and gen (iset: string) (pat: string) (include_pc: bool) (backend: gen_backend) (dir: string): unit =
         if not (Sys.file_exists dir) then failwith ("Can't find target dir " ^ dir);
 

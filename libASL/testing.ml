@@ -4,6 +4,7 @@ module Env = Eval.Env
 open AST
 open Value
 open Asl_utils
+open Symbolic
 
 (****************************************************************
  * Opcode decoding without evaluation.
@@ -482,7 +483,7 @@ let op_dis (env: Env.t) (iset: string) (op: Primops.bigint): stmt list opresult 
   let decoder = Eval.Env.getDecoder env (Ident iset) in
   try
     Dis.check_rasl := true;
-    let stmts = Dis.dis_decode_entry env lenv decoder op in
+    let stmts = Dis.dis_decode_entry env lenv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) op))) in
     Result.Ok stmts
   with
     | e -> Result.Error (Op_DisFail e)
