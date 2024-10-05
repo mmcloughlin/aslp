@@ -2,7 +2,7 @@ name: Build with opam
 
 on:
   push:
-    branches: [ partial_eval ]
+    branches: [ dev ]
     paths: [ '*.opam', '.github/workflows/opam.yml' ]
   pull_request:
     paths: [ '*.opam', '.github/workflows/opam.yml' ]
@@ -25,4 +25,3 @@ jobs:
     - run: opam install dune
     - run: opam install . --deps-only --with-test
     - run: opam exec -- dune build --profile release
-

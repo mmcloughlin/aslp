@@ -3,7 +3,7 @@ name: Test partial eval
 on:
   push:
     branches:
-      - partial_eval 
+      - dev
   pull_request:
     types: []
   workflow_dispatch:
