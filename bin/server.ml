@@ -10,6 +10,7 @@ open List
 open Array
 open Asl_ast
 open Value
+open Symbolic
 open Eval
 open Asl_utils
 open Lwt
@@ -24,7 +25,8 @@ let eval_instr (opcode: string) : string * string =
     let env' = Lazy.force persistent_env in
     let lenv = Dis.build_env env' in
     let decoder = Eval.Env.getDecoder env' (Ident "A64") in
-    let (enc,stmts) = Dis.dis_decode_entry_with_inst env' lenv decoder (Z.of_string opcode) in
+    let (op, _) = sym_bits_of_string opcode in
+    let (enc,stmts) = Dis.dis_decode_entry_with_inst env' lenv decoder op in
 
     let stmts'   = List.map pp_raw stmts in
     enc, String.concat "\n" stmts'
@@ -96,4 +98,3 @@ let () = Arg.parse speclist ignore "usage: aslp-server --host HOSTNAME --port PO
 let () =
   let _address = Unix.(ADDR_INET (inet_addr_of_string !addr_opt, !port_opt)) in
   Lwt_main.run (server !addr_opt !port_opt)
-

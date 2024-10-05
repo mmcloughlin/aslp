@@ -6,7 +6,7 @@ run asli with these commands
   "
   0xab030041
   "
-  Decoding instruction A64 ab030041
+  Decoding instruction A64 0xab030041
   constant bits ( 64 ) Cse0__5 = add_bits.0 {{ 64 }} ( __array _R [ 2 ],__array _R [ 3 ] ) ;
   PSTATE . V = not_bits.0 {{ 1 }} ( cvt_bool_bv.0 {{  }} ( eq_bits.0 {{ 128 }} ( SignExtend.0 {{ 64,128 }} ( Cse0__5,128 ),add_bits.0 {{ 128 }} ( SignExtend.0 {{ 64,128 }} ( __array _R [ 2 ],128 ),SignExtend.0 {{ 64,128 }} ( __array _R [ 3 ],128 ) ) ) ) ) ;
   PSTATE . C = not_bits.0 {{ 1 }} ( cvt_bool_bv.0 {{  }} ( eq_bits.0 {{ 128 }} ( ZeroExtend.0 {{ 64,128 }} ( Cse0__5,128 ),add_bits.0 {{ 128 }} ( ZeroExtend.0 {{ 64,128 }} ( __array _R [ 2 ],128 ),ZeroExtend.0 {{ 64,128 }} ( __array _R [ 3 ],128 ) ) ) ) ) ;
@@ -23,14 +23,14 @@ run asli with these commands
   "
   0xd10083ff
   "
-  Decoding instruction A64 d10083ff
+  Decoding instruction A64 0xd10083ff
   SP_EL0 = add_bits.0 {{ 64 }} ( SP_EL0,'1111111111111111111111111111111111111111111111111111111111100000' ) ;
   ""
   Stmt_Assign(LExpr_Var("SP_EL0"),Expr_TApply("add_bits.0",[64],[Expr_Var("SP_EL0");'1111111111111111111111111111111111111111111111111111111111100000']))
   "
   0xa8c80861
   "
-  Decoding instruction A64 a8c80861
+  Decoding instruction A64 0xa8c80861
   __array _R [ 1 ] = Mem.read.0 {{ 8 }} ( __array _R [ 3 ],8,0 ) ;
   __array _R [ 2 ] = Mem.read.0 {{ 8 }} ( add_bits.0 {{ 64 }} ( __array _R [ 3 ],'0000000000000000000000000000000000000000000000000000000000001000' ),8,0 ) ;
   __array _R [ 3 ] = add_bits.0 {{ 64 }} ( __array _R [ 3 ],'0000000000000000000000000000000000000000000000000000000010000000' ) ;
@@ -41,7 +41,7 @@ run asli with these commands
   "
   0xa8880861
   "
-  Decoding instruction A64 a8880861
+  Decoding instruction A64 0xa8880861
   Mem.set.0 {{ 8 }} ( __array _R [ 3 ],8,0,__array _R [ 1 ] ) ;
   Mem.set.0 {{ 8 }} ( add_bits.0 {{ 64 }} ( __array _R [ 3 ],'0000000000000000000000000000000000000000000000000000000000001000' ),8,0,__array _R [ 2 ] ) ;
   __array _R [ 3 ] = add_bits.0 {{ 64 }} ( __array _R [ 3 ],'0000000000000000000000000000000000000000000000000000000010000000' ) ;
@@ -52,7 +52,7 @@ run asli with these commands
   "
   0x1e630040
   "
-  Decoding instruction A64 1e630040
+  Decoding instruction A64 0x1e630040
   bits ( 4 ) FPDecodeRounding5__5 ;
   FPDecodeRounding5__5 = ZeroExtend.0 {{ 2,4 }} ( FPCR [ 22 +: 2 ],4 ) ;
   constant bits ( 64 ) Exp9__5 = FixedToFP.0 {{ 32,64 }} ( __array _R [ 2 ] [ 0 +: 32 ],0,TRUE,FPCR,cvt_bits_uint.0 {{ 4 }} ( FPDecodeRounding5__5 ) ) ;
@@ -65,14 +65,14 @@ run asli with these commands
   "
   0xd53b4200
   "
-  Decoding instruction A64 d53b4200
+  Decoding instruction A64 0xd53b4200
   __array _R [ 0 ] = append_bits.0 {{ 36,28 }} ( ZeroExtend.0 {{ 4,36 }} ( append_bits.0 {{ 3,1 }} ( append_bits.0 {{ 2,1 }} ( append_bits.0 {{ 1,1 }} ( PSTATE . N,PSTATE . Z ),PSTATE . C ),PSTATE . V ),36 ),'0000000000000000000000000000' ) ;
   ""
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("append_bits.0",[36;28],[Expr_TApply("ZeroExtend.0",[4;36],[Expr_TApply("append_bits.0",[3;1],[Expr_TApply("append_bits.0",[2;1],[Expr_TApply("append_bits.0",[1;1],[Expr_Field(Expr_Var("PSTATE"),"N");Expr_Field(Expr_Var("PSTATE"),"Z")]);Expr_Field(Expr_Var("PSTATE"),"C")]);Expr_Field(Expr_Var("PSTATE"),"V")]);36]);'0000000000000000000000000000']))
   "
   0x0e000000
   "
-  Decoding instruction A64 e000000
+  Decoding instruction A64 0x0e000000
   constant bits ( 16 ) Cse15__5 = ZeroExtend.0 {{ 8,16 }} ( __array _Z [ 0 ] [ 0 +: 8 ],16 ) ;
   constant bits ( 16 ) Cse14__5 = mul_bits.0 {{ 16 }} ( ZeroExtend.0 {{ 8,16 }} ( __array _Z [ 0 ] [ 0 +: 8 ],16 ),'0000000000001000' ) ;
   constant bits ( 16 ) Cse13__5 = ZeroExtend.0 {{ 8,16 }} ( __array _Z [ 0 ] [ 8 +: 8 ],16 ) ;
@@ -179,7 +179,7 @@ run asli with these commands
   "
   0x0e205800
   "
-  Decoding instruction A64 e205800
+  Decoding instruction A64 0x0e205800
   bits ( 4 ) result__5 = '0000' ;
   if eq_bits.0 {{ 1 }} ( __array _Z [ 0 ] [ 0 +: 1 ],'1' ) then {
   result__5 = '0001' ;
@@ -586,7 +586,7 @@ run asli with these commands
   "
   0x4f71d000
   "
-  Decoding instruction A64 4f71d000
+  Decoding instruction A64 0x4f71d000
   constant bits ( 32 ) Cse43__5 = SignExtend.0 {{ 16,32 }} ( __array _Z [ 0 ] [ 0 +: 16 ],32 ) ;
   constant bits ( 32 ) Cse36__5 = SignExtend.0 {{ 16,32 }} ( __array _Z [ 0 ] [ 16 +: 16 ],32 ) ;
   constant bits ( 32 ) Cse30__5 = SignExtend.0 {{ 16,32 }} ( __array _Z [ 0 ] [ 32 +: 16 ],32 ) ;
