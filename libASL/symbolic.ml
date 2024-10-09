@@ -942,18 +942,24 @@ let rec expr_access_chain (x: expr) (a: access_chain list): expr =
   | (SymIndex e)::a -> expr_access_chain (Expr_Array(x,e)) a
   | [] -> x)
 
+(* Segment of a symbolic bitvector *)
+type segment
+  = SegmentBits of bitvector
+  | SegmentField of ident * int
 
-let sym_bits_segment_expr_of_string (s: string) (bits: int option): sym * int =
+(* Symbolic bitvector *)
+type sym_bits = segment list
+  
+let sym_bits_segment_expr_of_string (s: string) (bits: int option): segment =
   if (String.starts_with ~prefix:"0x" s) then
     let litbits = (String.length s - 2) * 4 in
     let bits' = Option.value bits ~default:litbits in
-    (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int bits') (Z.of_string s))), bits')
+    SegmentBits (Primops.prim_cvt_int_bits (Z.of_int bits') (Z.of_string s))
   else match bits with
-  | Some bits -> (Exp (Expr_Var (Ident s)), bits)
+  | Some bits -> SegmentField ((Ident s), bits)
   | None -> failwith ("variable segment must have a concrete width")
 
-
-let sym_bits_segment_of_string (s: string): sym * int =
+let sym_bits_segment_of_string (s: string): segment =
   match String.split_on_char ':' s with
   | [expr; bits] ->
     sym_bits_segment_expr_of_string expr (Some (int_of_string bits))
@@ -961,7 +967,21 @@ let sym_bits_segment_of_string (s: string): sym * int =
     sym_bits_segment_expr_of_string expr None
   | _ -> failwith ("invalid opcode segment")
 
-let sym_bits_of_string (s: string): sym * int =
-  let segs = List.map sym_bits_segment_of_string (String.split_on_char '|' s) in
+let sym_bits_of_string (s: string): sym_bits =
+  List.map sym_bits_segment_of_string (String.split_on_char '|' s)
+
+let sym_of_segment (s: segment): sym =
+  match s with
+  | SegmentBits b -> Val (VBits b)
+  | SegmentField (f, w) -> Exp (Expr_Var f)
+
+let segment_width (s: segment): int =
+  match s with
+  | SegmentBits b -> b.n
+  | SegmentField (_, w) -> w
+  
+let sym_of_sym_bits (s: sym_bits): sym =
+  let segs = List.map (fun seg -> (sym_of_segment seg, segment_width seg)) s in
   let init = (Val (VBits empty_bits), 0) in
-  List.fold_left (fun (x, xw) (y, yw) -> (sym_append_bits Unknown xw yw x y, xw+yw)) init segs
+  let (s, _) = List.fold_left (fun (x, xw) (y, yw) -> (sym_append_bits Unknown xw yw x y, xw+yw)) init segs in
+  s

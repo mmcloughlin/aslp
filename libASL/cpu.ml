@@ -58,7 +58,12 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
 
     and sem (iset: string) (opcode: string): unit =
         let decoder = Eval.Env.getDecoder env (Ident iset) in
+
+        (* Parse symbolic opcode *)
         let (op, _) = sym_bits_of_string opcode in
+
+        let (lenv, globals) = denv in
+        
         List.iter
             (fun s -> Printf.printf "%s\n" (pp_stmt s))
             (Dis.dis_decode_entry env denv decoder op)
