@@ -83,7 +83,7 @@ let test_compare env () : unit =
                 (try
                     (* Generate and evaluate partially evaluated instruction *)
                     Dis.check_rasl := true;
-                    let disStmts = Dis.dis_decode_entry disEnv lenv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) op))) in
+                    let disStmts = Dis.dis_decode_entry disEnv lenv decoder (Symbolic.sym_bits_of_bv (Primops.prim_cvt_int_bits (Z.of_int 32) op)) in
                     List.iter (Eval.eval_stmt disEvalEnv) disStmts;
 
                     compare_env evalEnv disEvalEnv opcode
