@@ -970,6 +970,9 @@ let segment_of_string (s: string): segment =
 let sym_bits_of_string (s: string): sym_bits =
   List.map segment_of_string (String.split_on_char '|' s)
 
+let sym_bits_of_bv (bv: Primops.bitvector): sym_bits =
+  [SegmentBits bv]
+
 let sym_of_segment (s: segment): sym =
   match s with
   | SegmentBits b -> Val (VBits b)
