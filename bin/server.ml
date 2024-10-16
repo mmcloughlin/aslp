@@ -25,7 +25,7 @@ let eval_instr (opcode: string) : string * string =
     let env' = Lazy.force persistent_env in
     let lenv = Dis.build_env env' in
     let decoder = Eval.Env.getDecoder env' (Ident "A64") in
-    let (op, _) = sym_bits_of_string opcode in
+    let op = sym_bits_of_string opcode in
     let (enc,stmts) = Dis.dis_decode_entry_with_inst env' lenv decoder op in
 
     let stmts'   = List.map pp_raw stmts in

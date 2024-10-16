@@ -1569,21 +1569,26 @@ let enum_types env i =
     | _ -> None
 
 (* Actually perform dis *)
-let dis_core (env: Eval.Env.t) (unroll_bound) ((lenv,globals): env) (decode: decode_case) (op: sym): string * stmt list =
+let dis_core (env: Eval.Env.t) (unroll_bound) ((lenv,globals): env) (decode: decode_case) (op: sym_bits): string * stmt list =
     let DecoderCase_Case (_,_,loc) = decode in
     let config = { eval_env = env ; unroll_bound } in
 
-    let (enc,lenv',stmts) = (dis_decode_case loc decode op) config lenv in
+    (* Declare symbolic fields as globals *)
+    let fields = fields_of_sym_bits op in
+    let field_names = List.map fst fields in
+    let globals = List.fold_left (fun idents name -> IdentSet.add name idents) globals field_names in
+
+    let (enc,lenv',stmts) = (dis_decode_case loc decode (sym_of_sym_bits op) config lenv) in
     let varentries = List.(concat @@ map (fun vars -> StringMap.(bindings (map fst vars))) lenv.locals) in
     let bindings = Asl_utils.Bindings.of_seq @@ List.to_seq @@ List.map (fun (x,y) -> (Ident x,y)) varentries in
     (* List.iter (fun (v,t) -> Printf.printf ("%s:%s\n") v (pp_type t)) varentries; *)
     let stmts = flatten stmts [] in
     let stmts' = Transforms.RemoveUnused.remove_unused globals @@ stmts in
     let stmts' = Transforms.RedundantSlice.do_transform Bindings.empty stmts' in
-    let stmts' = Transforms.FixRedefinitions.run (globals : IdentSet.t) stmts' in
+    let stmts' = Transforms.FixRedefinitions.run globals stmts' in
     let stmts' = Transforms.StatefulIntToBits.run (enum_types env) stmts' in
     let stmts' = Transforms.IntToBits.ints_to_bits stmts' in
-    let stmts' = Transforms.CommonSubExprElim.do_transform stmts' in
+    let stmts' = Transforms.CommonSubExprElim.do_transform stmts' globals in
     let stmts' = Transforms.CopyProp.copyProp stmts' in
     let stmts' = Transforms.RedundantSlice.do_transform bindings stmts' in
     let stmts' = Transforms.RemoveUnused.remove_unused globals @@ stmts' in
@@ -1604,7 +1609,7 @@ let dis_core (env: Eval.Env.t) (unroll_bound) ((lenv,globals): env) (decode: dec
    This is a complete hack, but it is nicer to make the loop unrolling decision during
    partial evaluation, rather than having to unroll after we know vectorization failed.
  *)
-let dis_decode_entry_with_inst (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: sym): string * stmt list =
+let dis_decode_entry_with_inst (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: sym_bits): string * stmt list =
   let max_upper_bound = Z.of_int64 Int64.max_int in
   match !Symbolic.use_vectoriser with
   | false -> dis_core env max_upper_bound (lenv,globals) decode op
@@ -1614,7 +1619,7 @@ let dis_decode_entry_with_inst (env: Eval.Env.t) ((lenv,globals): env) (decode: 
     if res then (enc,stmts') else
       dis_core env max_upper_bound (lenv,globals) decode op
 
-let dis_decode_entry (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: sym): stmt list =
+let dis_decode_entry (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: sym_bits): stmt list =
   snd @@ dis_decode_entry_with_inst env (lenv,globals) decode op
 
 let build_env (env: Eval.Env.t): env =
@@ -1660,4 +1665,5 @@ let retrieveDisassembly ?(address:string option) (env: Eval.Env.t) (lenv: env) (
     let lenv = match address with
     | Some v -> setPC env lenv (Z.of_string v)
     | None -> lenv in
-    dis_decode_entry env lenv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) (Z.of_string opcode))))
+    let op = sym_bits_of_string opcode in
+    dis_decode_entry env lenv decoder op

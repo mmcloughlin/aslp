@@ -135,7 +135,7 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
 
                     (try
                         (* Generate and evaluate partially evaluated instruction *)
-                        let disStmts = Dis.dis_decode_entry disEnv lenv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) op))) in
+                        let disStmts = Dis.dis_decode_entry disEnv lenv decoder (sym_bits_of_bv (Primops.prim_cvt_int_bits (Z.of_int 32) op)) in
                         List.iter (eval_stmt disEvalEnv) disStmts;
 
                         if Eval.Env.compare evalEnv disEvalEnv then
@@ -193,7 +193,7 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         Printf.printf "Decoding instruction %s %s\n" iset opcode;
         cpu'.sem iset opcode
     | ":ast" :: iset :: opcode :: rest when List.length rest <= 1 ->
-        let (op, _) = sym_bits_of_string opcode in
+        let op = sym_bits_of_string opcode in
         let decoder = Eval.Env.getDecoder cpu.env (Ident iset) in
         let chan_opt = Option.map open_out (List.nth_opt rest 0) in
         let chan = Option.value chan_opt ~default:stdout in
@@ -230,7 +230,7 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         let cpu' = Cpu.mkCPU (Eval.Env.copy cpu.env) cpu.denv in
         let op = Z.of_string opcode in
         let decoder = Eval.Env.getDecoder cpu'.env (Ident iset) in
-        let stmts = Dis.dis_decode_entry cpu'.env cpu.denv decoder (Val (Value.VBits (Primops.prim_cvt_int_bits (Z.of_int 32) op))) in
+        let stmts = Dis.dis_decode_entry cpu'.env cpu.denv decoder (sym_bits_of_bv (Primops.prim_cvt_int_bits (Z.of_int 32) op)) in
         let chan = open_out_bin fname in
         Printf.printf "Dumping instruction semantics for %s %s" iset (Z.format "%x" op);
         Printf.printf " to file %s\n" fname;
