@@ -1543,7 +1543,7 @@ module CommonSubExprElim = struct
     | Some t -> t
     | None -> raise (CSEError ("Can't infer type of strange expr: " ^ (pp_expr e)))
 
-  let insert_into_stmts (xs: stmt list) (x: stmt): (stmt list) =
+  let insert_into_stmts (xs: stmt list) (x: stmt) (predefined: IdentSet.t): (stmt list) =
     let rec move_after_stmts (head: stmt list) (tail: stmt list) (targets: IdentSet.t) (found: IdentSet.t) =
       if IdentSet.subset targets found then
         (head, tail)
@@ -1565,11 +1565,11 @@ module CommonSubExprElim = struct
         not (Str.string_match (Str.regexp "Cse") s 0)
       | _ -> false
     ) (fv_stmt x) in
-    let lists = move_after_stmts [] xs targets (IdentSet.empty) in
+    let lists = move_after_stmts [] xs targets predefined in
 
     (fst lists) @ [x] @ (snd lists)
 
-  let apply_knowledge (xs: stmt list) (knowledge: expr list) (repl): (stmt list) =
+  let apply_knowledge (xs: stmt list) (knowledge: expr list) (repl) (predefined: IdentSet.t): (stmt list) =
     let rec add_exprs_num (xs: stmt list) (k: expr list) (id: int) =
       match k with
       | [] -> xs
@@ -1581,7 +1581,7 @@ module CommonSubExprElim = struct
         let () = repl#add (Ident(new_var_name)) head in
         (* Do replacement in our remaining eliminate-able expressions
            to ensure that they will continue to match correctly *)
-        add_exprs_num (insert_into_stmts xs new_stmt) (visit_exprs repl tail) (id+1)
+        add_exprs_num (insert_into_stmts xs new_stmt predefined) (visit_exprs repl tail) (id+1)
     in
     add_exprs_num xs knowledge 0
 
@@ -1590,12 +1590,12 @@ module CommonSubExprElim = struct
       gain_info_pass xs knowledge (n+1)
     )
 
-  let do_transform (xs: stmt list): stmt list =
+  let do_transform (xs: stmt list) (predefined: IdentSet.t): stmt list =
     let expression_visitor = new gather_expressions in
     let expression_replacer = new replace_all_instances in
 
     let xs = visit_stmts expression_visitor xs in
-    let xs = apply_knowledge xs expression_visitor#get_info expression_replacer in
+    let xs = apply_knowledge xs expression_visitor#get_info expression_replacer predefined in
     let xs = visit_stmts expression_replacer xs in
     xs
 end

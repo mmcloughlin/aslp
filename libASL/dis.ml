@@ -1573,6 +1573,11 @@ let dis_core (env: Eval.Env.t) (unroll_bound) ((lenv,globals): env) (decode: dec
     let DecoderCase_Case (_,_,loc) = decode in
     let config = { eval_env = env ; unroll_bound } in
 
+    (* Declare symbolic fields as globals *)
+    let fields = fields_of_sym_bits op in
+    let field_names = List.map fst fields in
+    let globals = List.fold_left (fun idents name -> IdentSet.add name idents) globals field_names in
+
     let (enc,lenv',stmts) = (dis_decode_case loc decode (sym_of_sym_bits op) config lenv) in
     let varentries = List.(concat @@ map (fun vars -> StringMap.(bindings (map fst vars))) lenv.locals) in
     let bindings = Asl_utils.Bindings.of_seq @@ List.to_seq @@ List.map (fun (x,y) -> (Ident x,y)) varentries in
@@ -1580,10 +1585,10 @@ let dis_core (env: Eval.Env.t) (unroll_bound) ((lenv,globals): env) (decode: dec
     let stmts = flatten stmts [] in
     let stmts' = Transforms.RemoveUnused.remove_unused globals @@ stmts in
     let stmts' = Transforms.RedundantSlice.do_transform Bindings.empty stmts' in
-    let stmts' = Transforms.FixRedefinitions.run (globals : IdentSet.t) stmts' in
+    let stmts' = Transforms.FixRedefinitions.run globals stmts' in
     let stmts' = Transforms.StatefulIntToBits.run (enum_types env) stmts' in
     let stmts' = Transforms.IntToBits.ints_to_bits stmts' in
-    let stmts' = Transforms.CommonSubExprElim.do_transform stmts' in
+    let stmts' = Transforms.CommonSubExprElim.do_transform stmts' globals in
     let stmts' = Transforms.CopyProp.copyProp stmts' in
     let stmts' = Transforms.RedundantSlice.do_transform bindings stmts' in
     let stmts' = Transforms.RemoveUnused.remove_unused globals @@ stmts' in
