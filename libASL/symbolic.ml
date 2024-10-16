@@ -949,8 +949,8 @@ type segment
 
 (* Symbolic bitvector *)
 type sym_bits = segment list
-  
-let sym_bits_segment_expr_of_string (s: string) (bits: int option): segment =
+
+let segment_expr_of_string (s: string) (bits: int option): segment =
   if (String.starts_with ~prefix:"0x" s) then
     let litbits = (String.length s - 2) * 4 in
     let bits' = Option.value bits ~default:litbits in
@@ -959,16 +959,16 @@ let sym_bits_segment_expr_of_string (s: string) (bits: int option): segment =
   | Some bits -> SegmentField ((Ident s), bits)
   | None -> failwith ("variable segment must have a concrete width")
 
-let sym_bits_segment_of_string (s: string): segment =
+let segment_of_string (s: string): segment =
   match String.split_on_char ':' s with
   | [expr; bits] ->
-    sym_bits_segment_expr_of_string expr (Some (int_of_string bits))
+    segment_expr_of_string expr (Some (int_of_string bits))
   | [expr] ->
-    sym_bits_segment_expr_of_string expr None
+    segment_expr_of_string expr None
   | _ -> failwith ("invalid opcode segment")
 
 let sym_bits_of_string (s: string): sym_bits =
-  List.map sym_bits_segment_of_string (String.split_on_char '|' s)
+  List.map segment_of_string (String.split_on_char '|' s)
 
 let sym_of_segment (s: segment): sym =
   match s with
@@ -985,3 +985,12 @@ let sym_of_sym_bits (s: sym_bits): sym =
   let init = (Val (VBits empty_bits), 0) in
   let (s, _) = List.fold_left (fun (x, xw) (y, yw) -> (sym_append_bits Unknown xw yw x y, xw+yw)) init segs in
   s
+
+let field_of_segment (s: segment): (ident * int) option =
+  match s with
+  | SegmentBits _ -> None
+  | SegmentField (f, w) -> Some (f, w)
+
+(* Extract the fields from a symbolic bitvector *)
+let fields_of_sym_bits (s: sym_bits): (ident * int) list =
+  List.filter_map field_of_segment s
