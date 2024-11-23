@@ -1213,6 +1213,20 @@ and dis_lexpr' (loc: l) (x: lexpr) (r: sym): unit rws =
         DisEnv.traverse2_ (dis_lexpr loc) ls rs
     | LExpr_Array(_,_) ->
         dis_lexpr_chain loc x [] r
+    | LExpr_BitTuple(ls) ->
+        let rec set_elem (i: int) (ls: lexpr list): unit rws =
+            (match ls with
+            | [] -> DisEnv.unit
+            | (l::ls') ->
+                let e = lexpr_to_expr loc l in
+                let@ ty = type_of_load loc e in
+                let w = width_of_type loc ty in
+                let y = sym_slice loc r i w in
+                let@ () = dis_lexpr_chain loc l [] y in
+                set_elem (i + w) ls'
+            )
+        in
+        set_elem 0 ls
     | LExpr_Write(setter, tes, es) ->
         let@ tvs = dis_exprs loc tes in
         let@ vs = dis_exprs loc es in
