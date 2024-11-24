@@ -241,6 +241,10 @@ let f_gen_lsl_bits xw yw x y =
   Expr_TApply (FIdent ("lsl_bits", 0), [expr_of_z xw; expr_of_z yw], [x;y])
 let f_gen_asr_bits xw yw x y =
   Expr_TApply (FIdent ("asr_bits", 0), [expr_of_z xw; expr_of_z yw], [x;y])
+let f_gen_ror_bits xw yw x y =
+  Expr_TApply (FIdent ("ror_bits", 0), [expr_of_z xw; expr_of_z yw], [x;y])
+let f_gen_rol_bits xw yw x y =
+  Expr_TApply (FIdent ("rol_bits", 0), [expr_of_z xw; expr_of_z yw], [x;y])
 let f_gen_replicate_bits xw yw x y =
   Expr_TApply (FIdent ("replicate_bits", 0), [expr_of_z xw; expr_of_z yw], [x; expr_of_z yw])
 let f_gen_ZeroExtend xw yw x y =
