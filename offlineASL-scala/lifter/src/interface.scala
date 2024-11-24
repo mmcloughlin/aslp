@@ -84,6 +84,8 @@ trait LiftState[RTSym, RTLabel, BV <: RTSym] {
   def f_gen_asr_bits(targ0: BigInt, targ1: BigInt, arg0: RTSym, arg1: RTSym): RTSym
   def f_gen_lsl_bits(targ0: BigInt, targ1: BigInt, arg0: RTSym, arg1: RTSym): RTSym
   def f_gen_lsr_bits(targ0: BigInt, targ1: BigInt, arg0: RTSym, arg1: RTSym): RTSym
+  def f_gen_ror_bits(targ0: BigInt, targ1: BigInt, arg0: RTSym, arg1: RTSym): RTSym
+  def f_gen_rol_bits(targ0: BigInt, targ1: BigInt, arg0: RTSym, arg1: RTSym): RTSym
   def f_gen_mul_bits(targ0: BigInt, arg0: RTSym, arg1: RTSym): RTSym
   def f_gen_ne_bits(targ0: BigInt, arg0: RTSym, arg1: RTSym): RTSym
   def f_gen_not_bits(targ0: BigInt, arg0: RTSym): RTSym
