@@ -108,6 +108,8 @@ let no_inline = [
 ]
 
 let no_inline_pure () = [
+  "ROR",0;
+  "ROL",0;
   "LSL",0;
   "LSR",0;
   "ASR",0;
