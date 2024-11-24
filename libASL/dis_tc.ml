@@ -91,6 +91,8 @@ let prim_type fi targs =
   | ("lsl_bits",          [     n])     -> Some (Type_Bits n)
   | ("lsr_bits",          [     n])     -> Some (Type_Bits n)
   | ("asr_bits",          [     n])     -> Some (Type_Bits n)
+  | ("ror_bits",          [     n])     -> Some (Type_Bits n)
+  | ("rol_bits",          [     n])     -> Some (Type_Bits n)
   | ("sle_bits",          [     n])     -> Some (Symbolic.type_bool)
   | ("slt_bits",          [     n])     -> Some (Symbolic.type_bool)
 

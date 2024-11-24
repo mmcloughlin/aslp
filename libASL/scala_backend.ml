@@ -42,7 +42,7 @@ module StringSet = Set.Make(String)
         "f_mul_bits"; "f_and_bits"; "f_or_bits"; "f_eor_bits"; "f_not_bits";
         "f_slt_bits"; "f_sle_bits"; "f_zeros_bits"; "f_ones_bits";
         "f_ZeroExtend"; "f_SignExtend"; "f_asr_bits"; "f_lsl_bits";
-        "f_lsr_bits"; "f_decl_bool"; "f_decl_bv"; "f_AtomicEnd";
+        "f_lsr_bits"; "f_ror_bits"; "f_rol_bits"; "f_decl_bool"; "f_decl_bv"; "f_AtomicEnd";
         "f_AtomicStart"; "f_replicate_bits"; "f_append_bits"; "f_gen_BFAdd";
         "f_gen_BFMul"; "f_gen_FPAdd"; "f_gen_FPCompare"; "f_gen_FPCompareEQ";
         "f_gen_FPCompareGE"; "f_gen_FPCompareGT"; "f_gen_FPConvert";
@@ -843,4 +843,3 @@ let run (dfn : ident) (dfnsig : ty option * 'a * ident list * ident list * 'b * 
   let files = (write_test_file tests dir st)::files in
   write_decoder_file dfn (lift_fsig dfnsig) files dir st |> ignore ; 
   ()
-
