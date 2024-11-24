@@ -141,6 +141,8 @@ public:
   virtual rt_expr f_gen_lsr_bits(rt_expr x, rt_expr y) = 0;
   virtual rt_expr f_gen_lsl_bits(rt_expr x, rt_expr y) = 0;
   virtual rt_expr f_gen_asr_bits(rt_expr x, rt_expr y) = 0;
+  virtual rt_expr f_gen_ror_bits(rt_expr x, rt_expr y) = 0;
+  virtual rt_expr f_gen_rol_bits(rt_expr x, rt_expr y) = 0;
   virtual rt_expr f_gen_replicate_bits(rt_expr x, rt_expr y) = 0;
   virtual rt_expr f_gen_ZeroExtend(rt_expr x, rt_expr y) = 0;
   virtual rt_expr f_gen_SignExtend(rt_expr x, rt_expr y) = 0;
