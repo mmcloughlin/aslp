@@ -5,7 +5,7 @@ import lifter._
  * User-provided implementation of the lift-time semantics (e.g. f_eq_bits) and IBI (e.g. f_gen_eq_bits).
  */
 
-sealed trait RExpr 
+sealed trait RExpr
 case class BitVec(val value: BigInt, val size: BigInt) extends RExpr
 case class OtherExpr() extends RExpr
 
@@ -95,6 +95,8 @@ class NotImplementedLifter extends LiftState[RExpr, String, BitVec] {
   def f_gen_asr_bits(targ0: BigInt, targ1: BigInt, arg0: RTSym, arg1: RTSym): RTSym = throw NotImplementedError()
   def f_gen_lsl_bits(targ0: BigInt, targ1: BigInt, arg0: RTSym, arg1: RTSym): RTSym = throw NotImplementedError()
   def f_gen_lsr_bits(targ0: BigInt, targ1: BigInt, arg0: RTSym, arg1: RTSym): RTSym = throw NotImplementedError()
+  def f_gen_ror_bits(targ0: BigInt, targ1: BigInt, arg0: RTSym, arg1: RTSym): RTSym = throw NotImplementedError()
+  def f_gen_rol_bits(targ0: BigInt, targ1: BigInt, arg0: RTSym, arg1: RTSym): RTSym = throw NotImplementedError()
   def f_gen_mul_bits(targ0: BigInt, arg0: RTSym, arg1: RTSym): RTSym = throw NotImplementedError()
   def f_gen_ne_bits(targ0: BigInt, arg0: RTSym, arg1: RTSym): RTSym = throw NotImplementedError()
   def f_gen_not_bits(targ0: BigInt, arg0: RTSym): RTSym = throw NotImplementedError()

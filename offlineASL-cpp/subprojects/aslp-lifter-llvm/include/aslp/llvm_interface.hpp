@@ -300,7 +300,7 @@ public:
   void f_gen_store(rt_lexpr ptr, rt_expr exp) override {
     return f_gen_array_store(ptr, 0, exp);
   }
- 
+
   rt_expr f_gen_array_load(rt_lexpr var, bigint index) override {
     llvm::Value* ptr{};
     llvm::Type* ty{};
@@ -441,6 +441,16 @@ public:
     auto shift = builder->CreateAShr(x, y);
     auto zero = int_const(wd, 0);
     return builder->CreateSelect(ok, shift, zero);
+  }
+
+  rt_expr f_gen_ror_bits(rt_expr x, rt_expr y) override {
+    assert(0 && "unimplemented");
+    return nullptr;
+  }
+
+  rt_expr f_gen_rol_bits(rt_expr x, rt_expr y) override {
+    assert(0 && "unimplemented");
+    return nullptr;
   }
 
   rt_expr f_gen_replicate_bits(rt_expr x, rt_expr y) override {

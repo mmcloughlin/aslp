@@ -179,6 +179,8 @@ let pure_prims =
     "sle_bits";
     "lsl_bits";
     "asr_bits";
+    "ror_bits";
+    "rol_bits";
     "slt_bits";
     "sdiv_bits";
   ]
@@ -925,4 +927,3 @@ let gen_prog fns results env =
 let run fns env =
   let (taint_res, callers) = analysis fns env in
   gen_prog fns taint_res env
-

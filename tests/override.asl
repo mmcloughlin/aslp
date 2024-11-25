@@ -51,6 +51,14 @@ bits(N1) asr_bits(bits(N1) x, bits(N2) y)
     integer yn = SInt(y);
     return ASR(x, yn);
 
+bits(N1) ror_bits(bits(N1) x, bits(N2) y)
+    integer yn = SInt(y);
+    return ROR(x, yn);
+
+bits(N1) rol_bits(bits(N1) x, bits(N2) y)
+    integer yn = SInt(y);
+    return ROL(x, yn);
+
 integer HighestSetBit(bits(N) x)
     assert 0 < N && N <= 64;
     if (63 < N && x[63] == '1') then

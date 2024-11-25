@@ -15,6 +15,8 @@ let pure_prims =
     FIdent("asr_bits",0);
     FIdent("lsr_bits",0);
     FIdent("lsl_bits",0);
+    FIdent("ror_bits",0);
+    FIdent("rol_bits",0);
     FIdent("slt_bits",0);
     FIdent("sle_bits",0);
   ]
@@ -113,6 +115,8 @@ let infer_type (e: expr): ty option =
     | "lsr_bits"           -> Some(Type_Bits(num1))
     | "asl_bits"           -> Some(Type_Bits(num1))
     | "asr_bits"           -> Some(Type_Bits(num1))
+    | "ror_bits"           -> Some(Type_Bits(num1))
+    | "rol_bits"           -> Some(Type_Bits(num1))
     | "append_bits"        ->
       Some(Type_Bits(Expr_LitInt(string_of_int((int_of_string v1) + (int_of_string v2)))))
     | _ -> None
@@ -636,6 +640,12 @@ module StatefulIntToBits = struct
       | Expr_TApply (FIdent ("ASR", 0), [size], [x; n]) ->
           let (n,w) = force_signed (bv_of_int_expr st n) in
           expr_prim' "asr_bits" [size; expr_of_abs w] [x;sym_expr n]
+      | Expr_TApply (FIdent ("ROR", 0), [size], [x; n]) ->
+          let (n,w) = force_signed (bv_of_int_expr st n) in
+          expr_prim' "ror_bits" [size; expr_of_abs w] [x;sym_expr n]
+      | Expr_TApply (FIdent ("ROL", 0), [size], [x; n]) ->
+          let (n,w) = force_signed (bv_of_int_expr st n) in
+          expr_prim' "rol_bits" [size; expr_of_abs w] [x;sym_expr n]
 
       | e -> e
       in
@@ -901,6 +911,8 @@ module IntToBits = struct
       | FIdent ("lsl_bits", 0), [Expr_LitInt n; _], _
       | FIdent ("lsr_bits", 0), [Expr_LitInt n; _], _
       | FIdent ("asr_bits", 0), [Expr_LitInt n; _], _
+      | FIdent ("ror_bits", 0), [Expr_LitInt n; _], _
+      | FIdent ("rol_bits", 0), [Expr_LitInt n; _], _
       | FIdent ("ones_bits", 0), [Expr_LitInt n], _ -> int_of_string n
       | FIdent ("append_bits", 0), [Expr_LitInt n; Expr_LitInt m], _ -> int_of_string n + int_of_string m
       | FIdent ("replicate_bits", 0), [Expr_LitInt n; Expr_LitInt m], _ -> int_of_string n * int_of_string m
@@ -1119,6 +1131,12 @@ module IntToBits = struct
             let (n,nsize) = bits_with_size_of_expr n in
             expr_prim' "lsr_bits" [size; expr_of_int nsize] [x;sym_expr n]
           | Expr_TApply (FIdent ("ASR", 0), [size], [x; n]) ->
+            let (n,nsize) = bits_with_size_of_expr n in
+            expr_prim' "asr_bits" [size; expr_of_int nsize] [x;sym_expr n]
+          | Expr_TApply (FIdent ("ROR", 0), [size], [x; n]) ->
+            let (n,nsize) = bits_with_size_of_expr n in
+            expr_prim' "asr_bits" [size; expr_of_int nsize] [x;sym_expr n]
+          | Expr_TApply (FIdent ("ROL", 0), [size], [x; n]) ->
             let (n,nsize) = bits_with_size_of_expr n in
             expr_prim' "asr_bits" [size; expr_of_int nsize] [x;sym_expr n]
 
