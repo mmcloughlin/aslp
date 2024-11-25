@@ -1228,7 +1228,7 @@ and dis_lexpr' (loc: l) (x: lexpr) (r: sym): unit rws =
                 set_elem (i + w) ls'
             )
         in
-        set_elem 0 ls
+        set_elem 0 (List.rev ls)
     | LExpr_Write(setter, tes, es) ->
         let@ tvs = dis_exprs loc tes in
         let@ vs = dis_exprs loc es in
