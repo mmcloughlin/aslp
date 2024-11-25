@@ -789,6 +789,10 @@ let sym_prim_simplify (name: string) (tes: sym list) (es: sym list): sym option 
       let lower = sym_slice loc x1 si u in
       Some (sym_append_bits loc si u z lower)
 
+  | ("ROL", _, [Exp (Expr_TApply (FIdent ("append_bits", 0), [Expr_LitInt wl;Expr_LitInt wr], [xl; xr])); Val (VInt rot)])
+    when rot == Z.of_string wl ->
+      Some (Exp (Expr_TApply (FIdent ("append_bits", 0), [Expr_LitInt wr;Expr_LitInt wl], [xr; xl])))
+
   | ("ZeroExtend",  [Val (VInt v1); Val (VInt v2)], [x1;_]) when Z.equal v1 v2 -> Some x1
 
   | ("eq_enum",     _,                [x; Val (VBool true)])
