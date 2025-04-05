@@ -1,0 +1,4 @@
+:set impdef "Has SHA1 Crypto instructions" = TRUE
+:set impdef "Has SHA256 Crypto instructions" = TRUE
+:set impdef "Has SHA3 Crypto instructions" = TRUE
+:set impdef "Has SHA512 Crypto instructions" = TRUE

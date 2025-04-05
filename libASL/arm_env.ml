@@ -1,6 +1,6 @@
 (* defines the evaluation environment for the bundled Arm spsecifications. *)
 
-let aarch64_asl_dir: string option = 
+let aarch64_asl_dir: string option =
     None
 
 let prelude_blob : LoadASL.source = DataSource ("prelude.asl", [%blob "../prelude.asl"])
@@ -25,10 +25,16 @@ let asl_blobs : LoadASL.source list = [
     DataSource ("tests/override.prj", [%blob "../tests/override.prj"]);
 ]
 
+let ext_blobs : LoadASL.source list = [
+    DataSource ("tests/crypto.prj", [%blob "../tests/crypto.prj"]);
+]
+
 let aarch64_asl_files: (LoadASL.source * LoadASL.source list) option =
     Some (prelude_blob, asl_blobs)
 
-let aarch64_evaluation_environment ?(verbose = false) (): Eval.Env.t option = 
-    Option.bind aarch64_asl_files 
+let aarch64_evaluation_environment ?(verbose = false) (): Eval.Env.t option =
+    Option.bind aarch64_asl_files
         (fun (prelude, filenames) -> Eval.evaluation_environment prelude filenames verbose)
 
+let aarch64_ext_evaluation_environment ?(verbose = false) (): Eval.Env.t option =
+    Eval.evaluation_environment prelude_blob (List.concat [asl_blobs; ext_blobs]) verbose

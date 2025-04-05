@@ -18,7 +18,8 @@
     mra_tools/support/stubs.asl
     mra_tools/types.asl
     tests/override.asl
-    tests/override.prj))
+    tests/override.prj
+    tests/crypto.prj))
 
 (alias
  (name default)
