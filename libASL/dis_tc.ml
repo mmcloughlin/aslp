@@ -90,6 +90,8 @@ let prim_type fi targs =
   | ("lsl_bits",          [     n])     -> Some (Type_Bits n)
   | ("lsr_bits",          [     n])     -> Some (Type_Bits n)
   | ("asr_bits",          [     n])     -> Some (Type_Bits n)
+  | ("ror_bits",          [     n])     -> Some (Type_Bits n)
+  | ("rol_bits",          [     n])     -> Some (Type_Bits n)
   | ("sle_bits",          [     n])     -> Some (Symbolic.type_bool)
   | ("slt_bits",          [     n])     -> Some (Symbolic.type_bool)
 
@@ -110,7 +112,7 @@ let prim_type fi targs =
 
 let get_ret_type f targs env =
   match Eval.Env.getFun Unknown env f with
-  | (Some ty,_,targs_s,_,_,_) -> 
+  | (Some ty,_,targs_s,_,_,_) ->
       let subst = List.fold_right2 Bindings.add targs_s targs Bindings.empty in
       Some (subst_type subst ty)
   | _ -> None
@@ -128,6 +130,6 @@ let infer_type (e: expr) vars env =
   | Expr_TApply(FIdent("extract_int", 0), _, [_;_;w]) -> (Some(Type_Bits(w)))
   | Expr_TApply(f, targs, args) ->
       (match prim_type f targs with
-      | Some t -> Some t 
+      | Some t -> Some t
       | None -> get_ret_type f targs env)
   | _ -> None
