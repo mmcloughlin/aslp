@@ -106,11 +106,15 @@ module AllowedIntrinsics = struct
       FIdent("LSL",0);
       FIdent("LSR",0);
       FIdent("ASR",0);
+      FIdent("ROR",0);
+      FIdent("ROL",0);
       FIdent("SignExtend",0);
       FIdent("ZeroExtend",0);
       FIdent("asr_bits",0);
       FIdent("lsr_bits",0);
       FIdent("lsl_bits",0);
+      FIdent("ror_bits",0);
+      FIdent("rol_bits",0);
       FIdent("slt_bits",0);
       FIdent("sle_bits",0);
       FIdent("sdiv_bits",0);
