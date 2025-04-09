@@ -754,20 +754,7 @@ let sym_prim_simplify (name: string) (tes: sym list) (es: sym list): sym option 
   | ("append_bits", [_; Val t2],      [x1; _])            when is_zero t2 -> Some x1
 
   | ("LSL",         _,                [x1; Val x2])       when is_zero x2 -> Some x1
-  | ("LSL",         [Val (VInt w)],   [x1; Val (VInt s)]) ->
-      let si = Z.to_int s in
-      let u = Z.to_int w - si in
-      let z = Val (VBits (prim_zeros_bits s)) in
-      let upper = sym_slice loc x1 0 u in
-      Some (sym_append_bits loc u si upper z)
-
   | ("LSR",         _,                [x1; Val x2])       when is_zero x2 -> Some x1
-  | ("LSR",         [Val (VInt w)],   [x1; Val (VInt s)]) ->
-      let si = Z.to_int s in
-      let u = Z.to_int w - si in
-      let z = Val (VBits (prim_zeros_bits s)) in
-      let lower = sym_slice loc x1 si u in
-      Some (sym_append_bits loc si u z lower)
 
   | ("ZeroExtend",  [Val (VInt v1); Val (VInt v2)], [x1;_]) when Z.equal v1 v2 -> Some x1
 

@@ -78,9 +78,9 @@ strip opcode information before passing to antlr.
   "0x0a0203de"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)])]);64]))
   "0x0a021111"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),17),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),8),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),17),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),8),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x0a02492f"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),15),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),9),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[14;18],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,14)]);'000000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),15),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),9),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0000000000010010'])]);64]))
   "0x0a030000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)])]);64]))
   "0x0a030021"
@@ -258,27 +258,27 @@ strip opcode information before passing to antlr.
   "0x0b000362"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)])]);64]))
   "0x0b000400"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b000800"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b0008a0"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b000c3b"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[29;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,29)]);'000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0011'])]);64]))
   "0x0b000c41"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[29;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,29)]);'000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0011'])]);64]))
   "0x0b001820"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b001842"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b001860"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b0018c0"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b004260"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x0b005060"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[12;20],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,12)]);'00000000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0000000000010100'])]);64]))
   "0x0b010000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)])]);64]))
   "0x0b010001"
@@ -394,29 +394,29 @@ strip opcode information before passing to antlr.
   "0x0b0103de"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)])]);64]))
   "0x0b010400"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b010440"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b010480"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b010821"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b010822"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b010c00"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[29;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,29)]);'000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'0011'])]);64]))
   "0x0b011841"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b011861"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b011881"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b0118a1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b0118c1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b0118e1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),7),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),7),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b020000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)])]);64]))
   "0x0b020002"
@@ -514,33 +514,33 @@ strip opcode information before passing to antlr.
   "0x0b0203de"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)])]);64]))
   "0x0b020840"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b020841"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b020843"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b020844"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b021000"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x0b021082"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x0b021802"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b021862"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b021873"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b021882"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b0218a2"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b0218c2"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b021a73"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b021b02"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b030000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)])]);64]))
   "0x0b030001"
@@ -670,25 +670,25 @@ strip opcode information before passing to antlr.
   "0x0b0303de"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)])]);64]))
   "0x0b030423"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b030862"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b030863"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b030865"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b031083"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x0b031803"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b031842"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b0318c3"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b0318e3"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),7),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),7),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b032823"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[22;10],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,22)]);'0000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00001010'])]);64]))
   "0x0b040000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)])]);64]))
   "0x0b040001"
@@ -866,9 +866,9 @@ strip opcode information before passing to antlr.
   "0x0b060386"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)])]);64]))
   "0x0b0604c6"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b062842"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[22;10],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,22)]);'0000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);'00001010'])]);64]))
   "0x0b070021"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),7),[Slice_LoWd(0,32)])]);64]))
   "0x0b070024"
@@ -958,11 +958,11 @@ strip opcode information before passing to antlr.
   "0x0b0902cb"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),11),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),9),[Slice_LoWd(0,32)])]);64]))
   "0x0b091809"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),9),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),9),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),9),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),9),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b091869"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),9),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),9),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),9),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),9),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b0918a9"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),9),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),9),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),9),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),9),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b0a0000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),10),[Slice_LoWd(0,32)])]);64]))
   "0x0b0a00a5"
@@ -972,11 +972,11 @@ strip opcode information before passing to antlr.
   "0x0b0a0244"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),10),[Slice_LoWd(0,32)])]);64]))
   "0x0b0a041c"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),10),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),10),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b0a2803"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[22;10],[Expr_Slices(Expr_Array(Expr_Var("_R"),10),[Slice_LoWd(0,22)]);'0000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),10),[Slice_LoWd(0,32)]);'00001010'])]);64]))
   "0x0b0a282a"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),10),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[22;10],[Expr_Slices(Expr_Array(Expr_Var("_R"),10),[Slice_LoWd(0,22)]);'0000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),10),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),10),[Slice_LoWd(0,32)]);'00001010'])]);64]))
   "0x0b0b0000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),11),[Slice_LoWd(0,32)])]);64]))
   "0x0b0b000b"
@@ -1068,9 +1068,9 @@ strip opcode information before passing to antlr.
   "0x0b120272"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),18),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)])]);64]))
   "0x0b121852"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),18),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),18),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b1218d2"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),18),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),18),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b130000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)])]);64]))
   "0x0b130021"
@@ -1098,7 +1098,7 @@ strip opcode information before passing to antlr.
   "0x0b13031a"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)])]);64]))
   "0x0b131853"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b140014"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)])]);64]))
   "0x0b140021"
@@ -1118,9 +1118,9 @@ strip opcode information before passing to antlr.
   "0x0b1402c1"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)])]);64]))
   "0x0b141694"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[27;5],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,27)]);'00000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);'00000101'])]);64]))
   "0x0b142354"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[24;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,24)]);'00000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x0b150000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)])]);64]))
   "0x0b150002"
@@ -1190,7 +1190,7 @@ strip opcode information before passing to antlr.
   "0x0b1602f6"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)])]);64]))
   "0x0b160719"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b170000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)])]);64]))
   "0x0b170021"
@@ -1216,11 +1216,11 @@ strip opcode information before passing to antlr.
   "0x0b17039c"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)])]);64]))
   "0x0b1706f8"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b1706f9"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b171017"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x0b180000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)])]);64]))
   "0x0b18001b"
@@ -1246,9 +1246,9 @@ strip opcode information before passing to antlr.
   "0x0b18037b"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)])]);64]))
   "0x0b180718"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b181842"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b190000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,32)])]);64]))
   "0x0b190021"
@@ -1274,9 +1274,9 @@ strip opcode information before passing to antlr.
   "0x0b190399"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,32)])]);64]))
   "0x0b190419"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x0b190b39"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b1a0013"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)])]);64]))
   "0x0b1a0040"
@@ -1294,7 +1294,7 @@ strip opcode information before passing to antlr.
   "0x0b1a0360"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)])]);64]))
   "0x0b1a1b18"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x0b1b0021"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)])]);64]))
   "0x0b1b0084"
@@ -1314,7 +1314,7 @@ strip opcode information before passing to antlr.
   "0x0b1b039c"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)])]);64]))
   "0x0b1b0c00"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[29;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,29)]);'000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)]);'0011'])]);64]))
   "0x0b1c0000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)])]);64]))
   "0x0b1c0021"
@@ -1356,7 +1356,7 @@ strip opcode information before passing to antlr.
   "0x0b1c03de"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)])]);64]))
   "0x0b1c0b8a"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),10),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),10),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b1e0000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)])]);64]))
   "0x0b1e0021"
@@ -1392,23 +1392,23 @@ strip opcode information before passing to antlr.
   "0x0b362396"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[16;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,16)]);32])]);64]))
   "0x0b410c81"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[29;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(3,29)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'0011'])]);64]))
   "0x0b412041"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[24;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(8,24)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x0b417c21"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[1;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(31,1)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'0000000000011111'])]);64]))
   "0x0b420822"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[30;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(2,30)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b420c82"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[29;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(3,29)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0011'])]);64]))
   "0x0b422021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[24;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(8,24)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x0b427c42"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[1;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(31,1)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0000000000011111'])]);64]))
   "0x0b430e63"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[29;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(3,29)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'0011'])]);64]))
   "0x0b437c63"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[1;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(31,1)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'0000000000011111'])]);64]))
   "0x0b820800"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("asr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x0b850863"
@@ -20094,19 +20094,19 @@ strip opcode information before passing to antlr.
   "0x2a0003fc"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);64]))
   "0x2a0006e0"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x2a0008e0"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),7),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),7),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x2a001080"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a001840"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a001980"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a002c80"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[21;11],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,21)]);'00000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00001011'])]);64]))
   "0x2a004c21"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[13;19],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,13)]);'0000000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0000000000010011'])]);64]))
   "0x2a010000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)])]);64]))
   "0x2a010001"
@@ -20172,17 +20172,17 @@ strip opcode information before passing to antlr.
   "0x2a0103fc"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);64]))
   "0x2a011001"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a0118c1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a011961"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),11),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),11),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a0119a1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),13),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),13),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a014041"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a0142e1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a020000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)])]);64]))
   "0x2a020006"
@@ -20230,11 +20230,11 @@ strip opcode information before passing to antlr.
   "0x2a0203fc"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);64]))
   "0x2a021602"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),16),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[27;5],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,27)]);'00000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),16),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000101'])]);64]))
   "0x2a0220c2"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[24;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,24)]);'00000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x2a024021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a030000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)])]);64]))
   "0x2a030021"
@@ -20278,9 +20278,9 @@ strip opcode information before passing to antlr.
   "0x2a0303f9"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);64]))
   "0x2a031083"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a032080"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[24;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,24)]);'00000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x2a040000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)])]);64]))
   "0x2a040021"
@@ -20328,13 +20328,13 @@ strip opcode information before passing to antlr.
   "0x2a0403f9"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);64]))
   "0x2a0418c4"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a041944"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),10),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),10),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a041984"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[26;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,26)]);'000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a046004"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[8;24],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,8)]);'000000000000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'0000000000011000'])]);64]))
   "0x2a050042"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)])]);64]))
   "0x2a050063"
@@ -20374,7 +20374,7 @@ strip opcode information before passing to antlr.
   "0x2a0503fa"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);64]))
   "0x2a051045"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a060021"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)])]);64]))
   "0x2a060063"
@@ -20442,7 +20442,7 @@ strip opcode information before passing to antlr.
   "0x2a0803f5"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),8),[Slice_LoWd(0,32)]);64]))
   "0x2a086c21"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[5;27],[Expr_Slices(Expr_Array(Expr_Var("_R"),8),[Slice_LoWd(0,5)]);'000000000000000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),8),[Slice_LoWd(0,32)]);'0000000000011011'])]);64]))
   "0x2a0903e0"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),9),[Slice_LoWd(0,32)]);64]))
   "0x2a0903e1"
@@ -20476,7 +20476,7 @@ strip opcode information before passing to antlr.
   "0x2a0c03f6"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);64]))
   "0x2a0c0dcc"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),12),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[29;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,29)]);'000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),12),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);'0011'])]);64]))
   "0x2a0d0063"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),13),[Slice_LoWd(0,32)])]);64]))
   "0x2a0d01cd"
@@ -20486,7 +20486,7 @@ strip opcode information before passing to antlr.
   "0x2a0d03e1"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),13),[Slice_LoWd(0,32)]);64]))
   "0x2a0d09ed"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),13),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),15),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),13),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),13),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),15),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),13),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x2a0e0231"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),17),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),17),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,32)])]);64]))
   "0x2a0e03e0"
@@ -20502,7 +20502,7 @@ strip opcode information before passing to antlr.
   "0x2a0f03e8"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),8),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),15),[Slice_LoWd(0,32)]);64]))
   "0x2a0f064d"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),13),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),15),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),13),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),15),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x2a100084"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),16),[Slice_LoWd(0,32)])]);64]))
   "0x2a10018c"
@@ -20518,7 +20518,7 @@ strip opcode information before passing to antlr.
   "0x2a11018c"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),12),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),17),[Slice_LoWd(0,32)])]);64]))
   "0x2a111e91"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),17),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[25;7],[Expr_Slices(Expr_Array(Expr_Var("_R"),17),[Slice_LoWd(0,25)]);'0000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),17),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),17),[Slice_LoWd(0,32)]);'00000111'])]);64]))
   "0x2a120084"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)])]);64]))
   "0x2a1203e0"
@@ -20558,7 +20558,7 @@ strip opcode information before passing to antlr.
   "0x2a1303fa"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);64]))
   "0x2a1312d3"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a140000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)])]);64]))
   "0x2a140063"
@@ -20594,7 +20594,7 @@ strip opcode information before passing to antlr.
   "0x2a1403fb"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);64]))
   "0x2a144034"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a150021"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)])]);64]))
   "0x2a15003a"
@@ -20632,13 +20632,13 @@ strip opcode information before passing to antlr.
   "0x2a1503fc"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)]);64]))
   "0x2a150fd5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[29;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,29)]);'000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)]);'0011'])]);64]))
   "0x2a154021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a154063"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a156015"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[8;24],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,8)]);'000000000000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)]);'0000000000011000'])]);64]))
   "0x2a1601ce"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),14),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)])]);64]))
   "0x2a1602a0"
@@ -20676,13 +20676,13 @@ strip opcode information before passing to antlr.
   "0x2a1603fb"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);64]))
   "0x2a164021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a164056"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a164261"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a164341"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a170017"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)])]);64]))
   "0x2a170277"
@@ -20722,7 +20722,7 @@ strip opcode information before passing to antlr.
   "0x2a1703fb"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);64]))
   "0x2a174021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a180021"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)])]);64]))
   "0x2a1802d6"
@@ -20762,9 +20762,9 @@ strip opcode information before passing to antlr.
   "0x2a1803fc"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);64]))
   "0x2a182021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[24;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,24)]);'00000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x2a184000"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a1903e0"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,32)]);64]))
   "0x2a1903e1"
@@ -20798,9 +20798,9 @@ strip opcode information before passing to antlr.
   "0x2a1903fb"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,32)]);64]))
   "0x2a194301"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a196c21"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[5;27],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,5)]);'000000000000000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,32)]);'0000000000011011'])]);64]))
   "0x2a1a0000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)])]);64]))
   "0x2a1a0282"
@@ -20832,9 +20832,9 @@ strip opcode information before passing to antlr.
   "0x2a1a03fc"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)]);64]))
   "0x2a1a4021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a1a6021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[8;24],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,8)]);'000000000000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,32)]);'0000000000011000'])]);64]))
   "0x2a1b0080"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)])]);64]))
   "0x2a1b03e0"
@@ -20864,7 +20864,7 @@ strip opcode information before passing to antlr.
   "0x2a1b03fc"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)]);64]))
   "0x2a1b42a1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x2a1c0021"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)])]);64]))
   "0x2a1c00a5"
@@ -20968,59 +20968,59 @@ strip opcode information before passing to antlr.
   "0x2a3c02e4"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)])])]);64]))
   "0x2a401160"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),11),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[28;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(4,28)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),11),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a421082"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[28;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(4,28)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a421484"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[27;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(5,27)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'00000101'])]);64]))
   "0x2a431163"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),11),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[28;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(4,28)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),11),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a431842"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[26;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(6,26)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a4408c7"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),7),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[30;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(2,30)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),7),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x2a4410a5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[28;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(4,28)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a450c86"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[29;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(3,29)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);'0011'])]);64]))
   "0x2a4510c5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[28;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(4,28)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a4518c5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[26;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(6,26)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a460442"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[31;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(1,31)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x2a4c55c4"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[11;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(21,11)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);'0000000000010101'])]);64]))
   "0x2a4f1d8f"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),15),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[25;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),15),[Slice_LoWd(7,25)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),15),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),15),[Slice_LoWd(0,32)]);'00000111'])]);64]))
   "0x2a500863"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[30;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),16),[Slice_LoWd(2,30)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),16),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x2a5019cc"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),12),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[26;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),16),[Slice_LoWd(6,26)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),12),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),16),[Slice_LoWd(0,32)]);'00000110'])]);64]))
   "0x2a5111ef"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),15),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),15),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[28;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),17),[Slice_LoWd(4,28)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),15),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),15),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),17),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x2a512591"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),17),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[23;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),17),[Slice_LoWd(9,23)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),17),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),17),[Slice_LoWd(0,32)]);'00001001'])]);64]))
   "0x2a520672"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),18),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[31;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(1,31)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),18),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x2a524a12"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),18),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),16),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[14;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(18,14)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),18),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),16),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)]);'0000000000010010'])]);64]))
   "0x2a530693"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[31;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(1,31)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);'01'])]);64]))
   "0x2a532ad3"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[22;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(10,22)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);'00001010'])]);64]))
   "0x2a5416d4"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[27;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(5,27)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);'00000101'])]);64]))
   "0x2a542074"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[24;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(8,24)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x2a552a55"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[22;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(10,22)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),18),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)]);'00001010'])]);64]))
   "0x2a5b207b"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[24;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(8,24)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x2a5e09de"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[30;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(2,30)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x2a5e369e"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[19;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(13,19)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("or_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);'00001101'])]);64]))
   "0x2b000020"
   Stmt_ConstDecl(Type_Bits(32),"Cse1__5",Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)])]))
   Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)])]);64]))
@@ -21134,9 +21134,9 @@ strip opcode information before passing to antlr.
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_Slices(Expr_Var("Cse1__5"),[Slice_LoWd(31,1)]))
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_Var("Cse0__5"))
   "0x2b020401"
-  Stmt_ConstDecl(Type_Bits(32),"Cse2__5",Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,31)]);'0']))
-  Stmt_ConstDecl(Type_Bits(32),"Cse1__5",Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,31)]);'0'])]))
-  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,31)]);'0'])]);64]))
+  Stmt_ConstDecl(Type_Bits(32),"Cse2__5",Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'01']))
+  Stmt_ConstDecl(Type_Bits(32),"Cse1__5",Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'01'])]))
+  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'01'])]);64]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_TApply("SignExtend.0",[32;64],[Expr_Var("Cse1__5");64]);Expr_TApply("add_bits.0",[64],[Expr_TApply("SignExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);64]);Expr_TApply("SignExtend.0",[32;64],[Expr_Var("Cse2__5");64])])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_Var("Cse0__5");Expr_TApply("add_bits.0",[64],[Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);64]);Expr_TApply("ZeroExtend.0",[32;64],[Expr_Var("Cse2__5");64])])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_Var("Cse1__5");'00000000000000000000000000000000'])]))
@@ -43269,9 +43269,9 @@ strip opcode information before passing to antlr.
   "0x4a0000c0"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)])]);64]))
   "0x4a001060"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x4a001180"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x4a010000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)])]);64]))
   "0x4a010042"
@@ -43321,9 +43321,9 @@ strip opcode information before passing to antlr.
   "0x4a0103de"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)])]);64]))
   "0x4a010861"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x4a012063"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[24;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,24)]);'00000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x4a020021"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)])]);64]))
   "0x4a020025"
@@ -43369,9 +43369,9 @@ strip opcode information before passing to antlr.
   "0x4a03039c"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)])]);64]))
   "0x4a034003"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x4a034183"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[16;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,16)]);'0000000000000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x4a040000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)])]);64]))
   "0x4a040021"
@@ -43409,7 +43409,7 @@ strip opcode information before passing to antlr.
   "0x4a0403de"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)])]);64]))
   "0x4a0423c4"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[24;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,24)]);'00000000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x4a050000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)])]);64]))
   "0x4a050021"
@@ -43545,7 +43545,7 @@ strip opcode information before passing to antlr.
   "0x4a0c022c"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),12),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),17),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)])]);64]))
   "0x4a0c106c"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),12),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[28;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,28)]);'0000'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),12),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x4a0d0021"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),13),[Slice_LoWd(0,32)])]);64]))
   "0x4a0d0063"
@@ -43741,27 +43741,27 @@ strip opcode information before passing to antlr.
   "0x4a1e0385"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)])]);64]))
   "0x4a1e089e"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,30)]);'00'])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x4a210000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)])])]);64]))
   "0x4a404023"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[16;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(16,16)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x4a430801"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[30;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(2,30)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x4a431020"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[28;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(4,28)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x4a43108c"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),12),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[28;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(4,28)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),12),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x4a432001"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[24;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(8,24)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x4a44087e"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[30;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(2,30)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),30),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'0010'])]);64]))
   "0x4a4c1040"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[28;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(4,28)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x4a4c4083"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[16;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(16,16)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),12),[Slice_LoWd(0,32)]);'0000000000010000'])]);64]))
   "0x4a5e2064"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[24;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(8,24)]);32])]);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),30),[Slice_LoWd(0,32)]);'00001000'])]);64]))
   "0x4ac31000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("eor_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("ror_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00000100'])]);64]))
   "0x4ac31084"
@@ -43833,17 +43833,17 @@ strip opcode information before passing to antlr.
   "0x4b0003e3"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)])]);'00000000000000000000000000000001']);64]))
   "0x4b000460"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,31)]);'0'])])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'01'])])]);'00000000000000000000000000000001']);64]))
   "0x4b0006c0"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,31)]);'0'])])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'01'])])]);'00000000000000000000000000000001']);64]))
   "0x4b0006e0"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,31)]);'0'])])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'01'])])]);'00000000000000000000000000000001']);64]))
   "0x4b000760"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,31)]);'0'])])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'01'])])]);'00000000000000000000000000000001']);64]))
   "0x4b0007e0"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,31)]);'0'])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'01'])]);'00000000000000000000000000000001']);64]))
   "0x4b000880"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,30)]);'00'])])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0010'])])]);'00000000000000000000000000000001']);64]))
   "0x4b010000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)])])]);'00000000000000000000000000000001']);64]))
   "0x4b010041"
@@ -43923,9 +43923,9 @@ strip opcode information before passing to antlr.
   "0x4b0203e4"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)])]);'00000000000000000000000000000001']);64]))
   "0x4b0207e2"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,31)]);'0'])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'01'])]);'00000000000000000000000000000001']);64]))
   "0x4b020821"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,30)]);'00'])])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'0010'])])]);'00000000000000000000000000000001']);64]))
   "0x4b030000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)])])]);'00000000000000000000000000000001']);64]))
   "0x4b030004"
@@ -43955,7 +43955,7 @@ strip opcode information before passing to antlr.
   "0x4b0303f3"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)])]);'00000000000000000000000000000001']);64]))
   "0x4b030403"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,31)]);'0'])])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'01'])])]);'00000000000000000000000000000001']);64]))
   "0x4b040000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)])])]);'00000000000000000000000000000001']);64]))
   "0x4b040021"
@@ -43983,9 +43983,9 @@ strip opcode information before passing to antlr.
   "0x4b0403e6"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)])]);'00000000000000000000000000000001']);64]))
   "0x4b040464"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,31)]);'0'])])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'01'])])]);'00000000000000000000000000000001']);64]))
   "0x4b040a64"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[30;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,30)]);'00'])])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'0010'])])]);'00000000000000000000000000000001']);64]))
   "0x4b050000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)])])]);'00000000000000000000000000000001']);64]))
   "0x4b050042"
@@ -43997,7 +43997,7 @@ strip opcode information before passing to antlr.
   "0x4b0503e8"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),8),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)])]);'00000000000000000000000000000001']);64]))
   "0x4b050485"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,31)]);'0'])])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,32)]);'01'])])]);'00000000000000000000000000000001']);64]))
   "0x4b060000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)])])]);'00000000000000000000000000000001']);64]))
   "0x4b060014"
@@ -44221,9 +44221,9 @@ strip opcode information before passing to antlr.
   "0x4b1c011c"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),8),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)])])]);'00000000000000000000000000000001']);64]))
   "0x4b4207e2"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_TApply("ZeroExtend.0",[31;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(1,31)]);32])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_TApply("lsr_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);'01'])]);'00000000000000000000000000000001']);64]))
   "0x4b440fe3"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_TApply("ZeroExtend.0",[29;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(3,29)]);32])]);'00000000000000000000000000000001']);64]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("not_bits.0",[32],[Expr_TApply("lsr_bits.0",[32;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'0011'])]);'00000000000000000000000000000001']);64]))
   "0x4b807c20"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("asr_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0000000000011111'])])]);'00000000000000000000000000000001']);64]))
   "0x4b807cc6"
@@ -79758,15 +79758,17 @@ strip opcode information before passing to antlr.
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,32)]);Expr_Var("Cse0__5")]);'00000000000000000000000000000000'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_TApply("and_bits.0",[1],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(31,1)]);Expr_Slices(Expr_Var("Cse0__5"),[Slice_LoWd(31,1)])]))
   "0x6a401a9f"
+  Stmt_ConstDecl(Type_Bits(32),"Cse0__5",Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'00000110']))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),'0')
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),'0')
-  Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[26;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(6,26)]);32])]);'00000000000000000000000000000000'])]))
-  Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),'0')
+  Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,32)]);Expr_Var("Cse0__5")]);'00000000000000000000000000000000'])]))
+  Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_TApply("and_bits.0",[1],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(31,1)]);Expr_Slices(Expr_Var("Cse0__5"),[Slice_LoWd(31,1)])]))
   "0x6a407c5f"
+  Stmt_ConstDecl(Type_Bits(32),"Cse0__5",Expr_TApply("lsr_bits.0",[32;16],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)]);'0000000000011111']))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),'0')
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),'0')
-  Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_TApply("ZeroExtend.0",[1;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(31,1)]);32])]);'00000000000000000000000000000000'])]))
-  Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),'0')
+  Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("and_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);Expr_Var("Cse0__5")]);'00000000000000000000000000000000'])]))
+  Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_TApply("and_bits.0",[1],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(31,1)]);Expr_Slices(Expr_Var("Cse0__5"),[Slice_LoWd(31,1)])]))
   "0x6b00003f"
   Stmt_ConstDecl(Type_Bits(32),"Cse2__5",Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)])]))
   Stmt_ConstDecl(Type_Bits(32),"Cse0__5",Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,32)])])]))
@@ -80213,8 +80215,8 @@ strip opcode information before passing to antlr.
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);'00000000000000000000000000000000'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_Slices(Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']),[Slice_LoWd(31,1)]))
   "0x6b03043f"
-  Stmt_ConstDecl(Type_Bits(32),"Cse2__5",Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,31)]);'0']))
-  Stmt_ConstDecl(Type_Bits(32),"Cse0__5",Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,31)]);'0'])])]))
+  Stmt_ConstDecl(Type_Bits(32),"Cse2__5",Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'01']))
+  Stmt_ConstDecl(Type_Bits(32),"Cse0__5",Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'01'])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_TApply("SignExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);64]);Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_TApply("SignExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);64]);Expr_TApply("SignExtend.0",[32;64],[Expr_TApply("not_bits.0",[32],[Expr_Var("Cse2__5")]);64])]);'0000000000000000000000000000000000000000000000000000000000000001'])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);64]);Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,32)]);64]);Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("not_bits.0",[32],[Expr_Var("Cse2__5")]);64])]);'0000000000000000000000000000000000000000000000000000000000000001'])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);'00000000000000000000000000000000'])]))
@@ -80290,8 +80292,8 @@ strip opcode information before passing to antlr.
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);'00000000000000000000000000000000'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_Slices(Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']),[Slice_LoWd(31,1)]))
   "0x6b0404df"
-  Stmt_ConstDecl(Type_Bits(32),"Cse2__5",Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,31)]);'0']))
-  Stmt_ConstDecl(Type_Bits(32),"Cse0__5",Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("append_bits.0",[31;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,31)]);'0'])])]))
+  Stmt_ConstDecl(Type_Bits(32),"Cse2__5",Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'01']))
+  Stmt_ConstDecl(Type_Bits(32),"Cse0__5",Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsl_bits.0",[32;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,32)]);'01'])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_TApply("SignExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);64]);Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_TApply("SignExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);64]);Expr_TApply("SignExtend.0",[32;64],[Expr_TApply("not_bits.0",[32],[Expr_Var("Cse2__5")]);64])]);'0000000000000000000000000000000000000000000000000000000000000001'])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);64]);Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,32)]);64]);Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("not_bits.0",[32],[Expr_Var("Cse2__5")]);64])]);'0000000000000000000000000000000000000000000000000000000000000001'])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);'00000000000000000000000000000000'])]))
@@ -81095,8 +81097,8 @@ strip opcode information before passing to antlr.
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);'00000000000000000000000000000000'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_Slices(Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']),[Slice_LoWd(31,1)]))
   "0x6b4322ff"
-  Stmt_ConstDecl(Type_Bits(32),"Cse2__5",Expr_TApply("ZeroExtend.0",[24;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(8,24)]);32]))
-  Stmt_ConstDecl(Type_Bits(32),"Cse0__5",Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("ZeroExtend.0",[24;32],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(8,24)]);32])])]))
+  Stmt_ConstDecl(Type_Bits(32),"Cse2__5",Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00001000']))
+  Stmt_ConstDecl(Type_Bits(32),"Cse0__5",Expr_TApply("add_bits.0",[32],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);Expr_TApply("not_bits.0",[32],[Expr_TApply("lsr_bits.0",[32;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,32)]);'00001000'])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_TApply("SignExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);64]);Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_TApply("SignExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);64]);Expr_TApply("SignExtend.0",[32;64],[Expr_TApply("not_bits.0",[32],[Expr_Var("Cse2__5")]);64])]);'0000000000000000000000000000000000000000000000000000000000000001'])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);64]);Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_TApply("ZeroExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,32)]);64]);Expr_TApply("ZeroExtend.0",[32;64],[Expr_TApply("not_bits.0",[32],[Expr_Var("Cse2__5")]);64])]);'0000000000000000000000000000000000000000000000000000000000000001'])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[32],[Expr_TApply("add_bits.0",[32],[Expr_Var("Cse0__5");'00000000000000000000000000000001']);'00000000000000000000000000000000'])]))
@@ -87382,37 +87384,37 @@ strip opcode information before passing to antlr.
   "0x8b00039c"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),28);Expr_Array(Expr_Var("_R"),0)]))
   "0x8b000401"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),0);'01'])]))
   "0x8b000820"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[62;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,62)]);'00'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),0);'0010'])]))
   "0x8b000840"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("append_bits.0",[62;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,62)]);'00'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),0);'0010'])]))
   "0x8b000ab5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("append_bits.0",[62;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,62)]);'00'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),0);'0010'])]))
   "0x8b000c21"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),0);'0011'])]))
   "0x8b001020"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b001021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b001033"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b001040"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b001061"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b001063"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b001080"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b001082"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b0010a1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b0010c0"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b001380"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),28);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),28);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00000100'])]))
   "0x8b010000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),1)]))
   "0x8b010001"
@@ -87508,35 +87510,35 @@ strip opcode information before passing to antlr.
   "0x8b010378"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),27);Expr_Array(Expr_Var("_R"),1)]))
   "0x8b010421"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),1);'01'])]))
   "0x8b010422"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),1);'01'])]))
   "0x8b010a63"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("append_bits.0",[62;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,62)]);'00'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),1);'0010'])]))
   "0x8b010c01"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),1);'0011'])]))
   "0x8b010c61"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),1);'0011'])]))
   "0x8b010dc1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),14);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),14);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),1);'0011'])]))
   "0x8b010f41"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),1);'0011'])]))
   "0x8b011000"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100'])]))
   "0x8b011001"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100'])]))
   "0x8b011041"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100'])]))
   "0x8b011081"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100'])]))
   "0x8b011082"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100'])]))
   "0x8b011087"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),7),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),7),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100'])]))
   "0x8b0110a2"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100'])]))
   "0x8b0112a1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100'])]))
   "0x8b020000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),2)]))
   "0x8b020001"
@@ -87634,31 +87636,31 @@ strip opcode information before passing to antlr.
   "0x8b020380"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),28);Expr_Array(Expr_Var("_R"),2)]))
   "0x8b020702"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),2);'01'])]))
   "0x8b020ca5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),2);'0011'])]))
   "0x8b021002"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00000100'])]))
   "0x8b02101a"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00000100'])]))
   "0x8b021021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00000100'])]))
   "0x8b021022"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00000100'])]))
   "0x8b021062"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00000100'])]))
   "0x8b021082"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00000100'])]))
   "0x8b0210a2"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00000100'])]))
   "0x8b0210c2"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00000100'])]))
   "0x8b021322"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),25);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),25);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00000100'])]))
   "0x8b022002"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[56;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,56)]);'00000000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00001000'])]))
   "0x8b022082"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[56;8],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,56)]);'00000000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00001000'])]))
   "0x8b030000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),3)]))
   "0x8b030001"
@@ -87722,31 +87724,31 @@ strip opcode information before passing to antlr.
   "0x8b030318"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_Array(Expr_Var("_R"),3)]))
   "0x8b030461"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),3);'01'])]))
   "0x8b030703"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),3);'01'])]))
   "0x8b030c84"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),3);'0011'])]))
   "0x8b031003"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b031023"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b031043"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b031083"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b0310a3"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b0310a5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b0310c3"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b0310c6"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b031284"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b031285"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b040000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),4)]))
   "0x8b040003"
@@ -87786,13 +87788,13 @@ strip opcode information before passing to antlr.
   "0x8b04037a"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),27);Expr_Array(Expr_Var("_R"),4)]))
   "0x8b040a64"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("append_bits.0",[62;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,62)]);'00'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),4);'0010'])]))
   "0x8b040c24"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),4);'0011'])]))
   "0x8b0410c1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),4);'00000100'])]))
   "0x8b041684"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("append_bits.0",[59;5],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(0,59)]);'00000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),4),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),4);'00000101'])]))
   "0x8b050025"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_Array(Expr_Var("_R"),5)]))
   "0x8b050034"
@@ -87816,19 +87818,19 @@ strip opcode information before passing to antlr.
   "0x8b050261"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_Array(Expr_Var("_R"),5)]))
   "0x8b050823"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[62;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,62)]);'00'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),5);'0010'])]))
   "0x8b050a65"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("append_bits.0",[62;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,62)]);'00'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),5);'0010'])]))
   "0x8b050c00"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),5);'0011'])]))
   "0x8b050ec0"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),5);'0011'])]))
   "0x8b051005"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),5),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),5);'00000100'])]))
   "0x8b051027"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),7),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),7),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),5);'00000100'])]))
   "0x8b0510e1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),7);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),7);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),5);'00000100'])]))
   "0x8b060021"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_Array(Expr_Var("_R"),6)]))
   "0x8b060042"
@@ -87846,11 +87848,11 @@ strip opcode information before passing to antlr.
   "0x8b060373"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),27);Expr_Array(Expr_Var("_R"),6)]))
   "0x8b0604c6"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),6);'01'])]))
   "0x8b060aa6"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("append_bits.0",[62;2],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,62)]);'00'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),6);'0010'])]))
   "0x8b060e66"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),6),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),6),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),6);'0011'])]))
   "0x8b070000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),7)]))
   "0x8b070021"
@@ -87880,7 +87882,7 @@ strip opcode information before passing to antlr.
   "0x8b0b0042"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_Array(Expr_Var("_R"),11)]))
   "0x8b0e05c1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),14);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),14),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),14);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),14);'01'])]))
   "0x8b130000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),19)]))
   "0x8b130002"
@@ -87940,9 +87942,9 @@ strip opcode information before passing to antlr.
   "0x8b130359"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_Array(Expr_Var("_R"),19)]))
   "0x8b131021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),19);'00000100'])]))
   "0x8b131080"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),19);'00000100'])]))
   "0x8b140000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),20)]))
   "0x8b140001"
@@ -87994,15 +87996,15 @@ strip opcode information before passing to antlr.
   "0x8b140354"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_Array(Expr_Var("_R"),20)]))
   "0x8b140694"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),20);'01'])]))
   "0x8b1406b5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),20);'01'])]))
   "0x8b140c14"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),20);'0011'])]))
   "0x8b141021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),20);'00000100'])]))
   "0x8b141042"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),20);'00000100'])]))
   "0x8b150000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),21)]))
   "0x8b150002"
@@ -88054,7 +88056,7 @@ strip opcode information before passing to antlr.
   "0x8b150315"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_Array(Expr_Var("_R"),21)]))
   "0x8b150ed5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),21);'0011'])]))
   "0x8b160000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),22)]))
   "0x8b160001"
@@ -88112,15 +88114,15 @@ strip opcode information before passing to antlr.
   "0x8b160315"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_Array(Expr_Var("_R"),22)]))
   "0x8b160673"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),22);'01'])]))
   "0x8b161000"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),22);'00000100'])]))
   "0x8b161001"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),22);'00000100'])]))
   "0x8b161016"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),22);'00000100'])]))
   "0x8b161021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),22);'00000100'])]))
   "0x8b170000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),23)]))
   "0x8b170001"
@@ -88162,15 +88164,15 @@ strip opcode information before passing to antlr.
   "0x8b170320"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),25);Expr_Array(Expr_Var("_R"),23)]))
   "0x8b1706e1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),23);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),23);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),23);'01'])]))
   "0x8b170e82"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),23);'0011'])]))
   "0x8b171043"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),23);'00000100'])]))
   "0x8b171080"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),4);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),23);'00000100'])]))
   "0x8b171a77"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("append_bits.0",[58;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(0,58)]);'000000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),23);'00000110'])]))
   "0x8b180000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),24)]))
   "0x8b180001"
@@ -88206,11 +88208,11 @@ strip opcode information before passing to antlr.
   "0x8b180359"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_Array(Expr_Var("_R"),24)]))
   "0x8b180718"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),24);'01'])]))
   "0x8b180e83"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),24);'0011'])]))
   "0x8b181021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),24);'00000100'])]))
   "0x8b190000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),25)]))
   "0x8b190002"
@@ -88240,7 +88242,7 @@ strip opcode information before passing to antlr.
   "0x8b19031b"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_Array(Expr_Var("_R"),25)]))
   "0x8b190ec1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("append_bits.0",[61;3],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,61)]);'000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("lsl_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),25);'0011'])]))
   "0x8b1a0000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),26)]))
   "0x8b1a001a"
@@ -88270,9 +88272,9 @@ strip opcode information before passing to antlr.
   "0x8b1a0394"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),28);Expr_Array(Expr_Var("_R"),26)]))
   "0x8b1a0757"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),26);'01'])]))
   "0x8b1a1021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),26);'00000100'])]))
   "0x8b1b0000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),27)]))
   "0x8b1b001b"
@@ -88292,7 +88294,7 @@ strip opcode information before passing to antlr.
   "0x8b1b02d6"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_Array(Expr_Var("_R"),27)]))
   "0x8b1b0681"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(0,63)]);'0'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),27);'01'])]))
   "0x8b1c0003"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_Array(Expr_Var("_R"),28)]))
   "0x8b1c001c"
@@ -88704,147 +88706,147 @@ strip opcode information before passing to antlr.
   "0x8b3cc01c"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("SignExtend.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(0,32)]);64])]))
   "0x8b403040"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00001100'])]))
   "0x8b4030c0"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00001100'])]))
   "0x8b403280"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00001100'])]))
   "0x8b411001"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ZeroExtend.0",[60;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(4,60)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100'])]))
   "0x8b413001"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00001100'])]))
   "0x8b413061"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00001100'])]))
   "0x8b413281"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00001100'])]))
   "0x8b415041"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),1);'0000000000010100'])]))
   "0x8b4150c1"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),6);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),1);'0000000000010100'])]))
   "0x8b415281"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),1);'0000000000010100'])]))
   "0x8b423002"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00001100'])]))
   "0x8b423021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00001100'])]))
   "0x8b423022"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00001100'])]))
   "0x8b423282"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00001100'])]))
   "0x8b425022"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),2);'0000000000010100'])]))
   "0x8b425062"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),2);'0000000000010100'])]))
   "0x8b425282"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),2);'0000000000010100'])]))
   "0x8b430842"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),3);'0010'])]))
   "0x8b430b9c"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),28);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),28),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),28);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),3);'0010'])]))
   "0x8b431003"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ZeroExtend.0",[60;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(4,60)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b431021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[60;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(4,60)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   "0x8b433003"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00001100'])]))
   "0x8b433021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00001100'])]))
   "0x8b433283"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00001100'])]))
   "0x8b435003"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),3);'0000000000010100'])]))
   "0x8b435042"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),3);'0000000000010100'])]))
   "0x8b435283"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),3);'0000000000010100'])]))
   "0x8b443021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),4);'00001100'])]))
   "0x8b443042"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),4);'00001100'])]))
   "0x8b445021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),4);'0000000000010100'])]))
   "0x8b445042"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),4),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),4);'0000000000010100'])]))
   "0x8b530842"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),19);'0010'])]))
   "0x8b530879"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),19);'0010'])]))
   "0x8b530a75"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),19);'0010'])]))
   "0x8b530a94"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),20),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),19);'0010'])]))
   "0x8b530ab5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),19);'0010'])]))
   "0x8b530ab7"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),19);'0010'])]))
   "0x8b530b19"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),19);'0010'])]))
   "0x8b531000"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ZeroExtend.0",[60;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(4,60)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),19);'00000100'])]))
   "0x8b531001"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ZeroExtend.0",[60;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(4,60)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),19);'00000100'])]))
   "0x8b531821"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[58;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(6,58)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),19);'00000110'])]))
   "0x8b533281"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),19);'00001100'])]))
   "0x8b533282"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),19);'00001100'])]))
   "0x8b533283"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),19);'00001100'])]))
   "0x8b535021"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),19);'0000000000010100'])]))
   "0x8b535282"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),19);'0000000000010100'])]))
   "0x8b5362d3"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("ZeroExtend.0",[40;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),19),[Slice_LoWd(24,40)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),19),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),19);'0000000000011000'])]))
   "0x8b540842"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),20);'0010'])]))
   "0x8b540a97"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),20);'0010'])]))
   "0x8b540af7"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),23);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),20),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),23);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),20);'0010'])]))
   "0x8b550a98"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),21);'0010'])]))
   "0x8b560ab5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),22);'0010'])]))
   "0x8b563296"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),22);'00001100'])]))
   "0x8b565036"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),22);'0000000000010100'])]))
   "0x8b565056"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),22);'0000000000010100'])]))
   "0x8b565296"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),22),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),22);'0000000000010100'])]))
   "0x8b570836"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),23);'0010'])]))
   "0x8b570b7b"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),27);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),27);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),23);'0010'])]))
   "0x8b573297"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[52;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(12,52)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),23);'00001100'])]))
   "0x8b575297"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("ZeroExtend.0",[44;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),23),[Slice_LoWd(20,44)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),20);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),23);'0000000000010100'])]))
   "0x8b580ab5"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),21);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),24);'0010'])]))
   "0x8b580ad6"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),24);'0010'])]))
   "0x8b580af7"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),23);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),23);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),24);'0010'])]))
   "0x8b580b5a"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),24);'0010'])]))
   "0x8b580b7b"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),27);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),27);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),24);'0010'])]))
   "0x8b5a0819"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),26);'0010'])]))
   "0x8b5a0b7b"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),27);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),26),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),27),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),27);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),26);'0010'])]))
   "0x8b5b085a"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),27),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),27);'0010'])]))
   "0x8b5c0800"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),28);'0010'])]))
   "0x8b5c0821"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),28);'0010'])]))
   "0x8b5c0b5a"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),28),[Slice_LoWd(2,62)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),26),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),26);Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),28);'0010'])]))
   "0x8b810c41"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("asr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),1);'0011'])]))
   "0x8b8112a1"
@@ -132518,8 +132520,8 @@ strip opcode information before passing to antlr.
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_Slices(Expr_Var("Cse0__5"),[Slice_LoWd(63,1)]))
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_Var("Cse0__5"))
   "0xab011041"
-  Stmt_ConstDecl(Type_Bits(64),"Cse1__5",Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,60)]);'0000']))
-  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_ConstDecl(Type_Bits(64),"Cse1__5",Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100']))
+  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00000100'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[128],[Expr_TApply("SignExtend.0",[64;128],[Expr_Var("Cse0__5");128]);Expr_TApply("add_bits.0",[128],[Expr_TApply("SignExtend.0",[64;128],[Expr_Array(Expr_Var("_R"),2);128]);Expr_TApply("SignExtend.0",[64;128],[Expr_Var("Cse1__5");128])])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[128],[Expr_TApply("ZeroExtend.0",[64;128],[Expr_Var("Cse0__5");128]);Expr_TApply("add_bits.0",[128],[Expr_TApply("ZeroExtend.0",[64;128],[Expr_Array(Expr_Var("_R"),2);128]);Expr_TApply("ZeroExtend.0",[64;128],[Expr_Var("Cse1__5");128])])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000000'])]))
@@ -132743,16 +132745,16 @@ strip opcode information before passing to antlr.
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000000'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_Slices(Expr_Var("Cse0__5"),[Slice_LoWd(63,1)]))
   "0xab031043"
-  Stmt_ConstDecl(Type_Bits(64),"Cse1__5",Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000']))
-  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_ConstDecl(Type_Bits(64),"Cse1__5",Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100']))
+  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[128],[Expr_TApply("SignExtend.0",[64;128],[Expr_Var("Cse0__5");128]);Expr_TApply("add_bits.0",[128],[Expr_TApply("SignExtend.0",[64;128],[Expr_Array(Expr_Var("_R"),2);128]);Expr_TApply("SignExtend.0",[64;128],[Expr_Var("Cse1__5");128])])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[128],[Expr_TApply("ZeroExtend.0",[64;128],[Expr_Var("Cse0__5");128]);Expr_TApply("add_bits.0",[128],[Expr_TApply("ZeroExtend.0",[64;128],[Expr_Array(Expr_Var("_R"),2);128]);Expr_TApply("ZeroExtend.0",[64;128],[Expr_Var("Cse1__5");128])])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000000'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_Slices(Expr_Var("Cse0__5"),[Slice_LoWd(63,1)]))
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_Var("Cse0__5"))
   "0xab0310a3"
-  Stmt_ConstDecl(Type_Bits(64),"Cse1__5",Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000']))
-  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),3),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_ConstDecl(Type_Bits(64),"Cse1__5",Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100']))
+  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),5);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),3);'00000100'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[128],[Expr_TApply("SignExtend.0",[64;128],[Expr_Var("Cse0__5");128]);Expr_TApply("add_bits.0",[128],[Expr_TApply("SignExtend.0",[64;128],[Expr_Array(Expr_Var("_R"),5);128]);Expr_TApply("SignExtend.0",[64;128],[Expr_Var("Cse1__5");128])])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[128],[Expr_TApply("ZeroExtend.0",[64;128],[Expr_Var("Cse0__5");128]);Expr_TApply("add_bits.0",[128],[Expr_TApply("ZeroExtend.0",[64;128],[Expr_Array(Expr_Var("_R"),5);128]);Expr_TApply("ZeroExtend.0",[64;128],[Expr_Var("Cse1__5");128])])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000000'])]))
@@ -132847,8 +132849,8 @@ strip opcode information before passing to antlr.
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000000'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_Slices(Expr_Var("Cse0__5"),[Slice_LoWd(63,1)]))
   "0xab051065"
-  Stmt_ConstDecl(Type_Bits(64),"Cse1__5",Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,60)]);'0000']))
-  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),5),[Slice_LoWd(0,60)]);'0000'])]))
+  Stmt_ConstDecl(Type_Bits(64),"Cse1__5",Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),5);'00000100']))
+  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),5);'00000100'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[128],[Expr_TApply("SignExtend.0",[64;128],[Expr_Var("Cse0__5");128]);Expr_TApply("add_bits.0",[128],[Expr_TApply("SignExtend.0",[64;128],[Expr_Array(Expr_Var("_R"),3);128]);Expr_TApply("SignExtend.0",[64;128],[Expr_Var("Cse1__5");128])])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[128],[Expr_TApply("ZeroExtend.0",[64;128],[Expr_Var("Cse0__5");128]);Expr_TApply("add_bits.0",[128],[Expr_TApply("ZeroExtend.0",[64;128],[Expr_Array(Expr_Var("_R"),3);128]);Expr_TApply("ZeroExtend.0",[64;128],[Expr_Var("Cse1__5");128])])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000000'])]))
@@ -148612,7 +148614,7 @@ strip opcode information before passing to antlr.
   "0xca000020"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_Array(Expr_Var("_R"),0)]))
   "0xca003821"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[50;14],[Expr_Slices(Expr_Array(Expr_Var("_R"),0),[Slice_LoWd(0,50)]);'00000000000000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),0);'00001110'])]))
   "0xca010041"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_Array(Expr_Var("_R"),1)]))
   "0xca010061"
@@ -148620,9 +148622,9 @@ strip opcode information before passing to antlr.
   "0xca010261"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_Array(Expr_Var("_R"),1)]))
   "0xca013842"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("append_bits.0",[50;14],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,50)]);'00000000000000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00001110'])]))
   "0xca013863"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("append_bits.0",[50;14],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,50)]);'00000000000000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),3),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00001110'])]))
   "0xca020022"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_Array(Expr_Var("_R"),2)]))
   "0xca020033"
@@ -148630,13 +148632,13 @@ strip opcode information before passing to antlr.
   "0xca020275"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_Array(Expr_Var("_R"),2)]))
   "0xca023821"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("append_bits.0",[50;14],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,50)]);'00000000000000'])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),2);'00001110'])]))
   "0xca416c21"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[37;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(27,37)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),1);'0000000000011011'])]))
   "0xca417c21"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("ZeroExtend.0",[33;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(31,33)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),1);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),1);'0000000000011111'])]))
   "0xca427841"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("ZeroExtend.0",[34;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(30,34)]);64])]))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),2);Expr_TApply("lsr_bits.0",[64;16],[Expr_Array(Expr_Var("_R"),2);'0000000000011110'])]))
   "0xcac12401"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("eor_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("ror_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),1);'00001001'])]))
   "0xcac12441"
@@ -148784,7 +148786,7 @@ strip opcode information before passing to antlr.
   "0xcb010318"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_TApply("not_bits.0",[64],[Expr_Array(Expr_Var("_R"),1)])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb010402"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("not_bits.0",[64],[Expr_TApply("append_bits.0",[63;1],[Expr_Slices(Expr_Array(Expr_Var("_R"),1),[Slice_LoWd(0,63)]);'0'])])]);'0000000000000000000000000000000000000000000000000000000000000001']))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),2),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("not_bits.0",[64],[Expr_TApply("lsl_bits.0",[64;2],[Expr_Array(Expr_Var("_R"),1);'01'])])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb020000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("not_bits.0",[64],[Expr_Array(Expr_Var("_R"),2)])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb020001"
@@ -149162,7 +149164,7 @@ strip opcode information before passing to antlr.
   "0xcb1502e1"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),23);Expr_TApply("not_bits.0",[64],[Expr_Array(Expr_Var("_R"),21)])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb151275"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("not_bits.0",[64],[Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),21),[Slice_LoWd(0,60)]);'0000'])])]);'0000000000000000000000000000000000000000000000000000000000000001']))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),21),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),19);Expr_TApply("not_bits.0",[64],[Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),21);'00000100'])])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb160000"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),0),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("not_bits.0",[64],[Expr_Array(Expr_Var("_R"),22)])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb160036"
@@ -149208,7 +149210,7 @@ strip opcode information before passing to antlr.
   "0xcb1802f7"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),23),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),23);Expr_TApply("not_bits.0",[64],[Expr_Array(Expr_Var("_R"),24)])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb181ad6"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("not_bits.0",[64],[Expr_TApply("append_bits.0",[58;6],[Expr_Slices(Expr_Array(Expr_Var("_R"),24),[Slice_LoWd(0,58)]);'000000'])])]);'0000000000000000000000000000000000000000000000000000000000000001']))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),22),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("not_bits.0",[64],[Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),24);'00000110'])])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb190001"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("not_bits.0",[64],[Expr_Array(Expr_Var("_R"),25)])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb190033"
@@ -149222,7 +149224,7 @@ strip opcode information before passing to antlr.
   "0xcb190318"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),24),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),24);Expr_TApply("not_bits.0",[64],[Expr_Array(Expr_Var("_R"),25)])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb1912d9"
-  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("not_bits.0",[64],[Expr_TApply("append_bits.0",[60;4],[Expr_Slices(Expr_Array(Expr_Var("_R"),25),[Slice_LoWd(0,60)]);'0000'])])]);'0000000000000000000000000000000000000000000000000000000000000001']))
+  Stmt_Assign(LExpr_Array(LExpr_Var("_R"),25),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),22);Expr_TApply("not_bits.0",[64],[Expr_TApply("lsl_bits.0",[64;8],[Expr_Array(Expr_Var("_R"),25);'00000100'])])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb1a0001"
   Stmt_Assign(LExpr_Array(LExpr_Var("_R"),1),Expr_TApply("add_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),0);Expr_TApply("not_bits.0",[64],[Expr_Array(Expr_Var("_R"),26)])]);'0000000000000000000000000000000000000000000000000000000000000001']))
   "0xcb1a0021"
@@ -153278,8 +153280,8 @@ strip opcode information before passing to antlr.
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000001']);'0000000000000000000000000000000000000000000000000000000000000000'])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"N"),Expr_Slices(Expr_TApply("add_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000001']),[Slice_LoWd(63,1)]))
   "0xeb42087f"
-  Stmt_ConstDecl(Type_Bits(64),"Cse2__5",Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(2,62)]);64]))
-  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("not_bits.0",[64],[Expr_TApply("ZeroExtend.0",[62;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(2,62)]);64])])]))
+  Stmt_ConstDecl(Type_Bits(64),"Cse2__5",Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),2);'0010']))
+  Stmt_ConstDecl(Type_Bits(64),"Cse0__5",Expr_TApply("add_bits.0",[64],[Expr_Array(Expr_Var("_R"),3);Expr_TApply("not_bits.0",[64],[Expr_TApply("lsr_bits.0",[64;4],[Expr_Array(Expr_Var("_R"),2);'0010'])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"V"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[128],[Expr_TApply("SignExtend.0",[64;128],[Expr_TApply("add_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000001']);128]);Expr_TApply("add_bits.0",[128],[Expr_TApply("add_bits.0",[128],[Expr_TApply("SignExtend.0",[64;128],[Expr_Array(Expr_Var("_R"),3);128]);Expr_TApply("SignExtend.0",[64;128],[Expr_TApply("not_bits.0",[64],[Expr_Var("Cse2__5")]);128])]);'00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001'])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"C"),Expr_TApply("not_bits.0",[1],[Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[128],[Expr_TApply("ZeroExtend.0",[64;128],[Expr_TApply("add_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000001']);128]);Expr_TApply("add_bits.0",[128],[Expr_TApply("add_bits.0",[128],[Expr_TApply("ZeroExtend.0",[64;128],[Expr_Array(Expr_Var("_R"),3);128]);Expr_TApply("ZeroExtend.0",[64;128],[Expr_TApply("not_bits.0",[64],[Expr_Var("Cse2__5")]);128])]);'00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001'])])])]))
   Stmt_Assign(LExpr_Field(LExpr_Var("PSTATE"),"Z"),Expr_TApply("cvt_bool_bv.0",[],[Expr_TApply("eq_bits.0",[64],[Expr_TApply("add_bits.0",[64],[Expr_Var("Cse0__5");'0000000000000000000000000000000000000000000000000000000000000001']);'0000000000000000000000000000000000000000000000000000000000000000'])]))
