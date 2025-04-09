@@ -737,12 +737,6 @@ let is_insert_mask (b: bitvector): (int * int) option =
 
 let sym_prim_simplify (name: string) (tes: sym list) (es: sym list): sym option =
   let loc = Unknown in
-
-  (* Utility to overwrite outer[wd:lo] with inner[wd:lo] *)
-  let insert w outer lo wd inner =
-    let mid = sym_slice loc inner lo wd in
-    sym_insert_bits loc (Z.to_int w) outer (sym_of_int lo) (sym_of_int wd) mid in
-
   (match (name, tes, es) with
   | ("add_int",  [ ], [x1; x2]) -> Some (sym_add_int loc x1 x2)
   | ("sub_int",  [ ], [x1; x2]) -> Some (sym_sub_int loc x1 x2)
@@ -767,31 +761,11 @@ let sym_prim_simplify (name: string) (tes: sym list) (es: sym list): sym option 
   | ("or_bits",     _,                [x1; Val x2])       when is_zero_bits x2 -> Some x1
   | ("or_bits",     _,                [Val x1; x2])       when is_one_bits x1 -> Some (Val x1)
   | ("or_bits",     _,                [x1; Val x2])       when is_one_bits x2 -> Some (Val x2)
-  | ("or_bits",     [Val (VInt n)],   [x1; x2]) ->
-      (* Identify whether the arguments are disjoint in terms of their maybe set bits *)
-      let m1 = maybe_set n (sym_expr x1) in
-      let m2 = maybe_set n (sym_expr x2) in
-      let r = prim_and_bits m1 m2 in
-      if Z.equal Z.zero r.v then
-        (* If so, attempt to extract a trivial insert mask *)
-        (match is_insert_mask m1, is_insert_mask m2 with
-        | Some (l,w), _ -> Some (insert n x2 l w x1)
-        | _, Some (l,w) -> Some (insert n x1 l w x2)
-        | _ -> None)
-      else None
 
   | ("and_bits",     _,               [Val x1; x2])       when is_zero_bits x1 -> Some (Val x1)
   | ("and_bits",     _,               [x1; Val x2])       when is_zero_bits x2 -> Some (Val x2)
   | ("and_bits",     _,               [Val v; x])         when is_one_bits v -> Some x
   | ("and_bits",     _,               [x; Val v])         when is_one_bits v -> Some x
-  | ("and_bits",    [Val (VInt n)],   [Val (VBits m); x])
-  | ("and_bits",    [Val (VInt n)],   [x; Val (VBits m)]) ->
-      let z = Val (VBits (prim_zeros_bits n)) in
-      (* Check if the and operation is a trivial mask *)
-      (match is_insert_mask m, is_insert_mask (prim_not_bits m) with
-      | Some (l,w), _ -> Some (insert n z l w x)
-      | _, Some (l,w) -> Some (insert n x l w z)
-      | _ -> None)
 
   | _ -> None)
 
