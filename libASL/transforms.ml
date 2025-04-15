@@ -356,32 +356,10 @@ module StatefulIntToBits = struct
   let wrapper_ident = FIdent ("StatefulIntToBit_wrapper", 0)
 
   let build_div x y =
-      let wx = width (snd x) in
-      let wy = width (snd y) in
-      let abs = abs_of_div (snd x) (snd y) in
-      let mgr = merge_abs (snd x) (snd y) in
-      let base_div = sym_prim (FIdent ("sdiv_bits", 0)) [sym_of_abs mgr] [extend mgr x; extend mgr y] in
-      if wy > wx then begin
-        (base_div, abs)
-      end
-      else begin
-        assert (width mgr = wx);
-        if width abs = wx then begin
-          (base_div, abs)
-        end else begin
-          let ex = extend abs in
-          (* Test if denom is -1 *)
-          let negone = VBits {n = wy ; v = Z.pred (Z.pow (Z.succ Z.one) wy)} in
-          let den = sym_prim (FIdent ("eq_bits", 0)) [sym_of_abs (snd y)] [fst y; Val negone] in
-          (* Test if num is INT_MIN *)
-          let intmin = VBits {n = wx ; v = Z.pow (Z.succ Z.one) (wx - 1)} in
-          let num = sym_prim (FIdent ("eq_bits", 0)) [sym_of_abs (snd x)] [fst x; Val intmin] in
-          (* Overflow result *)
-          let res = VBits {n = width abs; v = Z.pow (Z.succ Z.one) (wx - 1)} in
-          let test = sym_prim (FIdent ("and_bool", 0)) [] [num;den] in
-          (sym_prim (FIdent ("ite", 0)) [sym_of_abs abs] [test; Val res; ex (base_div,mgr)], abs)
-        end
-      end
+    let w = abs_of_div (snd x) (snd y) in
+    let ex = extend w in
+    let f = sym_prim (FIdent ("sdiv_bits", 0)) [sym_of_abs w] [ex x; ex y] in
+    (f,w)
 
   (** Covert an integer expression tree into a bitvector equivalent *)
   let rec bv_of_int_expr (st: state) (e: expr): (sym * abs) =
@@ -1158,6 +1136,16 @@ module IntToBits = struct
 
     method! vexpr e =
       match e with
+      (* Naive match for division where both arguments have been sign extended from
+         some original width, which is now being sliced out. *)
+      | Expr_Slices(Expr_TApply (FIdent("sdiv_bits",0) as f, [w], [
+         Expr_TApply (FIdent("SignExtend",0), [w1;_], [arg1;_]);
+         Expr_TApply (FIdent("SignExtend",0), [w2;_], [arg2;_]);
+        ]), [Slice_LoWd (Expr_LitInt lo, wd) as sl] )
+          when int_of_string lo = 0 && wd = w1 && wd = w2 ->
+        let f = Expr_TApply (f, [w1], [arg1; arg2]) in
+        ChangeDoChildrenPost (f, fun x -> Expr_Slices (x, [sl]))
+
       | Expr_Slices(
           Expr_TApply (f, tes, es) as inner,
           [Slice_LoWd (Expr_LitInt lo, Expr_LitInt wd) as sl] ) ->
