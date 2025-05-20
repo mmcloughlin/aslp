@@ -767,6 +767,9 @@ let sym_prim_simplify (name: string) (tes: sym list) (es: sym list): sym option 
   | ("and_bits",     _,               [Val v; x])         when is_one_bits v -> Some x
   | ("and_bits",     _,               [x; Val v])         when is_one_bits v -> Some x
 
+  | ("eor_bits",     _,               [Val x1; x2])       when is_zero_bits x1 -> Some x2
+  | ("eor_bits",     _,               [x1; Val x2])       when is_zero_bits x2 -> Some x1
+
   | _ -> None)
 
 let rec val_type (v: value): ty =
