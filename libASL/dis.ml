@@ -1365,7 +1365,7 @@ and dis_stmt' (x: AST.stmt): unit rws =
         DisEnv.write [Stmt_Assert(expr_false, loc)]
     )
 
-let dis_encoding (x: encoding) (op: Primops.bigint): bool rws =
+let dis_encoding (x: encoding) (op: Primops.bigint): (stmt list option) rws =
     let Encoding_Block (nm, iset, fields, opcode, guard, unpreds, b, loc) = x in
     (* todo: consider checking iset *)
     (* Printf.printf "Checking opcode match %s == %s\n" (Utils.to_string (PP.pp_opcode_value opcode)) (pp_value op); *)
@@ -1386,12 +1386,11 @@ let dis_encoding (x: encoding) (op: Primops.bigint): bool rws =
                     raise (Throw (loc, Exc_Unpredictable))
             ) unpreds;
             (* dis_encoding: we cannot guarantee that these statements are fully evaluated. *)
-            let@ () = dis_stmts b in
-            DisEnv.pure true
+            DisEnv.pure (Some b)
         end else begin
-            DisEnv.pure false
+            DisEnv.pure None
         end
-    | None -> DisEnv.pure false
+    | None -> DisEnv.pure None
 
 let dis_decode_slice (loc: l) (x: decode_slice) (op: Primops.bigint): value rws =
     (match x with
@@ -1444,7 +1443,7 @@ and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: 
         | DecoderBody_Encoding (inst, l) ->
                 let@ (enc, opost, cond, exec) = DisEnv.reads (fun config -> Eval.Env.getInstruction loc config.eval_env inst) in
                 let@ enc_match = dis_encoding enc op in
-                if enc_match then begin
+                (match enc_match with Some decode ->
                     (* todo: should evaluate ConditionHolds to decide whether to execute body *)
                     if !debug_level >= 0 then begin
                         Printf.printf "Disasm: %s\n" (pprint_ident inst);
@@ -1452,15 +1451,15 @@ and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: 
 
                     let@ (lenv',stmts) = DisEnv.locally_ (
                         let@ () = DisEnv.modify (LocalEnv.addLevel) in
-                        let@ () = (match opost with
+                        let postdecode = (match opost with
                           | Some post ->
                               if !debug_level >= 2 then begin
                                 Printf.printf "also disassembling __postdecode...\n"
                               end;
-                              dis_stmts post
-                          | None -> DisEnv.unit
+                              post
+                          | None -> []
                         ) in
-                        let@ () = dis_stmts exec in
+                        dis_stmts (decode @ postdecode @ exec) >>
                         DisEnv.modify (LocalEnv.popLevel)
                     ) in
                     let stmts = flatten stmts [] in
@@ -1473,9 +1472,8 @@ and dis_decode_alt' (loc: AST.l) (DecoderAlt_Alt (ps, b)) (vs: value list) (op: 
 
                     let@ () = DisEnv.write stmts in
                     DisEnv.pure (Some (pprint_ident inst))
-                end else begin
-                    DisEnv.pure None
-                end
+                | None ->
+                    DisEnv.pure None)
         | DecoderBody_Decoder (fs, c, loc) ->
                 let@ () = DisEnv.modify (LocalEnv.addLevel) in
                 let@ () = DisEnv.traverse_ (function (IField_Field (f, lo, wd)) ->
