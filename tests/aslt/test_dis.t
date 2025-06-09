@@ -58,14 +58,14 @@ run asli with these commands
   0x1e630040
   "
   Decoding instruction A64 1e630040
-  bits ( 4 ) FPDecodeRounding5__5 ;
-  FPDecodeRounding5__5 = ZeroExtend.0 {{ 2,4 }} ( FPCR [ 22 +: 2 ],4 ) ;
-  constant bits ( 64 ) Exp9__5 = FixedToFP.0 {{ 32,64 }} ( __array _R [ 2 ] [ 0 +: 32 ],0,TRUE,FPCR,cvt_bits_uint.0 {{ 4 }} ( FPDecodeRounding5__5 ) ) ;
+  bits ( 4 ) FPDecodeRounding5__6 ;
+  FPDecodeRounding5__6 = ZeroExtend.0 {{ 2,4 }} ( FPCR [ 22 +: 2 ],4 ) ;
+  constant bits ( 64 ) Exp9__5 = FixedToFP.0 {{ 32,64 }} ( __array _R [ 2 ] [ 0 +: 32 ],0,TRUE,FPCR,cvt_bits_uint.0 {{ 4 }} ( FPDecodeRounding5__6 ) ) ;
   __array _Z [ 0 ] = ZeroExtend.0 {{ 64,128 }} ( Exp9__5,128 ) ;
   ""
-  Stmt_VarDeclsNoInit(Type_Bits(4),["FPDecodeRounding5__5"])
-  Stmt_Assign(LExpr_Var("FPDecodeRounding5__5"),Expr_TApply("ZeroExtend.0",[2;4],[Expr_Slices(Expr_Var("FPCR"),[Slice_LoWd(22,2)]);4]))
-  Stmt_ConstDecl(Type_Bits(64),"Exp9__5",Expr_TApply("FixedToFP.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);0;Expr_Var("TRUE");Expr_Var("FPCR");Expr_TApply("cvt_bits_uint.0",[4],[Expr_Var("FPDecodeRounding5__5")])]))
+  Stmt_VarDeclsNoInit(Type_Bits(4),["FPDecodeRounding5__6"])
+  Stmt_Assign(LExpr_Var("FPDecodeRounding5__6"),Expr_TApply("ZeroExtend.0",[2;4],[Expr_Slices(Expr_Var("FPCR"),[Slice_LoWd(22,2)]);4]))
+  Stmt_ConstDecl(Type_Bits(64),"Exp9__5",Expr_TApply("FixedToFP.0",[32;64],[Expr_Slices(Expr_Array(Expr_Var("_R"),2),[Slice_LoWd(0,32)]);0;Expr_Var("TRUE");Expr_Var("FPCR");Expr_TApply("cvt_bits_uint.0",[4],[Expr_Var("FPDecodeRounding5__6")])]))
   Stmt_Assign(LExpr_Array(LExpr_Var("_Z"),0),Expr_TApply("ZeroExtend.0",[64;128],[Expr_Var("Exp9__5");128]))
   "
   0xd53b4200
