@@ -475,6 +475,18 @@ class replaceExprClass (replace: expr -> expr option) = object
         )
 end
 
+class pruneParensClass = object
+  inherit nopAslVisitor
+  method! vexpr x =
+    match x with
+    | Expr_Parens e -> ChangeTo e
+    | _ -> DoChildren
+end
+
+let prune_parens e =
+  let c = new pruneParensClass in
+  visit_expr c e
+
 (****************************************************************)
 (** {2 Resugaring}                                              *)
 (****************************************************************)
