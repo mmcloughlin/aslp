@@ -1561,22 +1561,26 @@ let build_env (env: Eval.Env.t): env =
     let lenv = LocalEnv.init env in
     let loc = Unknown in
 
-    (* get the pstate, then construct a new pstate where nRW=0, EL=0 & SP=0, then set the pstate *)
-    let (_, pstate) = LocalEnv.getVar loc (Var(0, ("PSTATE"))) lenv in
-    let pstate = (match pstate with
-    | Val(pstate_v) ->
-      let pstate_v = set_access_chain loc pstate_v [Field(Ident("EL"))] (VBits({n=2; v=Z.zero;})) in
-      let pstate_v = set_access_chain loc pstate_v [Field(Ident("SP"))] (VBits({n=1; v=Z.zero;})) in
-      let pstate_v = set_access_chain loc pstate_v [Field(Ident("nRW"))] (VBits({n=1; v=Z.zero;})) in
-      pstate_v
-    | _ ->
-      unsupported loc @@ "Initial env value of PSTATE is not a Value";
-    ) in
-    let lenv = LocalEnv.setVar loc (Var(0, ("PSTATE"))) (Val(pstate)) lenv in
-    let lenv = LocalEnv.setVar loc (Var(0, ("SCR_EL3"))) (Val(VBits({n=64; v=Z.zero;}))) lenv in
-    let lenv = LocalEnv.setVar loc (Var(0, ("SCTLR_EL1"))) (Val(VBits({n=64; v=Z.zero;}))) lenv in
-    (* set InGuardedPage to false *)
-    let lenv = LocalEnv.setVar loc (Var(0, ("InGuardedPage"))) (Val (VBool false)) lenv in
+    let lenv = try
+      (* get the pstate, then construct a new pstate where nRW=0, EL=0 & SP=0, then set the pstate *)
+      let (_, pstate) = LocalEnv.getVar loc (Var(0, ("PSTATE"))) lenv in
+      let pstate = (match pstate with
+      | Val(pstate_v) ->
+        let pstate_v = set_access_chain loc pstate_v [Field(Ident("EL"))] (VBits({n=2; v=Z.zero;})) in
+        let pstate_v = set_access_chain loc pstate_v [Field(Ident("SP"))] (VBits({n=1; v=Z.zero;})) in
+        let pstate_v = set_access_chain loc pstate_v [Field(Ident("nRW"))] (VBits({n=1; v=Z.zero;})) in
+        pstate_v
+      | _ ->
+        unsupported loc @@ "Initial env value of PSTATE is not a Value";
+      ) in
+      let lenv = LocalEnv.setVar loc (Var(0, ("PSTATE"))) (Val(pstate)) lenv in
+      let lenv = LocalEnv.setVar loc (Var(0, ("SCR_EL3"))) (Val(VBits({n=64; v=Z.zero;}))) lenv in
+      let lenv = LocalEnv.setVar loc (Var(0, ("SCTLR_EL1"))) (Val(VBits({n=64; v=Z.zero;}))) lenv in
+      (* set InGuardedPage to false *)
+      LocalEnv.setVar loc (Var(0, ("InGuardedPage"))) (Val (VBool false)) lenv
+    with _ ->
+      lenv
+    in
     let globals = IdentSet.of_list @@ List.map fst @@ Bindings.bindings (Eval.Env.readGlobals env) in
     lenv, globals
 
