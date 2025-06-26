@@ -950,6 +950,11 @@ let unify_ixtype (u: unifier) (ty1: AST.ixtype) (ty2: AST.ixtype): unit =
     | _ -> ()
     )
 
+let addConstraint env loc e =
+  let subst_consts = new substFunClass (GlobalEnv.getConstant (Env.globals env)) in
+  let e = Visitor.visit_expr subst_consts e in
+  Env.addConstraint env loc e
+
 (** Unify two types
 
     This performs a structural match on two types - ignoring the dependent type part
@@ -1811,7 +1816,7 @@ and tc_stmt (env: Env.t) (x: AST.stmt): AST.stmt =
             let ty' = tc_type env loc ty in
             let i'  = check_expr env loc ty' i in
             Env.addLocalVar env loc v ty';
-            if ty' = type_integer then Env.addConstraint env loc (mk_eq_int (Expr_Var v) i');
+            if ty' = type_integer then addConstraint env loc (mk_eq_int (Expr_Var v) i');
             Stmt_ConstDecl(ty', v, i', loc)
     | Stmt_Assign(l, r, loc) ->
             let (s, (r', rty, l', imps)) = with_unify env loc (fun u ->
@@ -1870,6 +1875,9 @@ and tc_stmt (env: Env.t) (x: AST.stmt): AST.stmt =
             Stmt_ProcReturn(loc)
     | Stmt_Assert(e, loc) ->
             let e' = check_expr env loc type_bool e in
+            (match prune_parens e' with
+            | Expr_TApply (FIdent("eq_int",_), _, _) -> addConstraint env loc e'
+            | e -> ());
             Stmt_Assert(e', loc)
     | Stmt_Unpred(loc) ->
             Stmt_Unpred(loc)
