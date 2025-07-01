@@ -63,6 +63,17 @@ let mk_add_int (x: AST.expr) (y: AST.expr): AST.expr =
 let mk_sub_int (x: AST.expr) (y: AST.expr): AST.expr =
     Expr_TApply (FIdent ("sub_int",0), [], [x; y])
 
+(** Construct expression "and_bool(x, y)" *)
+let mk_and_bool (x: AST.expr) (y: AST.expr): AST.expr =
+    Expr_TApply (FIdent ("and_bool",0), [], [x; y])
+
+(** Construct expression "not_bool(x)" *)
+let mk_not_bool (x: AST.expr): AST.expr =
+    Expr_TApply (FIdent ("not_bool",0), [], [x])
+
+(** Construct expression "TRUE" *)
+let mk_true = Expr_Var (Ident "TRUE")
+
 (** Construct expression "(0 + x1) + ... + xn" *)
 let mk_add_ints (xs: AST.expr list): AST.expr =
     List.fold_left mk_add_int (Expr_LitInt "0") xs
@@ -545,6 +556,8 @@ module Env : sig
     val getConstraints      : t -> AST.expr list
     val setReturnType       : t -> AST.ty -> unit
     val getReturnType       : t -> AST.ty option
+
+    val isConstant          : t -> AST.ident -> bool
 end = struct
     type t = {
         globals             : GlobalEnv.t;
@@ -557,7 +570,7 @@ end = struct
         mutable implicits   : AST.ty Bindings.t ref;
 
         (* constraints collected while typechecking current expression/assignment *)
-        mutable constraints : AST.expr list;
+        mutable constraints : (AST.expr list) list;
     }
 
     let mkEnv (globalEnv: GlobalEnv.t) = {
@@ -566,7 +579,7 @@ end = struct
         locals      = [Bindings.empty];
         modified    = IdentSet.empty;
         implicits   = ref Bindings.empty;
-        constraints = [];
+        constraints = [[]];
     }
 
     (* todo: would it be better to make Env a subclass of GlobalEnv
@@ -582,7 +595,7 @@ end = struct
             locals      = Bindings.empty :: parent.locals;
             modified    = IdentSet.empty;
             implicits   = parent.implicits;
-            constraints = parent.constraints;
+            constraints = [] :: parent.constraints;
         } in
         let r = k child in
         parent.modified <- IdentSet.union parent.modified child.modified;
@@ -595,7 +608,7 @@ end = struct
             locals      = Bindings.empty :: parent.locals;
             modified    = IdentSet.empty;
             implicits   = parent.implicits;
-            constraints = parent.constraints;
+            constraints = [] :: parent.constraints;
         } in
         let r = k child in
         parent.modified <- IdentSet.union parent.modified child.modified;
@@ -653,10 +666,13 @@ end = struct
         env.modified <- IdentSet.add v env.modified
 
     let addConstraint (env: t) (loc: AST.l) (c: AST.expr): unit =
-        env.constraints <- c :: env.constraints
+        if verbose then Printf.printf "    - Adding constraint: %s\n" (pp_expr c);
+        match env.constraints with
+        | cs::css -> env.constraints <- (c::cs)::css
+        | _ -> failwith "addConstraint"
 
     let getConstraints (env: t): AST.expr list =
-        env.constraints
+        List.flatten env.constraints
 
     let setReturnType (env: t) (ty: AST.ty): unit =
         env.rty <- Some ty
@@ -664,7 +680,47 @@ end = struct
     let getReturnType (env: t): AST.ty option =
         env.rty
 
+    let isConstant (env: t) (v: AST.ident): bool =
+      true
+        (*GlobalEnv.getConstant env.globals v <> None ||
+        (not (IdentSet.mem v env.modified) && List.exists (fun m -> Bindings.mem v m) env.locals) *)
+
 end
+
+(****************************************************************)
+(** {2 Path-sensitive analysis helper functions}               *)
+(****************************************************************)
+
+(** Z3-compatible pure operations for constant conditions *)
+let z3_pure_ops = [
+    (* Boolean operations *)
+    "eq_bool"; "ne_bool"; "not_bool"; "and_bool"; "or_bool"; "implies_bool";
+    (* Integer operations *)
+    "eq_int"; "ne_int"; "le_int"; "lt_int"; "ge_int"; "gt_int";
+    "add_int"; "sub_int"; "mul_int"; "neg_int"; "pow2_int"
+]
+
+(** Attempt to extract a constant expression bounding reachability, implied by the provided term *)
+let rec to_constant_expr (env: Env.t) (e: AST.expr): AST.expr option =
+    match e with
+    | Expr_Parens e -> to_constant_expr env e
+    | Expr_LitInt _
+    | Expr_Var (Ident "TRUE")
+    | Expr_Var (Ident "FALSE") -> Some e
+    | Expr_Var v when Env.isConstant env v -> Some e
+    | Expr_TApply (FIdent("and_bool", i), [], es) ->
+        let es = List.filter_map (to_constant_expr env) es in
+        (match es with
+        | [] -> None
+        | [e] -> Some e
+        | es -> Some (Expr_TApply (FIdent("and_bool", i), [], es)))
+    | Expr_TApply (FIdent(f, i), [], es) when List.mem f z3_pure_ops ->
+        let es' = List.filter_map (to_constant_expr env) es in
+        if List.length es <> List.length es' then None
+        else Some (Expr_TApply (FIdent(f, i), [], es'))
+    | _ -> None
+
+let is_constant_expr env e = (to_constant_expr env e = Some e)
 
 (****************************************************************)
 (** {2 Unification}                                             *)
@@ -874,6 +930,7 @@ class unifier (loc: AST.l) (assumptions: expr list) = object (self)
                 renamings#pp "      Renaming: ";
                 Bindings.iter (fun v e -> Printf.printf "      Bind: %s -> %s\n" (pprint_ident v) (ppp_expr e)) bindings
             end;
+            List.iter (fun c -> Printf.printf "      Assumption: %s\n" (ppp_expr c)) assumptions;
             List.iter (fun c -> Printf.printf "      Constraint: %s\n" (ppp_expr c)) constraints;
             flush stdout;
             raise (TypeError (loc, "Type mismatch"))
@@ -951,9 +1008,11 @@ let unify_ixtype (u: unifier) (ty1: AST.ixtype) (ty2: AST.ixtype): unit =
     )
 
 let addConstraint env loc e =
-  let subst_consts = new substFunClass (GlobalEnv.getConstant (Env.globals env)) in
-  let e = Visitor.visit_expr subst_consts e in
-  Env.addConstraint env loc e
+    let subst_consts = new substFunClass (GlobalEnv.getConstant (Env.globals env)) in
+    let e = Visitor.visit_expr subst_consts e in
+    match to_constant_expr env e with
+    | Some e -> Env.addConstraint env loc e
+    | None -> ()
 
 (** Unify two types
 
@@ -1320,17 +1379,44 @@ and tc_slice_expr (env: Env.t) (u: unifier) (loc: AST.l) (x: expr) (ss: (AST.sli
     | _ -> raise (TypeError (loc, "slice of expr"))
     )
 
+(* Join two types under some constant condition *)
+and cond_join_typs env u loc c tty ety =
+    let bail tty ety =
+      check_type env u loc tty ety;
+      tty
+    in
+    let rec loop tty ety =
+        match tty, ety with
+        | _ when tty = ety -> tty
+        | Type_Bits(n), Type_Bits(m) -> Type_Bits (Expr_If (type_integer, c, n, [], m))
+        | Type_Tuple(ttys), Type_Tuple(etys) ->
+                let tys = List.map2 loop ttys etys in
+                Type_Tuple(tys)
+        | _ -> bail tty ety
+    in
+    if is_constant_expr env c then loop tty ety else bail tty ety
+
+(* Type check an expression if *)
+and tc_e_if env u loc bodies default =
+    match bodies with
+    | (E_Elsif_Cond(c,s))::bodies ->
+            let c' = check_expr env loc type_bool c in
+            let (s',tty) = tc_expr env u loc s in
+            let (ety,bodies',default') = tc_e_if env u loc bodies default in
+            let ty = cond_join_typs env u loc c' tty ety in
+            (ty,E_Elsif_Cond(c',s')::bodies',default')
+    | [] ->
+            let (default',dty) = tc_expr env u loc default in
+            (dty,[],default')
+
 (** Typecheck expression *)
 and tc_expr (env: Env.t) (u: unifier) (loc: AST.l) (x: AST.expr): (AST.expr * AST.ty) =
     (match x with
     | Expr_If(_, c, t, els, e) ->
-            let c'        = check_expr env loc type_bool c in
-            let (t', tty)     = tc_expr env u loc t in
-            let (els', eltys) = List.split (List.map (tc_e_elsif env u loc) els) in
-            let (e', ety)     = tc_expr env u loc e in
-            List.iter (fun elty -> check_type env u loc tty elty) eltys;
-            check_type env u loc tty ety;
-            (Expr_If(tty, c', t', els', e'), tty)
+            let bodies = E_Elsif_Cond(c,t)::els in
+            let (ty,bodies',default') = tc_e_if env u loc bodies e in
+            let E_Elsif_Cond(c',t') = List.hd bodies' in
+            (Expr_If(ty, c', t', List.tl bodies', default'), ty)
     | Expr_Binop(x, Binop_Eq, Expr_LitMask(y)) ->
             (* syntactic sugar *)
             tc_expr env u loc (Expr_In(x, Pat_LitMask y))
@@ -1772,24 +1858,42 @@ let rec tc_stmts (env: Env.t) (loc: AST.l) (xs: AST.stmt list): AST.stmt list =
     ) env in
     List.concat rss
 
-(** Typecheck 'if expr then stmt' *)
-and tc_s_elsif (env: Env.t) (loc: AST.l) (x: AST.s_elsif): AST.s_elsif =
-    (match x with
-    | S_Elsif_Cond(c, s) ->
-            let c' = check_expr env loc type_bool c in
-            let s' = tc_stmts env loc s in
-            S_Elsif_Cond(c', s')
-    )
+(** Typecheck list of statements guarded by some condition *)
+and tc_stmts_with_cond (env: Env.t) (loc: AST.l) (c: AST.expr) (xs: AST.stmt list): AST.stmt list =
+    let rss = Env.nest (fun env' ->
+        addConstraint env' loc c;
+        List.map (fun s ->
+            let s' = tc_stmt env' s in
+            let imps = Env.getImplicits env' in
+            List.iter (fun (v, ty) -> Env.addLocalVar env' loc v ty) imps;
+            let decls = declare_implicits loc imps in
+            if verbose && decls <> [] then Printf.printf "Implicit decls: %s %s" (pp_loc loc) (Utils.to_string (PP.pp_indented_block decls));
+            List.append decls [s']
+        ) xs
+    ) env in
+    List.concat rss
+
+and tc_s_elsif (env: Env.t) (loc: AST.l) (bodies: s_elsif list) default =
+    let rec loop bodies reach = match bodies with
+    | (S_Elsif_Cond(c,s))::bodies ->
+        let c' = check_expr env loc type_bool c in
+        let s' = tc_stmts_with_cond env loc (mk_and_bool reach c') s in
+        let (bodies',default') = loop bodies (mk_and_bool reach (mk_not_bool c')) in
+        (S_Elsif_Cond(c',s')::bodies',default')
+    | [] ->
+        let default' = tc_stmts_with_cond env loc reach default in
+        ([],default')
+    in
+    loop bodies mk_true
 
 (** Typecheck case alternative *)
-and tc_alt (env: Env.t) (loc: AST.l) (ty: AST.ty) (x: AST.alt): AST.alt =
-    (match x with
-    | Alt_Alt(ps, oc, b) ->
-            let ps' = List.map (tc_pattern env loc ty) ps in
-            let oc' = map_option (fun c -> check_expr env loc type_bool c) oc in
-            let b' = tc_stmts env loc b in
-            Alt_Alt(ps', oc', b')
-    )
+and tc_alt (env: Env.t) (loc: AST.l) (ty: AST.ty) (e: AST.expr) (Alt_Alt(ps, oc, b): AST.alt): AST.alt =
+    let ps' = List.map (tc_pattern env loc ty) ps in
+    let oc' = map_option (fun c -> check_expr env loc type_bool c) oc in
+    let b' = match ps with
+    | [Pat_LitInt l] -> tc_stmts_with_cond env loc (mk_eq_int e (Expr_LitInt l)) b
+    | _ -> tc_stmts env loc b in
+    Alt_Alt(ps', oc', b')
 
 (** Typecheck exception catcher 'when expr stmt' *)
 and tc_catcher (env: Env.t) (loc: AST.l) (x: AST.catcher): AST.catcher =
@@ -1875,9 +1979,7 @@ and tc_stmt (env: Env.t) (x: AST.stmt): AST.stmt =
             Stmt_ProcReturn(loc)
     | Stmt_Assert(e, loc) ->
             let e' = check_expr env loc type_bool e in
-            (match prune_parens e' with
-            | Expr_TApply (FIdent("eq_int",_), _, _) -> addConstraint env loc e'
-            | e -> ());
+            addConstraint env loc e';
             Stmt_Assert(e', loc)
     | Stmt_Unpred(loc) ->
             Stmt_Unpred(loc)
@@ -1911,17 +2013,16 @@ and tc_stmt (env: Env.t) (x: AST.stmt): AST.stmt =
             ) in
             let e' = check_expr env loc ty e in
             Stmt_DecodeExecute(i, e', loc)
-    | Stmt_If(c, t, els, e, loc) ->
-            let c'   = check_expr env loc type_bool c in
-            let t'   = tc_stmts env loc t in
-            let els' = List.map (tc_s_elsif env loc) els in
-            let e'   = tc_stmts env loc e in
-            Stmt_If(c', t', els', e', loc)
+    | Stmt_If(c, t, els, default, loc) ->
+            let bodies = S_Elsif_Cond(c,t)::els in
+            let (bodies',default') = tc_s_elsif env loc bodies default in
+            let S_Elsif_Cond(c', t') = List.hd bodies' in
+            Stmt_If(c', t', List.tl bodies', default', loc)
     | Stmt_Case(e, alts, odefault, loc) ->
             let (s, (e', ty')) = with_unify env loc (fun u -> tc_expr env u loc e) in
             let e''       = unify_subst_e  s e' in
             let ty''      = unify_subst_ty s ty' in
-            let alts'     = List.map (tc_alt env loc ty'') alts in
+            let alts'     = List.map (tc_alt env loc ty'' e'') alts in
             let odefault' = map_option (fun b -> tc_stmts env loc b) odefault in
             Stmt_Case(e'', alts', odefault', loc)
     | Stmt_For(v, start, dir, stop, b, loc) ->
