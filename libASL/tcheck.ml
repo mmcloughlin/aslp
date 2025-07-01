@@ -681,9 +681,8 @@ end = struct
         env.rty
 
     let isConstant (env: t) (v: AST.ident): bool =
-      true
-        (*GlobalEnv.getConstant env.globals v <> None ||
-        (not (IdentSet.mem v env.modified) && List.exists (fun m -> Bindings.mem v m) env.locals) *)
+        let imps = !(env.implicits) in
+        GlobalEnv.getConstant env.globals v <> None || (not (Bindings.mem v imps))
 
 end
 
@@ -696,7 +695,7 @@ let z3_pure_ops = [
     (* Boolean operations *)
     "eq_bool"; "ne_bool"; "not_bool"; "and_bool"; "or_bool"; "implies_bool";
     (* Integer operations *)
-    "eq_int"; "ne_int"; "le_int"; "lt_int"; "ge_int"; "gt_int";
+    "eq_int"; "ne_int"; "le_int"; "lt_int"; "ge_int"; "gt_int"; "fdiv_int";
     "add_int"; "sub_int"; "mul_int"; "neg_int"; "pow2_int"
 ]
 
@@ -1388,6 +1387,10 @@ and cond_join_typs env u loc c tty ety =
     let rec loop tty ety =
         match tty, ety with
         | _ when tty = ety -> tty
+        | Type_Bits(Expr_Var v), _ when u#isFresh v ->
+            bail tty ety
+        | _, Type_Bits(Expr_Var v) when u#isFresh v ->
+            bail tty ety
         | Type_Bits(n), Type_Bits(m) -> Type_Bits (Expr_If (type_integer, c, n, [], m))
         | Type_Tuple(ttys), Type_Tuple(etys) ->
                 let tys = List.map2 loop ttys etys in
