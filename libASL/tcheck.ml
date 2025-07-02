@@ -702,11 +702,15 @@ let z3_pure_ops = [
 (** Attempt to extract a constant expression bounding reachability, implied by the provided term *)
 let rec to_constant_expr (env: Env.t) (e: AST.expr): AST.expr option =
     match e with
-    | Expr_Parens e -> to_constant_expr env e
+    | Expr_Parens e -> Option.map (fun v -> Expr_Parens v) (to_constant_expr env e)
     | Expr_LitInt _
     | Expr_Var (Ident "TRUE")
     | Expr_Var (Ident "FALSE") -> Some e
     | Expr_Var v when Env.isConstant env v -> Some e
+    | Expr_If(ty, c, t, [], f) ->
+        (match to_constant_expr env c, to_constant_expr env t, to_constant_expr env f with
+        | Some c', Some t', Some f' -> Some (Expr_If(ty, c', t', [], f'))
+        | _ -> None)
     | Expr_TApply (FIdent("and_bool", i), [], es) ->
         let es = List.filter_map (to_constant_expr env) es in
         (match es with
@@ -1011,7 +1015,9 @@ let addConstraint env loc e =
     let e = Visitor.visit_expr subst_consts e in
     match to_constant_expr env e with
     | Some e -> Env.addConstraint env loc e
-    | None -> ()
+    | None ->
+        if verbose then Printf.printf "    - Skipping constraint: %s\n" (pp_expr e);
+        ()
 
 (** Unify two types
 

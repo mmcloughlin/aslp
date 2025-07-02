@@ -146,9 +146,12 @@ and z3_of_expr (ctx: Z3.context) (ufs: (AST.expr * Z3.Expr.expr) list ref) (x: A
     | Expr_TApply (FIdent ("pow2_int",_),  [], [Expr_LitInt i]) when int_of_string i = 0 ->
         Z3.Arithmetic.Integer.mk_numeral_i ctx 1
     | Expr_TApply (FIdent ("pow2_int",_),  [], [i]) ->
-        let two = Z3.Arithmetic.Integer.mk_numeral_i ctx 2 in
-        let arg = z3_of_expr ctx ufs i in
-        Z3.Arithmetic.mk_power ctx two arg
+        let i = z3_of_expr ctx ufs i in
+        let rec loop n =
+          if n = 0 then Z3.Arithmetic.Integer.mk_numeral_i ctx 1
+          else Z3.Boolean.mk_ite ctx (Z3.Boolean.mk_eq ctx (Z3.Arithmetic.Integer.mk_numeral_i ctx n) i) (Z3.Arithmetic.Integer.mk_numeral_i ctx (1 lsl n)) (loop (n - 1))
+        in
+        loop 30
 
     | Expr_If (_, c, t, [], f) ->
         let c = z3_of_bool ctx ufs c in
@@ -184,5 +187,5 @@ let check_constraints (bs: AST.expr list) (cs: AST.expr list): bool =
     if verbose then Printf.printf "      - Checking %s\n" (Z3.Expr.to_string p);
     Z3.Solver.add solver [Z3.Boolean.mk_not z3_ctx p];
     let q = Z3.Solver.check solver [] in
-    if q = SATISFIABLE then Printf.printf "Failed property %s\n" (Z3.Expr.to_string p);
+    if q <> UNSATISFIABLE then Printf.printf "Failed property %s\n" (Z3.Expr.to_string p);
     q = UNSATISFIABLE
