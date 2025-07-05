@@ -421,6 +421,10 @@ module StatefulIntToBits = struct
         let y = force_signed (bv_of_int_expr st y) in
         assert (is_pos x = is_pos y);
         build_div x y
+    | Expr_TApply (FIdent ("zdiv_int", 0), [], [x; y]) ->
+        let x = force_signed (bv_of_int_expr st x) in
+        let y = force_signed (bv_of_int_expr st y) in
+        build_div x y
 
     (* when the divisor is a power of 2, mod can be implemented by truncating. *)
     | Expr_TApply (FIdent ("frem_int", 0), [], [n;Expr_LitInt d]) when is_power_of_2 (int_of_string d) ->
@@ -1461,6 +1465,7 @@ module CommonSubExprElim = struct
       | Stmt_ConstDecl(_, n, _, _) ->
           consts <- IdentSet.add n consts;
           SkipChildren
+      | Stmt_If _ -> SkipChildren
       | _ -> DoChildren)
     method get_info = consts
   end
