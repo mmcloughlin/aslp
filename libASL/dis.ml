@@ -561,6 +561,46 @@ let rec ite_body stmts result =
   | (Stmt_ConstDecl _ )::es -> ite_body es result
   | _ -> None
 
+(** Recursive datatype to represent variable structure for tuples *)
+type var_structure = 
+  | VarLeaf of var
+  | VarTuple of var_structure list
+
+(** Build variable structure from type *)
+let rec build_var_structure (loc: l) (t: ty) (prefix: string): var_structure rws =
+  (match t with
+  | Type_Tuple tys ->
+      let+ structures = DisEnv.traverse (fun ty -> build_var_structure loc ty prefix) tys in
+      VarTuple structures
+  | _ ->
+      let+ temp = declare_fresh_named_var loc prefix t in
+      VarLeaf temp)
+
+(** Assign value to variable structure *)
+let rec assign_var_structure (loc: l) (structure: var_structure) (sym: sym): unit rws =
+  (match structure with
+  | VarLeaf var ->
+      assign_var loc var sym
+  | VarTuple structures ->
+      let syms = sym_of_tuple loc sym in
+      let rec assign_all structures syms =
+        (match structures, syms with
+        | [], [] -> DisEnv.unit
+        | structure::rest_structures, sym::rest_syms ->
+            let@ () = assign_var_structure loc structure sym in
+            assign_all rest_structures rest_syms
+        | _ -> internal_error loc "mismatch between tuple structures and symbols")
+      in
+      assign_all structures syms)
+
+(** Convert variable structure to expression *)
+let rec var_structure_to_expr (structure: var_structure): expr =
+  (match structure with
+  | VarLeaf var ->
+      var_expr var
+  | VarTuple structures ->
+      Expr_Tuple (List.map var_structure_to_expr structures))
+
 (** Symbolic implementation of an if statement that returns an expression
  *)
 let rec sym_if (loc: l) (t: ty) (test: sym rws) (tcase: sym rws) (fcase: sym rws): sym rws =
@@ -571,29 +611,36 @@ let rec sym_if (loc: l) (t: ty) (test: sym rws) (tcase: sym rws) (fcase: sym rws
   | Val _ -> failwith ("Split on non-boolean value")
   | Exp e ->
       let@ t = dis_type loc t in
-      let@ tmp = declare_fresh_named_var loc "If" t in
+      let@ structure = build_var_structure loc t "If" in
       (* Evaluate true branch statements. *)
       let@ (tenv,tstmts) = DisEnv.locally_
-          (tcase >>= assign_var loc tmp) in
+          (tcase >>= assign_var_structure loc structure) in
       let tstmts = flatten tstmts [] in
       (* Propagate incremented counter to env'. *)
       let@ env' = DisEnv.gets (fun env -> LocalEnv.sequence_merge env tenv) in
       (* Execute false branch statements with env'. *)
       let@ (fenv,fstmts) = DisEnv.locally_
-          (DisEnv.put env' >> fcase >>= assign_var loc tmp) in
+          (DisEnv.put env' >> fcase >>= assign_var_structure loc structure) in
       let@ () = DisEnv.join_locals tenv fenv in
       let fstmts = flatten fstmts [] in
-      match ite_body tstmts tmp, ite_body fstmts tmp with
-      | Some (Val _ as te), Some fe
-      | Some te, Some (Val _ as fe) ->
-          let@ () = DisEnv.write (Utils.butlast tstmts) in
-          let+ () = DisEnv.write (Utils.butlast fstmts) in
-          (match t with
-          | Type_Bits _ -> sym_ite_bits loc (Exp e) te fe
-          | _ -> sym_ite_bool loc (Exp e) te fe)
-      | _ ->
+      (* For single variable, try the ITE optimization *)
+      (match structure with
+      | VarLeaf tmp ->
+          (match ite_body tstmts tmp, ite_body fstmts tmp with
+          | Some (Val _ as te), Some fe
+          | Some te, Some (Val _ as fe) ->
+              let@ () = DisEnv.write (Utils.butlast tstmts) in
+              let+ () = DisEnv.write (Utils.butlast fstmts) in
+              (match t with
+              | Type_Bits _ -> sym_ite_bits loc (Exp e) te fe
+              | _ -> sym_ite_bool loc (Exp e) te fe)
+          | _ ->
+              let+ () = DisEnv.write [Stmt_If(e, tstmts, [], fstmts, loc)] in
+              Exp (var_expr tmp))
+      | VarTuple _ ->
+          (* For tuple types, generate if statement and return tuple expression *)
           let+ () = DisEnv.write [Stmt_If(e, tstmts, [], fstmts, loc)] in
-          Exp (var_expr tmp))
+          Exp (var_structure_to_expr structure)))
 
 (** Symbolic implementation of an if statement with no return *)
 and unit_if (loc: l) (test: sym rws) (tcase: unit rws) (fcase: unit rws): unit rws =
