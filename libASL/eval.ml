@@ -493,38 +493,6 @@ let initializeGlobals (env: Env.t): unit =
     let g = Env.getGlobals env in
     g.bs <- Bindings.map (eval_uninitialized_to_defaults env) g.bs
 
-let initializeRegistersAndMemory (env: Env.t) (regs: bitvector list) (vecs: bitvector list): unit =
-    let d = VBits {n=64; v=Z.zero} in
-
-    let vals = List.mapi (fun i v -> (i, VBits v)) regs in
-    let arr = List.fold_left
-        (fun a (k,v) -> ImmutableArray.add k v a)
-        ImmutableArray.empty
-        vals
-    in
-    Env.setVar Unknown env (Ident "_R") (VArray (arr, d));
-
-    let vals = List.mapi (fun i v -> (i, VBits v)) vecs in
-    let arr = List.fold_left
-        (fun a (k,v) -> ImmutableArray.add k v a)
-        ImmutableArray.empty
-        vals
-    in
-    Env.setVar Unknown env (Ident "_Z") (VArray (arr, d));
-
-    (* Init memory *)
-    let ram = Primops.init_ram (char_of_int 0) in
-    ram.default <- None;
-    Env.setVar Unknown env (Ident "__Memory") (VRAM ram)
-
-let randomRegistersAndMemory (env: Env.t): unit =
-    let rnd n = Primops.({ n ; v = Z.random_bits n }) in
-    (* Init register array, should be 31 elements, each 64 bits wide *)
-    let regs = List.init 31 (fun i -> (rnd 64)) in
-    (* Init vector array, should be 32 elements, each 128 bits wide *)
-    let vecs = List.init 32 (fun i -> (rnd 128)) in
-    initializeRegistersAndMemory env regs vecs
-
 let isGlobalConst (env: Env.t) (id: AST.ident): bool =
     match Env.getGlobalConst env id with
     | _ -> true
@@ -1395,6 +1363,11 @@ let evaluation_environment (prelude: LoadASL.source) (files: LoadASL.source list
     Option.iter (fun env -> List.iter (evaluate_prj_minimal tcenv env) prjs) env;
     env
 
+let randomRegistersAndMemory (env: Env.t): unit =
+    try
+      eval_proccall Unknown env (FIdent ("random_state", 0)) [] []
+    with
+    | Return None -> ()
 
 (****************************************************************
  * End
