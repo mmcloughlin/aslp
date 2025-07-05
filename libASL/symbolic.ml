@@ -114,6 +114,8 @@ let expr_of_int n =
     literal expressions into values. *)
 let sym_of_expr (e: expr): sym =
   match e with
+  | Expr_Var id when pprint_ident id = "TRUE" -> Val (VBool true)
+  | Expr_Var id when pprint_ident id = "FALSE" -> Val (VBool false)
   | Expr_LitInt(i) ->    (Val (from_intLit i))
   | Expr_LitHex(i) ->    (Val (from_hexLit i))
   | Expr_LitReal(r) ->   (Val (from_realLit r))
@@ -181,7 +183,7 @@ let int_of_sym (e: sym): int =
 let sym_of_tuple (loc: AST.l) (v: sym): sym list  =
   match v with
   | Val (VTuple vs) -> (List.map (fun v -> Val v) vs)
-  | Exp (Expr_Tuple vs) -> (List.map (fun v -> Exp v) vs)
+  | Exp (Expr_Tuple vs) -> (List.map sym_of_expr vs)
   | _ -> raise (EvalError (loc, "tuple expected. Got "^ pp_sym v))
 
 let eval_lit (x: sym) =
