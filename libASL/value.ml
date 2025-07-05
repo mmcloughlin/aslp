@@ -324,6 +324,7 @@ let eval_prim (f: string) (tvs: value list) (vs: value list): value option =
     | ("not_bits",          [VInt n], [VBits x             ])     -> Some (VBits   (prim_not_bits x))
     | ("zeros_bits",        [VInt n], [                    ])     -> Some (VBits   (prim_zeros_bits n))
     | ("ones_bits",         [VInt n], [                    ])     -> Some (VBits   (prim_ones_bits n))
+    | ("random_bits",       [VInt n], [                    ])     -> Some (VBits   (Primops.({n = Z.to_int n; v = Z.random_bits (Z.to_int n)})))
     | ("replicate_bits",    [_; _  ], [VBits x; VInt y     ])     -> Some (VBits   (prim_replicate_bits x y))
     | ("append_bits",       [VInt m; VInt n], [VBits x; VBits y]) -> Some (VBits   (prim_append_bits x y))
     | ("eq_str",            [      ], [VString x; VString y])     -> Some (VBool   (prim_eq_str x y))
