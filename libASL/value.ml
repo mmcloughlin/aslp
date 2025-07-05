@@ -344,6 +344,7 @@ let eval_prim (f: string) (tvs: value list) (vs: value list): value option =
 
     (* The remaining primops all have side effects *)
     | ("ram_init",          _,        [VInt a; VInt n; VRAM ram; VBits i])          -> Some (prim_init_ram a n ram i; VTuple [])
+    | ("ram_init",          _,        [VInt a; VInt n; VUninitialized _; VBits i])  -> Some (prim_init_ram a n (Primops.init_ram (char_of_int 0)) i; VTuple [])
     | ("ram_read",          _,        [VInt a; VInt n; VRAM ram; VBits i])          -> Some (VBits (prim_read_ram a n ram i.v))
     | ("ram_write",         _,        [VInt a; VInt n; VRAM ram; VBits i; VBits x]) -> Some (prim_write_ram a n ram i.v x; VTuple [])
 

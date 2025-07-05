@@ -331,7 +331,7 @@ let field_vals_flags_only (enc: encoding) (name: string) (wd: int): int list =
   | _ when Utils.startswith name "uimm" -> [1]
   | _ when Utils.startswith name "scale" -> [0]
   | _, ("b40") -> [0;1;ones]
-  | _ -> List.init bound (fun x -> x)
+  | _ -> List.init (min 256 bound) (fun x -> x)
 
 let enumerate_encoding (enc: encoding) (field_vals: string -> int -> int list): encoding_tree =
   let Encoding_Block(name, iset, fields, opcode, guard, unpreds, stmts, loc) = enc in
@@ -417,7 +417,7 @@ let op_test_opcode (env: Env.t) (iset: string) (op: int): Env.t opresult =
   op_compare (evalenv, disevalenv)
 
 let get_opcodes (opt_verbose: bool ref) (iset: string) (instr: string) (env: Env.t): (string * instr_field list * ((int * bool) list) option) list =
-  if !opt_verbose then Printf.printf "Coverage for encoding %s\n" instr;
+  if !opt_verbose then Printf.printf "Coverage for encoding %s\n%!" instr;
 
   let re = Str.regexp instr in
   let encoding_matches = function
