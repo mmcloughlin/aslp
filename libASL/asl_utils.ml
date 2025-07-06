@@ -478,9 +478,9 @@ end
 class pruneParensClass = object
   inherit nopAslVisitor
   method! vexpr x =
-    match x with
-    | Expr_Parens e -> ChangeTo e
-    | _ -> DoChildren
+    ChangeDoChildrenPost(x, function 
+    | Expr_Parens e -> e
+    | e -> e)
 end
 
 let prune_parens e =
