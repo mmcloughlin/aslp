@@ -331,6 +331,107 @@ let field_vals_flags_only (enc: encoding) (name: string) (wd: int): int list =
   | _ when Utils.startswith name "uimm" -> [1]
   | _ when Utils.startswith name "scale" -> [0]
   | _, ("b40") -> [0;1;ones]
+
+  (* RISCV common cases *)
+  | _ when Utils.startswith name "rs" -> [0;1;2;ones]
+  | _ when Utils.startswith name "rd" -> [0;1;2;ones]
+  | _ when Utils.startswith name "vs" -> [0;1;2;ones]
+  | _ when Utils.startswith name "vd" -> [0;1;2;ones]
+  | _, "rm" -> [ 0; 1; 2; 3; 4; 7 ]
+
+  (* Just the entire opcode as a field... *)
+  | Ident "ILLEGAL_0", _ -> [0]
+  | Ident "FENCE_RESERVED_0", "fm" -> [0]
+  | Ident "FENCE_RESERVED_0", "pred" -> [0]
+  | Ident "FENCE_RESERVED_0", "succ" -> [0]
+
+  (* Auto-generated *)
+  | Ident "AMO_0", "op" -> [ 1; 0; 4; 12; 8; 16; 20; 24; 28 ]
+  | Ident "BTYPE_0", "op" -> [ 0; 1; 4; 5; 6; 7 ]
+  | Ident "CSRImm_0", "op" -> [ 1; 2; 3 ]
+  | Ident "CSRReg_0", "op" -> [ 1; 2; 3 ]
+  | Ident "FVFMATYPE_0", "funct6" -> [ 40; 41; 42; 43; 44; 45; 46; 47 ]
+  | Ident "FVFMTYPE_0", "funct6" -> [ 24; 25; 27; 28; 29; 31 ]
+  | Ident "FVFTYPE_0", "funct6" -> [ 0; 2; 4; 6; 8; 9; 10; 14; 15; 32; 33; 36; 39 ]
+  | Ident "FVVMATYPE_0", "funct6" -> [ 40; 41; 42; 43; 44; 45; 46; 47 ]
+  | Ident "FVVMTYPE_0", "funct6" -> [ 24; 25; 27; 28 ]
+  | Ident "FVVTYPE_0", "funct6" -> [ 0; 2; 4; 6; 8; 9; 10; 32; 36 ]
+  | Ident "FWFTYPE_0", "funct6" -> [ 52; 54 ]
+  | Ident "FWVFMATYPE_0", "funct6" -> [ 60; 61; 62; 63 ]
+  | Ident "FWVFTYPE_0", "funct6" -> [ 48; 50; 56 ]
+  | Ident "FWVTYPE_0", "funct6" -> [ 52; 54 ]
+  | Ident "FWVVMATYPE_0", "funct6" -> [ 60; 61; 62; 63 ]
+  | Ident "FWVVTYPE_0", "funct6" -> [ 48; 50; 56 ]
+  | Ident "ITYPE_0", "op" -> [ 0; 2; 3; 7; 6; 4 ]
+  | Ident "LOAD_0", "is_unsigned" -> [ 1; 0 ]
+  | Ident "LOAD_0", "width" -> [ 0; 1; 2; 3 ]
+  | Ident "MMTYPE_0", "funct6" -> [ 25; 29; 24; 27; 26; 30; 28; 31 ]
+  | Ident "MUL_0", "mul_opXN" -> [ 0; 1; 2; 3 ]
+  | Ident "MVVMATYPE_0", "funct6" -> [ 45; 47; 41; 43 ]
+  | Ident "MVVTYPE_0", "funct6" -> [ 8; 9; 10; 11; 37; 39; 36; 38; 32; 33; 34; 35 ]
+  | Ident "MVXMATYPE_0", "funct6" -> [ 45; 47; 41; 43 ]
+  | Ident "MVXTYPE_0", "funct6" -> [ 8; 9; 10; 11; 14; 15; 37; 39; 36; 38; 32; 33; 34; 35 ]
+  | Ident "NISTYPE_0", "funct6" -> [ 44; 45 ]
+  | Ident "NITYPE_0", "funct6" -> [ 46; 47 ]
+  | Ident "NVSTYPE_0", "funct6" -> [ 44; 45 ]
+  | Ident "NVTYPE_0", "funct6" -> [ 46; 47 ]
+  | Ident "NXSTYPE_0", "funct6" -> [ 44; 45 ]
+  | Ident "NXTYPE_0", "funct6" -> [ 46; 47 ]
+  | Ident "REM_0", "is_unsigned" -> [ 1; 0 ]
+  | Ident "REMW_0", "is_unsigned" -> [ 1; 0 ]
+  | Ident "RFVVTYPE_0", "funct6" -> [ 3; 1; 7; 5; 51; 49 ]
+  | Ident "RIVVTYPE_0", "funct6" -> [ 48; 49 ]
+  | Ident "RMVVTYPE_0", "funct6" -> [ 0; 1; 2; 3; 4; 5; 6; 7 ]
+  | Ident "UTYPE_0", "op" -> [ 55; 23 ]
+  | Ident "VAESDF_0", "funct6" -> [ 40; 41 ]
+  | Ident "VAESDM_0", "funct6" -> [ 40; 41 ]
+  | Ident "VAESEF_0", "funct6" -> [ 40; 41 ]
+  | Ident "VAESEM_0", "funct6" -> [ 40; 41 ]
+  | Ident "VEXT2TYPE_0", "funct6" -> [ 6; 7 ]
+  | Ident "VEXT4TYPE_0", "funct6" -> [ 4; 5 ]
+  | Ident "VEXT8TYPE_0", "funct6" -> [ 2; 3 ]
+  | Ident "VFNUNARY0_0", "vfnunary0XN" -> [ 16; 17; 18; 19; 20; 21; 22; 23 ]
+  | Ident "VFUNARY0_0", "vfunary0XN" -> [ 0; 1; 2; 3; 6; 7 ]
+  | Ident "VFUNARY1_0", "vfunary1XN" -> [ 0; 4; 5; 16 ]
+  | Ident "VFWUNARY0_0", "vfwunary0XN" -> [ 8; 9; 10; 11; 12; 14; 15 ]
+  | Ident "VICMPTYPE_0", "funct6" -> [ 24; 25; 28; 29; 30; 31 ]
+  | Ident "VIMCTYPE_0", "funct6" -> [ 17 ]
+  | Ident "VIMSTYPE_0", "funct6" -> [ 16 ]
+  | Ident "VIMTYPE_0", "funct6" -> [ 17 ]
+  | Ident "VISG_0", "funct6" -> [ 14; 15; 12 ]
+  | Ident "VITYPE_0", "funct6" -> [ 0; 3; 9; 10; 11; 32; 33; 37; 40; 41; 42; 43 ]
+  | Ident "VLOXSEGTYPE_0", "width" -> [ 0; 5; 6; 7 ]
+  | Ident "VLRETYPE_0", "width" -> [ 0; 5; 6; 7 ]
+  | Ident "VLSEGFFTYPE_0", "width" -> [ 0; 5; 6; 7 ]
+  | Ident "VLSEGTYPE_0", "width" -> [ 0; 5; 6; 7 ]
+  | Ident "VLSSEGTYPE_0", "width" -> [ 0; 5; 6; 7 ]
+  | Ident "VLUXSEGTYPE_0", "width" -> [ 0; 5; 6; 7 ]
+  | Ident "VMTYPE_0", "op" -> [ 7; 39 ]
+  | Ident "VSOXSEGTYPE_0", "width" -> [ 0; 5; 6; 7 ]
+  | Ident "VSSEGTYPE_0", "width" -> [ 0; 5; 6; 7 ]
+  | Ident "VSSSEGTYPE_0", "width" -> [ 0; 5; 6; 7 ]
+  | Ident "VSUXSEGTYPE_0", "width" -> [ 0; 5; 6; 7 ]
+  | Ident "VVCMPTYPE_0", "funct6" -> [ 24; 25; 26; 27; 28; 29 ]
+  | Ident "VVMCTYPE_0", "funct6" -> [ 17; 19 ]
+  | Ident "VVMSTYPE_0", "funct6" -> [ 16; 18 ]
+  | Ident "VVMTYPE_0", "funct6" -> [ 17; 19 ]
+  | Ident "VVTYPE_0", "funct6" -> [ 0; 2; 4; 5; 6; 7; 9; 10; 11; 12; 14; 32; 33; 34; 35; 37; 39; 40; 41; 42; 43 ]
+  | Ident "VXCMPTYPE_0", "funct6" -> [ 24; 25; 26; 27; 28; 29; 30; 31 ]
+  | Ident "VXMCTYPE_0", "funct6" -> [ 17; 19 ]
+  | Ident "VXMSTYPE_0", "funct6" -> [ 16; 18 ]
+  | Ident "VXMTYPE_0", "funct6" -> [ 17; 19 ]
+  | Ident "VXSG_0", "funct6" -> [ 14; 15; 12 ]
+  | Ident "VXTYPE_0", "funct6" -> [ 0; 2; 3; 4; 5; 6; 7; 9; 10; 11; 32; 33; 34; 35; 37; 39; 40; 41; 42; 43 ]
+  | Ident "WMVVTYPE_0", "funct6" -> [ 60; 61; 63 ]
+  | Ident "WMVXTYPE_0", "funct6" -> [ 60; 61; 62; 63 ]
+  | Ident "WRS_0", "op" -> [ 29; 13 ]
+  | Ident "WVTYPE_0", "funct6" -> [ 53; 55; 52; 54 ]
+  | Ident "WVVTYPE_0", "funct6" -> [ 49; 51; 48; 50; 59; 56; 58 ]
+  | Ident "WVXTYPE_0", "funct6" -> [ 49; 51; 48; 50; 59; 56; 58 ]
+  | Ident "WXTYPE_0", "funct6" -> [ 53; 55; 52; 54 ]
+  | Ident "ZICBOM_0", "cbop" -> [ 1; 2; 0 ]
+  | Ident "ZVKSHA2TYPE_0", "funct6" -> [ 46; 47 ]
+
   | _ -> List.init (min 256 bound) (fun x -> x)
 
 let enumerate_encoding (enc: encoding) (field_vals: string -> int -> int list): encoding_tree =
@@ -452,11 +553,12 @@ let get_opcodes (opt_verbose: bool ref) (iset: string) (instr: string) (env: Env
 
   List.fold_left (fun encs enc ->
       let Encoding_Block (nm,_,fields,_,_,_,_,_) = enc in
+      if !opt_verbose then Printf.printf "Coverage for encoding block %s\n%!" (pprint_ident nm);
       let newEnc = pprint_ident nm in
       let t = enumerate_encoding enc (field_vals_flags_only enc) in
       let l = list_of_enc_tree t in
       let opcodes = (match get_opcodes nm with
-      | [||] -> 
+      | [||] ->
         None
       | ops ->
           Some (List.fold_left (fun codes op ->
