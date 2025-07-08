@@ -26,7 +26,8 @@ let mra_tools () = List.map (fun x -> LoadASL.FileSource x) [
     "../../../mra_tools/support/interrupts.asl";
     "../../../mra_tools/support/memory.asl";
     "../../../mra_tools/support/stubs.asl";
-    "../../../mra_tools/support/fetchdecode.asl"
+    "../../../mra_tools/support/fetchdecode.asl";
+    "../../../tests/override.asl"
 ]
 
 let format_value f v = Format.fprintf f "%s" (Value.pp_value v)

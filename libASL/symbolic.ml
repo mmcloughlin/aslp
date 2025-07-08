@@ -73,6 +73,7 @@ let rec val_expr (v: Value.value): AST.expr =
       let v = Z.format ("%0" ^ string_of_int n ^ "b") v in
       let m = Z.format ("%0" ^ string_of_int n ^ "b") m in
       Expr_LitMask (String.mapi (fun i c -> if String.get m i = '1' then c else 'x') v)
+  | VUninitialized(ty) -> Expr_Unknown(ty)
   | _ -> failwith @@ "Casting unhandled value type to expression: " ^ pp_value v
 
 let rec val_initialised (v: value): bool =
@@ -113,6 +114,8 @@ let expr_of_int n =
     literal expressions into values. *)
 let sym_of_expr (e: expr): sym =
   match e with
+  | Expr_Var id when pprint_ident id = "TRUE" -> Val (VBool true)
+  | Expr_Var id when pprint_ident id = "FALSE" -> Val (VBool false)
   | Expr_LitInt(i) ->    (Val (from_intLit i))
   | Expr_LitHex(i) ->    (Val (from_hexLit i))
   | Expr_LitReal(r) ->   (Val (from_realLit r))
@@ -180,7 +183,7 @@ let int_of_sym (e: sym): int =
 let sym_of_tuple (loc: AST.l) (v: sym): sym list  =
   match v with
   | Val (VTuple vs) -> (List.map (fun v -> Val v) vs)
-  | Exp (Expr_Tuple vs) -> (List.map (fun v -> Exp v) vs)
+  | Exp (Expr_Tuple vs) -> (List.map sym_of_expr vs)
   | _ -> raise (EvalError (loc, "tuple expected. Got "^ pp_sym v))
 
 let eval_lit (x: sym) =
@@ -252,11 +255,18 @@ let expr_true    = Expr_Var (Ident "TRUE")
 let expr_false   = Expr_Var (Ident "FALSE")
 let sym_zeros n  = Val (VBits (prim_zeros_bits (Z.of_int n)))
 
+let int_or_enum (loc: AST.l) (x: value): bigint =
+    (match x with
+    | VInt i -> i
+    | VEnum (_, i) -> Z.of_int i
+    | _ -> raise (EvalError (loc, "integer expected. Got " ^ pp_value x))
+    )
+
 let rec sym_eq_int loc x y =
   let x = eval_lit x in
   let y = eval_lit y in
   match x, y with
-  | Val x, Val y -> Val (VBool (prim_eq_int (to_integer loc x) (to_integer loc y)))
+  | Val x, Val y -> Val (VBool (prim_eq_int (int_or_enum loc x) (int_or_enum loc y)))
   (* (x = x) = True *)
   | Exp x, Exp y when x = y -> Val (VBool (true))
   (* (x = x + v) = (v = 0) *)

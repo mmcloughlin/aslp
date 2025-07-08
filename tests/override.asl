@@ -579,3 +579,15 @@ bits(N) FPToFixedJS_impl(bits(M) op, FPCRType fpcr, boolean Is64)
 (bits(N), bit) FPToFixedJS(bits(M) op, FPCRType fpcr, boolean Is64)
     bits(N + 1) res = FPToFixedJS_impl(op, fpcr, Is64);
     return (res[N:1], res[0]);
+
+random_state()
+    // Initialize register array: 31 elements, each 64 bits wide
+    for i = 0 to 30
+        _R[i] = random_bits();
+
+    // Initialize vector array: 32 elements, each 128 bits wide
+    for i = 0 to 31
+        _Z[i] = random_bits();
+
+    // Initialize memory with random default
+    __InitRAM(52, 1, __Memory, Zeros(8));

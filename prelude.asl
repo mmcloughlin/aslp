@@ -81,6 +81,7 @@ __builtin bits(N)   eor_bits(bits(N) x, bits(N) y);
 __builtin bits(N)   not_bits(bits(N) x);
 __builtin bits(N)   zeros_bits();
 __builtin bits(N)   ones_bits();
+__builtin bits(N)   random_bits();
 __builtin boolean   cvt_bv_bool(bit x);
 __builtin bit       cvt_bool_bv(boolean x);
 

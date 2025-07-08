@@ -561,6 +561,46 @@ let rec ite_body stmts result =
   | (Stmt_ConstDecl _ )::es -> ite_body es result
   | _ -> None
 
+(** Recursive datatype to represent variable structure for tuples *)
+type var_structure = 
+  | VarLeaf of var
+  | VarTuple of var_structure list
+
+(** Build variable structure from type *)
+let rec build_var_structure (loc: l) (t: ty) (prefix: string): var_structure rws =
+  (match t with
+  | Type_Tuple tys ->
+      let+ structures = DisEnv.traverse (fun ty -> build_var_structure loc ty prefix) tys in
+      VarTuple structures
+  | _ ->
+      let+ temp = declare_fresh_named_var loc prefix t in
+      VarLeaf temp)
+
+(** Assign value to variable structure *)
+let rec assign_var_structure (loc: l) (structure: var_structure) (sym: sym): unit rws =
+  (match structure with
+  | VarLeaf var ->
+      assign_var loc var sym
+  | VarTuple structures ->
+      let syms = sym_of_tuple loc sym in
+      let rec assign_all structures syms =
+        (match structures, syms with
+        | [], [] -> DisEnv.unit
+        | structure::rest_structures, sym::rest_syms ->
+            let@ () = assign_var_structure loc structure sym in
+            assign_all rest_structures rest_syms
+        | _ -> internal_error loc "mismatch between tuple structures and symbols")
+      in
+      assign_all structures syms)
+
+(** Convert variable structure to expression *)
+let rec var_structure_to_expr (structure: var_structure): expr =
+  (match structure with
+  | VarLeaf var ->
+      var_expr var
+  | VarTuple structures ->
+      Expr_Tuple (List.map var_structure_to_expr structures))
+
 (** Symbolic implementation of an if statement that returns an expression
  *)
 let rec sym_if (loc: l) (t: ty) (test: sym rws) (tcase: sym rws) (fcase: sym rws): sym rws =
@@ -571,29 +611,36 @@ let rec sym_if (loc: l) (t: ty) (test: sym rws) (tcase: sym rws) (fcase: sym rws
   | Val _ -> failwith ("Split on non-boolean value")
   | Exp e ->
       let@ t = dis_type loc t in
-      let@ tmp = declare_fresh_named_var loc "If" t in
+      let@ structure = build_var_structure loc t "If" in
       (* Evaluate true branch statements. *)
       let@ (tenv,tstmts) = DisEnv.locally_
-          (tcase >>= assign_var loc tmp) in
+          (tcase >>= assign_var_structure loc structure) in
       let tstmts = flatten tstmts [] in
       (* Propagate incremented counter to env'. *)
       let@ env' = DisEnv.gets (fun env -> LocalEnv.sequence_merge env tenv) in
       (* Execute false branch statements with env'. *)
       let@ (fenv,fstmts) = DisEnv.locally_
-          (DisEnv.put env' >> fcase >>= assign_var loc tmp) in
+          (DisEnv.put env' >> fcase >>= assign_var_structure loc structure) in
       let@ () = DisEnv.join_locals tenv fenv in
       let fstmts = flatten fstmts [] in
-      match ite_body tstmts tmp, ite_body fstmts tmp with
-      | Some (Val _ as te), Some fe
-      | Some te, Some (Val _ as fe) ->
-          let@ () = DisEnv.write (Utils.butlast tstmts) in
-          let+ () = DisEnv.write (Utils.butlast fstmts) in
-          (match t with
-          | Type_Bits _ -> sym_ite_bits loc (Exp e) te fe
-          | _ -> sym_ite_bool loc (Exp e) te fe)
-      | _ ->
+      (* For single variable, try the ITE optimization *)
+      (match structure with
+      | VarLeaf tmp ->
+          (match ite_body tstmts tmp, ite_body fstmts tmp with
+          | Some (Val _ as te), Some fe
+          | Some te, Some (Val _ as fe) ->
+              let@ () = DisEnv.write (Utils.butlast tstmts) in
+              let+ () = DisEnv.write (Utils.butlast fstmts) in
+              (match t with
+              | Type_Bits _ -> sym_ite_bits loc (Exp e) te fe
+              | _ -> sym_ite_bool loc (Exp e) te fe)
+          | _ ->
+              let+ () = DisEnv.write [Stmt_If(e, tstmts, [], fstmts, loc)] in
+              Exp (var_expr tmp))
+      | VarTuple _ ->
+          (* For tuple types, generate if statement and return tuple expression *)
           let+ () = DisEnv.write [Stmt_If(e, tstmts, [], fstmts, loc)] in
-          Exp (var_expr tmp))
+          Exp (var_structure_to_expr structure)))
 
 (** Symbolic implementation of an if statement with no return *)
 and unit_if (loc: l) (test: sym rws) (tcase: unit rws) (fcase: unit rws): unit rws =
@@ -800,6 +847,11 @@ and dis_expr loc x =
   | Val (VUninitialized _) -> internal_error loc @@ "dis_expr returning VUninitialized, invalidating assumption"
   | _ -> r
 
+and dis_unknown ty: expr =
+  match ty with
+  | Type_Tuple (tys) -> Expr_Tuple (List.map dis_unknown tys)
+  | _ -> Expr_Unknown(ty)
+
 and dis_expr' (loc: l) (x: AST.expr): sym rws =
     (match x with
     | Expr_If(ty, c, t, els, e) ->
@@ -878,7 +930,7 @@ and dis_expr' (loc: l) (x: AST.expr): sym rws =
             raise (EvalError (loc, "unary operation should have been removed"))
     | Expr_Unknown(t) -> (* TODO: Is this enough? *)
             let+ t' = dis_type loc t in
-            Exp (Expr_Unknown(t'))
+            Exp (dis_unknown t')
     | Expr_ImpDef(t, Some(s)) ->
             DisEnv.reads (fun config -> Val (Eval.Env.getImpdef loc config.eval_env s))
     | Expr_ImpDef(t, None) ->
@@ -1561,22 +1613,26 @@ let build_env (env: Eval.Env.t): env =
     let lenv = LocalEnv.init env in
     let loc = Unknown in
 
-    (* get the pstate, then construct a new pstate where nRW=0, EL=0 & SP=0, then set the pstate *)
-    let (_, pstate) = LocalEnv.getVar loc (Var(0, ("PSTATE"))) lenv in
-    let pstate = (match pstate with
-    | Val(pstate_v) ->
-      let pstate_v = set_access_chain loc pstate_v [Field(Ident("EL"))] (VBits({n=2; v=Z.zero;})) in
-      let pstate_v = set_access_chain loc pstate_v [Field(Ident("SP"))] (VBits({n=1; v=Z.zero;})) in
-      let pstate_v = set_access_chain loc pstate_v [Field(Ident("nRW"))] (VBits({n=1; v=Z.zero;})) in
-      pstate_v
-    | _ ->
-      unsupported loc @@ "Initial env value of PSTATE is not a Value";
-    ) in
-    let lenv = LocalEnv.setVar loc (Var(0, ("PSTATE"))) (Val(pstate)) lenv in
-    let lenv = LocalEnv.setVar loc (Var(0, ("SCR_EL3"))) (Val(VBits({n=64; v=Z.zero;}))) lenv in
-    let lenv = LocalEnv.setVar loc (Var(0, ("SCTLR_EL1"))) (Val(VBits({n=64; v=Z.zero;}))) lenv in
-    (* set InGuardedPage to false *)
-    let lenv = LocalEnv.setVar loc (Var(0, ("InGuardedPage"))) (Val (VBool false)) lenv in
+    let lenv = try
+      (* get the pstate, then construct a new pstate where nRW=0, EL=0 & SP=0, then set the pstate *)
+      let (_, pstate) = LocalEnv.getVar loc (Var(0, ("PSTATE"))) lenv in
+      let pstate = (match pstate with
+      | Val(pstate_v) ->
+        let pstate_v = set_access_chain loc pstate_v [Field(Ident("EL"))] (VBits({n=2; v=Z.zero;})) in
+        let pstate_v = set_access_chain loc pstate_v [Field(Ident("SP"))] (VBits({n=1; v=Z.zero;})) in
+        let pstate_v = set_access_chain loc pstate_v [Field(Ident("nRW"))] (VBits({n=1; v=Z.zero;})) in
+        pstate_v
+      | _ ->
+        unsupported loc @@ "Initial env value of PSTATE is not a Value";
+      ) in
+      let lenv = LocalEnv.setVar loc (Var(0, ("PSTATE"))) (Val(pstate)) lenv in
+      let lenv = LocalEnv.setVar loc (Var(0, ("SCR_EL3"))) (Val(VBits({n=64; v=Z.zero;}))) lenv in
+      let lenv = LocalEnv.setVar loc (Var(0, ("SCTLR_EL1"))) (Val(VBits({n=64; v=Z.zero;}))) lenv in
+      (* set InGuardedPage to false *)
+      LocalEnv.setVar loc (Var(0, ("InGuardedPage"))) (Val (VBool false)) lenv
+    with _ ->
+      lenv
+    in
     let globals = IdentSet.of_list @@ List.map fst @@ Bindings.bindings (Eval.Env.readGlobals env) in
     lenv, globals
 
