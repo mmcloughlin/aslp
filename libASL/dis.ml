@@ -847,6 +847,11 @@ and dis_expr loc x =
   | Val (VUninitialized _) -> internal_error loc @@ "dis_expr returning VUninitialized, invalidating assumption"
   | _ -> r
 
+and dis_unknown ty: expr =
+  match ty with
+  | Type_Tuple (tys) -> Expr_Tuple (List.map dis_unknown tys)
+  | _ -> Expr_Unknown(ty)
+
 and dis_expr' (loc: l) (x: AST.expr): sym rws =
     (match x with
     | Expr_If(ty, c, t, els, e) ->
@@ -925,7 +930,7 @@ and dis_expr' (loc: l) (x: AST.expr): sym rws =
             raise (EvalError (loc, "unary operation should have been removed"))
     | Expr_Unknown(t) -> (* TODO: Is this enough? *)
             let+ t' = dis_type loc t in
-            Exp (Expr_Unknown(t'))
+            Exp (dis_unknown t')
     | Expr_ImpDef(t, Some(s)) ->
             DisEnv.reads (fun config -> Val (Eval.Env.getImpdef loc config.eval_env s))
     | Expr_ImpDef(t, None) ->
