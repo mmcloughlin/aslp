@@ -885,10 +885,3 @@ run asli with these commands
   Stmt_Assign(LExpr_Var("FPSR"),Expr_TApply("append_bits.0",[4;28],[Expr_Slices(Expr_Var("FPSR"),[Slice_LoWd(28,4)]);Expr_TApply("append_bits.0",[1;27],['1';Expr_Slices(Expr_Var("FPSR"),[Slice_LoWd(0,27)])])]))
   ],[],[])
   Stmt_Assign(LExpr_Array(LExpr_Var("_Z"),0),Expr_TApply("append_bits.0",[16;112],[Expr_Var("SignedSatQ109__5");Expr_TApply("append_bits.0",[16;96],[Expr_Var("SignedSatQ96__5");Expr_TApply("append_bits.0",[16;80],[Expr_Var("SignedSatQ83__5");Expr_TApply("append_bits.0",[16;64],[Expr_Var("SignedSatQ70__5");Expr_TApply("append_bits.0",[16;48],[Expr_Var("SignedSatQ57__5");Expr_TApply("append_bits.0",[16;32],[Expr_Var("SignedSatQ44__5");Expr_TApply("append_bits.0",[16;16],[Expr_Var("SignedSatQ31__5");Expr_Var("SignedSatQ17__5")])])])])])])]))
-<<<<<<< HEAD
-=======
->>>>>>> e5190a0 (symbolic opcodes (#4))
-<<<<<<< HEAD
-=======
->>>>>>> e5190a0 (symbolic opcodes (#4))
-
