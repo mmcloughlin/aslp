@@ -589,14 +589,14 @@ and sym_and_bits loc w (x: sym) (y: sym) =
   | x, Val y when is_zero_bits y -> Val y
   | Val x, y when is_one_bits x -> y
   | x, Val y when is_one_bits y -> x
-  | (Exp (Expr_TApply (FIdent ("append_bits", 0), [lw; rw], [l; r])), y) ->
-    let lw' = sym_of_expr lw in
-    let rw' = sym_of_expr rw in
-    let yl = sym_extract_bits loc y rw' lw' in
-    let yr = sym_extract_bits loc y (sym_of_int 0) rw' in
-    let l' = sym_and_bits loc (sym_expr lw') (sym_of_expr l) yl in
-    let r' = sym_and_bits loc (sym_expr rw') (sym_of_expr r) yr in
-    Exp (Expr_TApply (FIdent ("append_bits", 0), [lw; rw], [sym_expr l'; sym_expr r']))
+  | (Exp (Expr_TApply (FIdent ("append_bits", 0), [Expr_LitInt lw; Expr_LitInt rw], [l; r])), y) ->
+    let lw' = int_of_string lw in
+    let rw' = int_of_string rw in
+    let yl = sym_slice loc y rw' lw' in
+    let yr = sym_slice loc y 0 rw' in
+    let l' = sym_and_bits loc (expr_of_int lw') (sym_of_expr l) yl in
+    let r' = sym_and_bits loc (expr_of_int rw') (sym_of_expr r) yr in
+    sym_append_bits loc lw' rw' l' r'
   | _ -> Exp (Expr_TApply (FIdent ("and_bits", 0), [w], [sym_expr x; sym_expr y]) )
 
 and sym_or_bits loc w (x: sym) (y: sym) =
