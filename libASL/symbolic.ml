@@ -606,6 +606,9 @@ and sym_or_bits loc w (x: sym) (y: sym) =
   | x, Val y when is_one_bits y -> Val y
   | Val x, y when is_zero_bits x -> y
   | x, Val y when is_zero_bits y -> x
+  (* (a /\ b) \/ !a ~> b \/ !a *)
+  | Exp (Expr_TApply (FIdent ("and_bits", 0), _, [a; x])), Exp (Expr_TApply (FIdent ("not_bits", 0), _, [a'])) when a = a' ->
+      sym_or_bits loc w (sym_of_expr x) y
   | _ -> Exp (Expr_TApply (FIdent ("or_bits", 0), [w], [sym_expr x; sym_expr y]) )
 
 and sym_eq_bits loc (x: sym) (y: sym) =
