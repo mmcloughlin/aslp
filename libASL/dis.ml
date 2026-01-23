@@ -1619,8 +1619,11 @@ let dis_decode_entry_with_inst (env: Eval.Env.t) ((lenv,globals): env) (decode: 
         RASL_check.AllowedLanguageConstructs.check_stmts_exc (snd stmts);
     stmts
 
-let dis_decode_entry (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: sym_bits): stmt list =
+let dis_decode_entry_sym (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: sym_bits): stmt list =
   snd @@ dis_decode_entry_with_inst env (lenv,globals) decode op
+
+let dis_decode_entry (env: Eval.Env.t) ((lenv,globals): env) (decode: decode_case) (op: Primops.bigint): stmt list =
+    dis_decode_entry_sym env (lenv,globals) decode (sym_bits_of_bv (Primops.prim_cvt_int_bits (Z.of_int 32) op))
 
 let build_env (env: Eval.Env.t): env =
     let env = Eval.Env.freeze env in
@@ -1670,4 +1673,4 @@ let retrieveDisassembly ?(address:string option) (env: Eval.Env.t) (lenv: env) (
     | Some v -> setPC env lenv (Z.of_string v)
     | None -> lenv in
     let op = sym_bits_of_string opcode in
-    dis_decode_entry env lenv decoder op
+    dis_decode_entry_sym env lenv decoder op

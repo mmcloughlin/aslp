@@ -64,7 +64,7 @@ let mkCPU (env : Eval.Env.t) (denv: Dis.env): cpu =
         
         List.iter
             (fun s -> Printf.printf "%s\n" (pp_stmt s))
-            (Dis.dis_decode_entry env denv decoder op)
+            (Dis.dis_decode_entry_sym env denv decoder op)
         
     and gen (iset: string) (pat: string) (include_pc: bool) (backend: gen_backend) (dir: string): unit =
         if not (Sys.file_exists dir) then failwith ("Can't find target dir " ^ dir);
