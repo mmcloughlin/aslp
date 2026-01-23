@@ -11,6 +11,7 @@ open LibASL
 
 open Asl_ast
 open Value
+open Symbolic
 open Eval
 open Asl_utils
 
@@ -39,8 +40,8 @@ let help_msg = [
     {|:? :help                       Show this help message|};
     {|:elf <file>                    Load an ELF file|};
     {|:opcode <instr-set> <int>      Decode and execute opcode|};
-    {|:sem <instr-set> <int>         Decode and print opcode semantics|};
-    {|:ast <instr-set> <int> [file]  Decode and write opcode semantics to stdout or a file, in a structured ast format|};
+    {|:sem <instr-set> <bits>        Decode and print opcode semantics|};
+    {|:ast <instr-set> <bits> [file] Decode and write opcode semantics to stdout or a file, in a structured ast format|};
     {|:gen <instr-set> <regex>       Generate an offline lifter using the given backend|};
     {|      [backend] [pc-option] [dir]|};
     {|:project <file>                Execute ASLi commands in <file>|};
@@ -186,17 +187,16 @@ let rec process_command (tcenv: TC.Env.t) (cpu: Cpu.cpu) (fname: string) (input0
         ) encodings;
     | [":sem"; iset; opcode] ->
         let cpu' = Cpu.mkCPU cpu.env cpu.denv in
-        let op = Z.of_string opcode in
-        Printf.printf "Decoding instruction %s %s\n" iset (Z.format "%x" op);
-        cpu'.sem iset op
+        Printf.printf "Decoding instruction %s %s\n" iset opcode;
+        cpu'.sem iset opcode
     | ":ast" :: iset :: opcode :: rest when List.length rest <= 1 ->
-        let op = Z.of_string opcode in
+        let op = sym_bits_of_string opcode in
         let decoder = Eval.Env.getDecoder cpu.env (Ident iset) in
         let chan_opt = Option.map open_out (List.nth_opt rest 0) in
         let chan = Option.value chan_opt ~default:stdout in
         List.iter
             (fun s -> Printf.fprintf chan "%s\n" (Utils.to_string (PP.pp_raw_stmt s)))
-            (Dis.dis_decode_entry cpu.env cpu.denv decoder op);
+            (Dis.dis_decode_entry_sym cpu.env cpu.denv decoder op);
         Option.iter close_out chan_opt
     | ":gen" :: iset :: id :: rest when List.length rest <= 3 ->
         let backend_str = Option.value List.(nth_opt rest 0) ~default:"ocaml" in

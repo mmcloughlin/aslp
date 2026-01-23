@@ -4,6 +4,7 @@ module Env = Eval.Env
 open AST
 open Value
 open Asl_utils
+open Symbolic
 
 (****************************************************************
  * Opcode decoding without evaluation.

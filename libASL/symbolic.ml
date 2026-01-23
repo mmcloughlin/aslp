@@ -180,6 +180,11 @@ let int_of_sym (e: sym): int =
   | Exp e        -> int_of_expr e
   | _ -> failwith @@ "int_of_sym: cannot coerce to int " ^ pp_sym e
 
+let bool_of_sym (s: sym): bool =
+  match s with
+  | Val (VBool b) -> b
+  | _ -> failwith @@ "bool_of_sym: cannot coerce to bool " ^ pp_sym s  
+  
 let sym_of_tuple (loc: AST.l) (v: sym): sym list  =
   match v with
   | Val (VTuple vs) -> (List.map (fun v -> Val v) vs)
@@ -277,21 +282,8 @@ let rec sym_eq_int loc x y =
 
 let sym_le_int   = prim_binop "le_int"
 
-let sym_eq_bits  = prim_binop "eq_bits"
-
 let sym_eq_real  = prim_binop "eq_real"
 
-let sym_eq (loc: AST.l) (x: sym) (y: sym): sym =
-  (match (x,y) with
-  | (Val x,Val y) -> Val (from_bool (eval_eq loc x y))
-  | (Exp _,Val v) | (Val v, Exp _) ->
-      (match v with
-      | VBits _ -> sym_eq_bits loc x y
-      | VInt _
-      | VEnum _ -> sym_eq_int loc x y
-      | VReal _ -> sym_eq_real loc x y
-      | _ -> failwith @@ "sym_eq: unknown value type " ^ (pp_sym x) ^ " " ^ (pp_sym y))
-  | (_,_) -> failwith "sym_eq: insufficient info to resolve type")
 
 let rec is_pure_exp (e: expr) =
   match e with
@@ -445,15 +437,6 @@ let sym_not_bits loc w (x: sym) =
   | Val x -> Val (VBits (prim_not_bits (to_bits loc x)))
   | _ -> Exp (Expr_TApply (FIdent ("not_bits", 0), [w], [sym_expr x]) )
 
-let sym_and_bits loc w (x: sym) (y: sym) =
-  match x, y with
-  | Val x, Val y -> Val (VBits (prim_and_bits (to_bits loc x) (to_bits loc y)))
-  | Val x, y when is_zero_bits x -> Val x
-  | x, Val y when is_zero_bits y -> Val y
-  | Val x, y when is_one_bits x -> y
-  | x, Val y when is_one_bits y -> x
-  | _ -> Exp (Expr_TApply (FIdent ("and_bits", 0), [w], [sym_expr x; sym_expr y]) )
-
 let sym_add_bits loc w (x: sym) (y: sym) =
   match x, y with
   | Val x, Val y -> Val (VBits (prim_add_bits (to_bits loc x) (to_bits loc y)))
@@ -461,34 +444,6 @@ let sym_add_bits loc w (x: sym) (y: sym) =
   | x, Val y when is_zero_bits y -> x
   | _ -> Exp (Expr_TApply (FIdent ("add_bits", 0), [w], [sym_expr x; sym_expr y]) )
 
-let sym_inmask loc v mask =
-  match v with
-  | Val x -> Val (VBool (prim_in_mask (to_bits loc x) mask))
-  | Exp e ->
-      let n = mask.n in
-      let ne = Expr_LitInt (string_of_int n) in
-      let m = Val (VBits {v = mask.m; n}) in
-      let v = Val (VBits {v = mask.v; n}) in
-      sym_eq_bits loc (sym_and_bits loc ne (Exp e) m) v
-
-let rec sym_or_bits loc w (x: sym) (y: sym) =
-  match x, y with
-  | Val x, Val y -> Val (VBits (prim_or_bits (to_bits loc x) (to_bits loc y)))
-  | Val x, y when is_one_bits x -> Val x
-  | x, Val y when is_one_bits y -> Val y
-  | Val x, y when is_zero_bits x -> y
-  | x, Val y when is_zero_bits y -> x
-  (* (a /\ b) \/ !a ~> b \/ !a *)
-  | Exp (Expr_TApply (FIdent ("and_bits", 0), _, [a; x])), Exp (Expr_TApply (FIdent ("not_bits", 0), _, [a'])) when a = a' ->
-      sym_or_bits loc w (sym_of_expr x) y
-  | _ -> Exp (Expr_TApply (FIdent ("or_bits", 0), [w], [sym_expr x; sym_expr y]) )
-
-(** Construct a ITE expression from bitvector operations. Expects arguments to be 1 bit wide. *)
-let sym_ite_bits loc (b: sym) (x: sym) (y: sym) =
-  let w = Expr_LitInt "1" in
-  let b = sym_cvt_bool_bv loc b in
-  let nb = sym_not_bits loc w b in
-  sym_or_bits loc w (sym_and_bits loc w b x) (sym_and_bits loc w nb y)
 
 let int_expr i = Expr_LitInt (string_of_int i)
 
@@ -614,7 +569,7 @@ and sym_slice (loc: l) (x: sym) (lo: int) (wd: int): sym =
     | _ -> Exp slice_expr)
 
 (** Wrapper around sym_slice to handle cases of symbolic slice bounds *)
-let sym_extract_bits loc v i w =
+and sym_extract_bits loc v i w =
   match (v, i, w) with
   (* Constant slice *)
   | _, Val i', Val w' ->
@@ -627,6 +582,73 @@ let sym_extract_bits loc v i w =
       Exp (Expr_Slices (e, [Slice_LoWd (sym_expr lo, sym_expr wd')]))
   | _ -> Exp (Expr_Slices (sym_expr v, [Slice_LoWd (sym_expr i, sym_expr w)]))
 
+and sym_and_bits loc w (x: sym) (y: sym) =
+  match x, y with
+  | Val x, Val y -> Val (VBits (prim_and_bits (to_bits loc x) (to_bits loc y)))
+  | Val x, y when is_zero_bits x -> Val x
+  | x, Val y when is_zero_bits y -> Val y
+  | Val x, y when is_one_bits x -> y
+  | x, Val y when is_one_bits y -> x
+  | (Exp (Expr_TApply (FIdent ("append_bits", 0), [Expr_LitInt lw; Expr_LitInt rw], [l; r])), y) ->
+    let lw' = int_of_string lw in
+    let rw' = int_of_string rw in
+    let yl = sym_slice loc y rw' lw' in
+    let yr = sym_slice loc y 0 rw' in
+    let l' = sym_and_bits loc (expr_of_int lw') (sym_of_expr l) yl in
+    let r' = sym_and_bits loc (expr_of_int rw') (sym_of_expr r) yr in
+    sym_append_bits loc lw' rw' l' r'
+  | _ -> Exp (Expr_TApply (FIdent ("and_bits", 0), [w], [sym_expr x; sym_expr y]) )
+
+and sym_or_bits loc w (x: sym) (y: sym) =
+  match x, y with
+  | Val x, Val y -> Val (VBits (prim_or_bits (to_bits loc x) (to_bits loc y)))
+  | Val x, y when is_one_bits x -> Val x
+  | x, Val y when is_one_bits y -> Val y
+  | Val x, y when is_zero_bits x -> y
+  | x, Val y when is_zero_bits y -> x
+  | _ -> Exp (Expr_TApply (FIdent ("or_bits", 0), [w], [sym_expr x; sym_expr y]) )
+
+and sym_eq_bits loc (x: sym) (y: sym) =
+  match x, y with
+  | Val x, Val y -> Val (VBool (prim_eq_bits (to_bits loc x) (to_bits loc y)))
+  | (Exp (Expr_TApply (FIdent ("append_bits", 0), [lw; rw], [l; r])), y) ->
+    let lw' = sym_of_expr lw in
+    let rw' = sym_of_expr rw in
+    let yl = sym_extract_bits loc y rw' lw' in
+    let yr = sym_extract_bits loc y (sym_of_int 0) rw' in
+    let l' = sym_eq_bits loc (sym_of_expr l) yl in
+    let r' = sym_eq_bits loc (sym_of_expr r) yr in
+    sym_and_bool loc l' r'
+  | _ -> prim_binop "eq_bits" loc x y
+
+and sym_inmask loc v mask =
+  match v with
+  | Val x -> Val (VBool (prim_in_mask (to_bits loc x) mask))
+  | Exp e ->
+      let n = mask.n in
+      let ne = Expr_LitInt (string_of_int n) in
+      let m = Val (VBits {v = mask.m; n}) in
+      let v = Val (VBits {v = mask.v; n}) in
+      sym_eq_bits loc (sym_and_bits loc ne (Exp e) m) v
+
+and sym_eq (loc: AST.l) (x: sym) (y: sym): sym =
+  (match (x,y) with
+  | (Val x,Val y) -> Val (from_bool (eval_eq loc x y))
+  | (Exp _,Val v) | (Val v, Exp _) ->
+      (match v with
+      | VBits _ -> sym_eq_bits loc x y
+      | VInt _
+      | VEnum _ -> sym_eq_int loc x y
+      | VReal _ -> sym_eq_real loc x y
+      | _ -> failwith @@ "sym_eq: unknown value type " ^ (pp_sym x) ^ " " ^ (pp_sym y))
+  | (_,_) -> failwith "sym_eq: insufficient info to resolve type")
+
+(** Construct a ITE expression from bitvector operations. Expects arguments to be 1 bit wide. *)
+let sym_ite_bits loc (b: sym) (x: sym) (y: sym) =
+  let w = Expr_LitInt "1" in
+  let b = sym_cvt_bool_bv loc b in
+  let nb = sym_not_bits loc w b in
+  sym_or_bits loc w (sym_and_bits loc w b x) (sym_and_bits loc w nb y)
 let sym_zero_extend num_zeros old_width e =
   match sym_append_bits Unknown num_zeros old_width (Val (val_zeros num_zeros)) e with
   | Val v -> Val v
@@ -932,6 +954,7 @@ let rec expr_access_chain (x: expr) (a: access_chain list): expr =
   | (SymIndex e)::a -> expr_access_chain (Expr_Array(x,e)) a
   | [] -> x)
 
+
 (****************************************************************)
 (** {2 Function and Expression Purity}                          *)
 (****************************************************************)
@@ -1042,3 +1065,60 @@ let rec is_pure e =
   | Expr_Field(e,_) -> is_pure e
   | Expr_Array(e,i) -> is_pure e && is_pure i
   | _ -> false
+
+
+(* Segment of a symbolic bitvector *)
+type segment
+  = SegmentBits of bitvector
+  | SegmentField of ident * int
+
+(* Symbolic bitvector *)
+type sym_bits = segment list
+
+let segment_expr_of_string (s: string) (bits: int option): segment =
+  if (String.starts_with ~prefix:"0x" s) then
+    let litbits = (String.length s - 2) * 4 in
+    let bits' = Option.value bits ~default:litbits in
+    SegmentBits (Primops.prim_cvt_int_bits (Z.of_int bits') (Z.of_string s))
+  else match bits with
+  | Some bits -> SegmentField ((Ident s), bits)
+  | None -> failwith ("variable segment must have a concrete width")
+
+let segment_of_string (s: string): segment =
+  match String.split_on_char ':' s with
+  | [expr; bits] ->
+    segment_expr_of_string expr (Some (int_of_string bits))
+  | [expr] ->
+    segment_expr_of_string expr None
+  | _ -> failwith ("invalid opcode segment")
+
+let sym_bits_of_string (s: string): sym_bits =
+  List.map segment_of_string (String.split_on_char '|' s)
+
+let sym_bits_of_bv (bv: Primops.bitvector): sym_bits =
+  [SegmentBits bv]
+
+let sym_of_segment (s: segment): sym =
+  match s with
+  | SegmentBits b -> Val (VBits b)
+  | SegmentField (f, w) -> Exp (Expr_Var f)
+
+let segment_width (s: segment): int =
+  match s with
+  | SegmentBits b -> b.n
+  | SegmentField (_, w) -> w
+  
+let sym_of_sym_bits (s: sym_bits): sym =
+  let segs = List.map (fun seg -> (sym_of_segment seg, segment_width seg)) s in
+  let init = (Val (VBits empty_bits), 0) in
+  let (s, _) = List.fold_left (fun (x, xw) (y, yw) -> (sym_append_bits Unknown xw yw x y, xw+yw)) init segs in
+  s
+
+let field_of_segment (s: segment): (ident * int) option =
+  match s with
+  | SegmentBits _ -> None
+  | SegmentField (f, w) -> Some (f, w)
+
+(* Extract the fields from a symbolic bitvector *)
+let fields_of_sym_bits (s: sym_bits): (ident * int) list =
+  List.filter_map field_of_segment s
