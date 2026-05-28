@@ -1,10 +1,10 @@
 (lang dune 2.9)
 (name asli)
-(version 0.3.2)
 
 (using menhir 2.0)
 
 (package
+ (version 0.3.3)
   (name asli)
   (synopsis "Interpreter for Arm's Architecture Specification Language (ASL)")
   (description "\| Interpreter for the language ASL that Arm uses to write their ISA specifications.
@@ -29,6 +29,7 @@
 )
 
 (package
+  (version 0.3.3)
   (name aslp_offline)
   (synopsis "AArch64 Offline lifter")
   (description "" )

@@ -1,4 +1,11 @@
 
+
+0.3.3 (2026-05-28)
+------------------
+
+* make offline lifter parametric in instruction building interface: removes
+  last aslp dependency from generated offline lifter.
+
 0.3.2 (2026-02-09)
 ------------------
 
