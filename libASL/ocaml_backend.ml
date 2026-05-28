@@ -32,18 +32,33 @@ let add_ref_var v st =
  * String Utils
  ****************************************************************)
 
+let ibi_contents = [%blob "../offlineASL/template_instruction_building_interface.ml"]
+
+(** Extract the declared IBI function names by searching for [val xxx] within the IBI ML file. *)
+let ibi_names =
+  let ibi_decl_regex = Str.regexp {|\bval \([fv][a-zA-Z0-9_]+\)\b|} in
+  let decl_names = Str.full_split ibi_decl_regex ibi_contents
+    |> List.filter_map (function Str.Delim s -> Some s | _ -> None)
+    |> List.map (fun s -> Str.string_after s 4) in
+  assert (List.mem "f_eq_bits" decl_names);
+  Array.of_list decl_names
+
 let replace s =
   String.fold_left (fun acc c ->
     if c = '.' then acc ^ "_"
     else if c = '#' then acc ^ "HASH"
     else acc ^ (String.make 1 c)) "" s
 
-let name_of_ident v =
+let name_of_ident ?(call = false) v =
   let s = (match v with
   | Ident n -> "v_" ^ n
   | FIdent (n,0) -> "f_" ^ n
   | FIdent (n,i) -> "f_" ^ n ^ "_" ^ (string_of_int i)) in
-  replace s
+  let s = replace s in
+  match v with
+  | _ when Array.mem s ibi_names -> "I." ^ s
+  | FIdent _ when call -> s ^ " (module I)"
+  | _ -> s
 
 let rec name_of_lexpr l =
   match l with
@@ -66,15 +81,22 @@ let write_preamble opens st =
     Printf.fprintf st.oc "open %s\n" s) opens;
   Printf.fprintf st.oc "\n"
 
-let write_epilogue use_pc fid st =
-  let conv_pc = "let pc = (mkBits (Z.of_int 64) (Z.of_int pc)) in" in
+let write_asl_runner_epilogue use_pc fid st =
+  let conv_pc = "let pc = (I.mkBits (I.bigint_of_int 64) (I.bigint_of_int pc)) in" in
   let dis_call = (match use_pc with
     | true ->  Printf.sprintf "%s\n  %s enc pc" conv_pc
     | false ->  Printf.sprintf "%s enc"
-  ) (name_of_ident fid)
+  ) (name_of_ident ~call:true fid)
   in
   let pc_arg = if use_pc then " ~(pc:int)" else "" in
-  Printf.fprintf st.oc "let run%s enc =\n  reset_ir ();\n  %s;\n  get_ir ()\n" pc_arg dis_call
+  Printf.fprintf st.oc {|let run %s enc =
+  let module I =
+    (Asl_ibi : Instruction_building_interface.IBI
+      with type bitvector = LibASL_stage0.Primops.bitvector
+      and type ast = LibASL_stage0.Asl_ast.stmt list) in
+  I.reset_ir ();
+  %s;
+  I.get_ir ()|} pc_arg dis_call
 
 let write_line s st =
   let padding = String.concat "" (List.init st.depth (fun _ -> " ")) in
@@ -116,25 +138,25 @@ let rec prints_expr e st =
       Printf.sprintf "List.nth (%s) (%s)" (prints_expr a st) (prints_expr i st)
 
   (* Int Expressions using Z *)
-  | Expr_LitInt i -> "Z.of_string \"" ^ i ^ "\""
+  | Expr_LitInt i -> "I.bigint_of_string \"" ^ i ^ "\""
   | Expr_TApply(FIdent("add_int", 0), [], [a;b]) ->
-      Printf.sprintf "Z.add (%s) (%s)" (prints_expr a st) (prints_expr b st)
+      Printf.sprintf "I.bigint_add (%s) (%s)" (prints_expr a st) (prints_expr b st)
   | Expr_TApply(FIdent("sub_int", 0), [], [a;b]) ->
-      Printf.sprintf "Z.sub (%s) (%s)" (prints_expr a st) (prints_expr b st)
+      Printf.sprintf "I.bigint_sub (%s) (%s)" (prints_expr a st) (prints_expr b st)
   | Expr_TApply(FIdent("mul_int", 0), [], [a;b]) ->
-      Printf.sprintf "Z.mul (%s) (%s)" (prints_expr a st) (prints_expr b st)
+      Printf.sprintf "I.bigint_mul (%s) (%s)" (prints_expr a st) (prints_expr b st)
   | Expr_TApply(FIdent("frem_int", 0), [], [a;b]) ->
-      Printf.sprintf "frem_int (%s) (%s)" (prints_expr a st) (prints_expr b st)
+      Printf.sprintf "I.frem_int (%s) (%s)" (prints_expr a st) (prints_expr b st)
 
   (* Other operations *)
-  | Expr_LitBits b -> "from_bitsLit \"" ^ b ^ "\""
+  | Expr_LitBits b -> "I.from_bitsLit \"" ^ b ^ "\""
   | Expr_Slices(e,[Slice_LoWd(i,w)]) ->
       let e = prints_expr e st in
       let i = prints_expr i st in
       let w = prints_expr w st in
-      Printf.sprintf "extract_bits (%s) (%s) (%s)" e i w
+      Printf.sprintf "I.extract_bits (%s) (%s) (%s)" e i w
   | Expr_TApply(f, targs, args) ->
-      let f = name_of_ident f in
+      let f = name_of_ident ~call:true f in
       let args = List.map (fun e -> prints_expr e st) (targs @ args) in
       f ^ " (" ^ (String.concat ") (" args) ^ ")"
 
@@ -148,16 +170,16 @@ let rec prints_expr e st =
 and default_value t st =
   match t with
   | Type_Bits w ->
-      Printf.sprintf "mkBits (%s) Z.zero" (prints_expr w st)
+      Printf.sprintf "I.mkBits (%s) I.bigint_zero" (prints_expr w st)
   | Type_Constructor (Ident "boolean") -> "true"
-  | Type_Constructor (Ident "integer") -> "Z.zero"
+  | Type_Constructor (Ident "integer") -> "I.bigint_zero"
   | Type_Constructor (Ident "rt_label") -> "0"
-  | Type_Constructor (Ident "rt_expr") -> "undefined ()"
+  | Type_Constructor (Ident "rt_expr") -> "I.undefined ()"
   | Type_Array(Index_Range(lo, hi),ty) ->
       let lo = prints_expr lo st in
       let hi = prints_expr hi st in
       let d = default_value ty st in
-      Printf.sprintf "List.init ((Z.to_int (%s)) - (Z.to_int (%s)) + 1) (fun _ -> %s)" hi lo d
+      Printf.sprintf "List.init ((I.bigint_to_int (%s)) - (I.bigint_to_int (%s)) + 1) (fun _ -> %s)" hi lo d
   | _ -> failwith @@ "Unknown type for default value: " ^ (pp_type t)
 
 let prints_ret_type t =
@@ -185,7 +207,7 @@ let write_unsupported st =
   write_line "failwith \"unsupported\"" st
 
 let write_call f targs args st =
-  let f = name_of_ident f in
+  let f = name_of_ident ~call:true f in
   let args = targs @ args in
   let call = f ^ " (" ^ (String.concat ") (" args) ^ ")" in
   write_line call st
@@ -326,14 +348,15 @@ and write_stmts s st =
       (*assert (not st.skip_seq)*)
 
 let build_args targs args =
+  let name_of_arg id = Printf.sprintf "(%s : bitvector)" (name_of_ident id) in
   if List.length targs = 0 && List.length args = 0 then "()"
-  else String.concat " " (List.map name_of_ident (targs@args))
+  else String.concat " " (List.map name_of_arg (targs@args))
 
 let write_fn name (ret_tyo,_,targs,args,_,body) st =
   clear_ref_vars st;
   let args = build_args targs args in
   let ret = prints_ret_type ret_tyo in
-  Printf.fprintf st.oc "let %s %s : %s = \n" (name_of_ident name) args ret;
+  Printf.fprintf st.oc "let %s (type bitvector) (module I : IBI with type bitvector = bitvector) %s : %s = \n" (name_of_ident name) args ret;
   write_stmts body st;
   Printf.fprintf st.oc "\n\n"
 
@@ -342,8 +365,8 @@ let write_fn name (ret_tyo,_,targs,args,_,body) st =
  ****************************************************************)
 
 let init_st oc = { depth = 0; skip_seq = false; oc ; ref_vars = IdentSet.empty }
-let global_deps = ["Offline_utils"]
-let offline_utils_file = [%blob "../offlineASL/template_offline_utils.ml"]
+let global_deps = ["Instruction_building_interface"]
+let offline_utils_contents = [%blob "../offlineASL/template_offline_utils.ml"]
 
 (* Write an instruction file, containing just the behaviour of one instructions *)
 let write_instr_file fn fnsig dir =
@@ -375,14 +398,24 @@ let write_decoder_file use_pc fn fnsig deps dir =
   let st = init_st oc in
   write_preamble (global_deps @ deps) st;
   write_fn fn fnsig st;
-  write_epilogue use_pc fn st;
   close_out oc;
   m
 
-let write_new_dune_file use_pc files dir  : unit =
+let write_asl_runner_file use_pc fn fnsig deps dir =
+  let m = if use_pc then "offlineASL_pc_runner" else "offlineASL_runner" in
+  let path = dir ^ "/" ^ m ^ ".ml" in
+  let oc = open_out path in
+  let st = init_st oc in
+  let module_name = if use_pc then "OfflineASL_pc" else "OfflineASL" in
+  write_preamble (module_name :: "Offline" :: "Asl_ibi" :: global_deps @ deps) st;
+  write_asl_runner_epilogue use_pc fn st;
+  close_out oc;
+  m
+
+let write_dune_file use_pc files runner_files dir  : unit =
   let target_gen_files = String.concat "" @@ List.map (fun k ->
     Printf.sprintf "    %s.ml\n" k
-  ) files in
+  ) (runner_files @ files) in
   let oc = open_out (dir ^ "/dune.generated.new") in
   Printf.fprintf oc "; AUTO-GENERATED BY OCAML BACKEND\n";
   Printf.fprintf oc "(rule
@@ -398,41 +431,36 @@ let write_new_dune_file use_pc files dir  : unit =
   (library
     (name %s)
     (public_name aslp_offline.%s)
-    (flags
-      (:standard -w -27 -w -33 -cclib -lstdc++))
+    (flags (:standard -w -27 -w -33))
     (modules \n"
     name
     (if use_pc then "pc_aarch64" else "aarch64") ;
     List.iter (fun k ->
       Printf.fprintf oc "    %s\n" k
     ) (files);
-    Printf.fprintf oc "  )
-    (libraries asli.libASL-stage0))" ;
-    Printf.fprintf oc  "\n(alias (name default) (deps (package aslp_offline) ../aslp_offline.install))"
+  Printf.fprintf oc "  ))";
 
-
-(* Write the dune build file *)
-(* XXX: this function is not used anymore? *)
-let write_dune_file use_pc files dir =
-  let oc = open_out (dir ^ "/dune.inc") in
-  Printf.fprintf oc "; AUTO-GENERATED BY OCAML BACKEND
+  let runner_name = if use_pc then "offlineASL_pc_runner" else "offlineASL_runner" in
+  Printf.fprintf oc "
 (library
-  (name offlineASL)
+  (name %s)
   (public_name aslp_offline.%s)
-  (flags
-    (:standard -w -27 -w -33 -cclib -lstdc++))
-  (modules \n"
-  (if use_pc then "pc_aarch64" else "aarch64") ;
-  List.iter (fun k ->
-    Printf.fprintf oc "    %s\n" k
-  ) files;
-  Printf.fprintf oc "  )
-  (libraries asli.libASL-stage0))";
+  (flags (:standard -w -27 -w -33))
+  (modules %s)
+  (optional)
+  (libraries asli.libASL-stage0 %s))"
+    runner_name runner_name (String.concat " " runner_files) name;
+
   close_out oc
+    (* Printf.fprintf oc  "\n(alias (name default) (deps (package aslp_offline) ../aslp_offline.install))" *)
 
 let write_ibi dir =
-  let oc = open_out (dir ^ "/Offline_utils.ml") in
-  output_string oc offline_utils_file ;
+  let oc = open_out (dir ^ "/Asl_ibi.ml") in
+  output_string oc offline_utils_contents ;
+  close_out oc ;
+
+  let oc = open_out (dir ^ "/Instruction_building_interface.ml") in
+  output_string oc ibi_contents ;
   close_out oc
 
 (* Write all of the above, expecting offline_utils.ml to already be present in dir *)
@@ -441,9 +469,10 @@ let run config dfn dfnsig tests fns =
   let files = Bindings.fold (fun fn fnsig acc -> (write_instr_file fn fnsig dir)::acc) fns [] in
   let files = (write_test_file tests dir)::files in
   let decoder = write_decoder_file config.use_pc dfn dfnsig files dir in
+  let runner = write_asl_runner_file config.use_pc dfn dfnsig files dir in
   write_ibi dir ;
   try
-  write_new_dune_file config.use_pc (decoder::files@global_deps) dir
+    write_dune_file config.use_pc (decoder::files@global_deps) [runner; "Asl_ibi"] dir
   with
     | Sys_error _ as e -> Printf.eprintf "failed to write dune file\n%s" (Printexc.to_string e); Printexc.print_backtrace stderr
 
